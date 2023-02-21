@@ -3,7 +3,7 @@ package PR1;
 public class RowWithLabel extends Row{
 
 
-    private int numbreClass;
+    protected int numbreClass;
 
     RowWithLabel(int i){
         numbreClass = i;

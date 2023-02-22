@@ -7,23 +7,25 @@ public class Table {
 
     protected List<String> headers;
     protected List<Row> instancias;
+    public static final Table TABLANULA = new Table();
+
+    public Table() {
+        headers = new ArrayList<>();
+        instancias = new ArrayList<>();
+    }
 
     public Table(String[] cabecera) {
-        instancias = new ArrayList<>();
-        for(String campo : cabecera)
-            headers.add(campo);
-        instancias = new ArrayList<>();
+        new Table();
+        for (String atributo: cabecera)
+            headers.add(atributo);
     }
 
-    public void add(String[] entrada) {
-        List<String> instancia = new ArrayList<>();
-        for(String valor: entrada)
-            instancia.add(valor);
-        //instancias.add(instancia);
+    public void add(Row entrada) {
+        instancias.add(entrada);
     }
 
-    public Row getRowAt(int index) {
-        return instancias.get(index);
+    public Row getRowAt(int rowNumber) {
+        return instancias.get(rowNumber);
     }
 
 }

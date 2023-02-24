@@ -7,7 +7,15 @@ public class Table {
 
     protected List<String> headers;
     protected List<Row> instancias;
-    public static final Table TABLANULA = new Table();
+    public static final Table TABLA_NULA = new Table();
+    static {
+        List<String> headersTABLA_NULA = new ArrayList<>();
+        headersTABLA_NULA.add("Esta");
+        headersTABLA_NULA.add("tabla");
+        headersTABLA_NULA.add("es");
+        headersTABLA_NULA.add("NULA");
+        TABLA_NULA.headers = headersTABLA_NULA;
+    }
 
     public Table() {
         headers = new ArrayList<>();
@@ -19,6 +27,10 @@ public class Table {
         for (String atributo: cabecera)
             headers.add(atributo);
     }
+    public List<String> getHeaders() {
+        return headers;
+    }
+
 
     public void add(Row entrada) {
         instancias.add(entrada);

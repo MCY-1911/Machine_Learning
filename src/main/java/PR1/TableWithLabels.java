@@ -9,10 +9,10 @@ public class TableWithLabels extends Table{
 
     public TableWithLabels() {
         super();
-        headers.add("class-number")
+        headers.add("class-number");
     }
 
-    public RowWithLabel getRowAt(int rowNumber) {
+    /*public RowWithLabel getRowAt(int rowNumber) {
         return instancias.get(rowNumber);
-    }
+    }*/
 }

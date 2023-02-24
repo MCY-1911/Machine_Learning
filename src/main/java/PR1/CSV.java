@@ -13,7 +13,7 @@ public class CSV {
         //gracias a su buffer. Este buffer permite reducir los accesos al disco.
 
         if (comprobarFichero(nombreFichero) == false) {
-            return Table.TABLANULA;
+            return Table.TABLA_NULA;
         }
 
         BufferedReader lector = new BufferedReader(new FileReader(nombreFichero));

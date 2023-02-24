@@ -1,12 +1,17 @@
 package PR1;
 
 public class RowWithLabel extends Row{
-    protected int numbreClass;
+    protected int numberClass;
 
-    RowWithLabel(int i){
-        numbreClass = i;
+    RowWithLabel() {
+        super();
     }
+    RowWithLabel(Double[] fila, int numeroClase){
+        super();
+        numberClass = numeroClase;
+    }
+
     public int getNumbreClass(){
-        return numbreClass;
+        return numberClass;
     }
 }

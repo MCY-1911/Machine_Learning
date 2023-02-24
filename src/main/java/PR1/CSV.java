@@ -17,9 +17,9 @@ public class CSV {
         }
 
         BufferedReader lector = new BufferedReader(new FileReader(nombreFichero));
-        // Leemos la cabecera de la tabla y la creamos
         String[] cabeceraVec = lector.readLine().split(",");
         Table tabla = new Table(cabeceraVec);
+
         String lineaActual;
         while ((lineaActual = lector.readLine()) != null) {
             String[] filaEnTexto = lineaActual.split(",");
@@ -27,7 +27,7 @@ public class CSV {
             int indice = 0;
             for (String dato: filaEnTexto)
                 filaEnDouble[indice++] = Double.parseDouble(dato);
-            tabla.add(new Row(filaEnDouble));
+            tabla.add(filaEnDouble);
         }
         return tabla;
     }

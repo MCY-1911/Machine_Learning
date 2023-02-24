@@ -11,6 +11,7 @@ public class Row {
     }
 
     public Row(Double[] fila) {
+        data = new ArrayList<>();
         new Row();
         for (Double valor: fila)
             data.add(valor);
@@ -18,5 +19,15 @@ public class Row {
 
     public List<Double> getData(){
         return data;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder resultado = new StringBuilder();
+        for (Double dato: data) {
+            resultado.append(dato);
+            resultado.append("\t|\t");
+        }
+        return resultado.toString();
     }
 }

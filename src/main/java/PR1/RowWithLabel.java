@@ -7,11 +7,18 @@ public class RowWithLabel extends Row{
         super();
     }
     RowWithLabel(Double[] fila, int numeroClase){
-        super();
+        super(fila);
         numberClass = numeroClase;
     }
 
     public int getNumbreClass(){
         return numberClass;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder resultado = new StringBuilder(super.toString());
+        resultado.append(numberClass);
+        return resultado.toString();
     }
 }

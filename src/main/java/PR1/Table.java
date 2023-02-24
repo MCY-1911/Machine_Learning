@@ -23,7 +23,8 @@ public class Table {
     }
 
     public Table(String[] cabecera) {
-        new Table();
+        headers = new ArrayList<>();
+        instancias = new ArrayList<>();
         for (String atributo: cabecera)
             headers.add(atributo);
     }
@@ -32,12 +33,27 @@ public class Table {
     }
 
 
-    public void add(Row entrada) {
-        instancias.add(entrada);
+    public void add(Double[] datos) {
+        Row fila = new Row(datos);
+        instancias.add(fila);
     }
 
     public Row getRowAt(int rowNumber) {
         return instancias.get(rowNumber);
     }
 
+    @Override
+    public String toString() {
+        StringBuilder resultado = new StringBuilder();
+        for(String campo : headers) {
+            resultado.append(campo);
+            resultado.append("\t|\t");
+        }
+        resultado.append("\n");
+        for (Row fila : instancias) {
+            resultado.append(fila);
+            resultado.append("\n");
+        }
+        return resultado.toString();
+    }
 }

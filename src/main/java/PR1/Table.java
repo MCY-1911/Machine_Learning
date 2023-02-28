@@ -1,6 +1,7 @@
 package PR1;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Table {
@@ -25,13 +26,11 @@ public class Table {
     public Table(String[] cabecera) {
         headers = new ArrayList<>();
         instancias = new ArrayList<>();
-        for (String atributo: cabecera)
-            headers.add(atributo);
+        Collections.addAll(headers, cabecera);
     }
     public List<String> getHeaders() {
         return headers;
     }
-
 
     public void add(Double[] datos) {
         Row fila = new Row(datos);

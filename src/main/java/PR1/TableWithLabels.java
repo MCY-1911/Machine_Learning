@@ -1,10 +1,21 @@
 package PR1;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class TableWithLabels extends Table{
-    private Map<Integer, String> labelsToIndex;
+    private Map<String, Integer> labelsToIndex;
+    public static final TableWithLabels TABLA_LABELS_NULA = new TableWithLabels();
+    static {
+        List<String> headersTABLA_NULA = new ArrayList<>();
+        headersTABLA_NULA.add("Esta");
+        headersTABLA_NULA.add("tabla");
+        headersTABLA_NULA.add("es");
+        headersTABLA_NULA.add("NULA");
+        TABLA_LABELS_NULA.headers = headersTABLA_NULA;
+    }
 
     public TableWithLabels() {
         super();
@@ -18,18 +29,14 @@ public class TableWithLabels extends Table{
         headers.add("class-number");
     }
     public void add(Double[] datos, String clase) {
-        Row fila = new RowWithLabel(datos, labelsToIndex.size());
-        // Para facilitar las cosas la posición del RowWithLabel en instancias será la de su número de clase
-        instancias.add(labelsToIndex.size(), fila);
-        labelsToIndex.put(labelsToIndex.size(), clase);
+        if (!labelsToIndex.containsKey(clase))
+            labelsToIndex.put(clase, labelsToIndex.size());
+        Row fila = new RowWithLabel(datos, labelsToIndex.get(clase));
+        instancias.add(fila);
     }
 
     public RowWithLabel getRowAt(int rowNumber) {
         return (RowWithLabel) instancias.get(rowNumber);
-    }
-
-    public String getClass(int numberClass) {
-        return labelsToIndex.get(numberClass);
     }
 
     @Override

@@ -32,6 +32,28 @@ public class CSV {
         return tabla;
     }
 
+    public TableWithLabels readTableWithLabels(String nombreFichero) throws IOException {
+
+        if (comprobarFichero(nombreFichero) == false) {
+            return TableWithLabels.TABLA_LABELS_NULA;
+        }
+
+        BufferedReader lector = new BufferedReader(new FileReader(nombreFichero));
+        String[] cabeceraVec = lector.readLine().split(",");
+        TableWithLabels tablaConEtiquetas = new TableWithLabels(cabeceraVec);
+
+        String lineaActual;
+        while ((lineaActual = lector.readLine()) != null) {
+            String[] filaEnTexto = lineaActual.split(",");
+            Double[] filaEnDouble = new Double[filaEnTexto.length];
+            int indice = 0;
+            for (String dato: filaEnTexto)
+                filaEnDouble[indice++] = Double.parseDouble(dato);
+            tablaConEtiquetas.add(filaEnDouble);
+        }
+        return tablaConEtiquetas;
+    }
+
     private boolean comprobarFichero(String nombreFichero) {
         //Método auxiliar que comprueba si un fichero existe o no.
         //False si no existe, true si existe

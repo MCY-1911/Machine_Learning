@@ -3,10 +3,10 @@ package PR1;
 public class RowWithLabel extends Row{
     protected int numberClass;
 
-    RowWithLabel() {
+    public RowWithLabel() {
         super();
     }
-    RowWithLabel(Double[] fila, int numeroClase){
+    public RowWithLabel(Double[] fila, int numeroClase){
         super(fila);
         numberClass = numeroClase;
     }

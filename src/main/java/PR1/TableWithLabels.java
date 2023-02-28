@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TableWithLabels extends Table{
-    private Map<Integer, String> labelsToIndex;
+    private Map<String, Integer> labelsToIndex;
 
     public TableWithLabels() {
         super();
@@ -18,18 +18,14 @@ public class TableWithLabels extends Table{
         headers.add("class-number");
     }
     public void add(Double[] datos, String clase) {
-        Row fila = new RowWithLabel(datos, labelsToIndex.size());
-        // Para facilitar las cosas la posición del RowWithLabel en instancias será la de su número de clase
-        instancias.add(labelsToIndex.size(), fila);
-        labelsToIndex.put(labelsToIndex.size(), clase);
+        if (!labelsToIndex.containsKey(clase))
+            labelsToIndex.put(clase, labelsToIndex.size());
+        Row fila = new RowWithLabel(datos, labelsToIndex.get(clase));
+        instancias.add(fila);
     }
 
     public RowWithLabel getRowAt(int rowNumber) {
         return (RowWithLabel) instancias.get(rowNumber);
-    }
-
-    public String getClass(int numberClass) {
-        return labelsToIndex.get(numberClass);
     }
 
     @Override

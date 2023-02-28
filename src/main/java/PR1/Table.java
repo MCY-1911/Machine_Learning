@@ -56,4 +56,13 @@ public class Table {
         }
         return resultado.toString();
     }
+
+    public int getFilas(){
+        return instancias.size();
+    }
+
+    public int getColumnas(){
+        return headers.size();
+    }
+
 }

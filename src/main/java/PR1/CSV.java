@@ -34,9 +34,9 @@ public class CSV {
 
     public TableWithLabels readTableWithLabels(String nombreFichero) throws IOException {
 
-/*        if (comprobarFichero(nombreFichero) == false) {
-            return Table.TABLA_NULA;
-        }*/
+        if (comprobarFichero(nombreFichero) == false) {
+            return TableWithLabels.TABLA_LABELS_NULA;
+        }
 
         BufferedReader lector = new BufferedReader(new FileReader(nombreFichero));
         String[] cabeceraVec = lector.readLine().split(",");

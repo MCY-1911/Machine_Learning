@@ -7,6 +7,11 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class CSV {
+
+    public CSV(){
+        super();
+    }
+
     public Table readTable(String nombreFichero) throws IOException {
         //Método para leer datos de fichero CSV que no contienen el atributo "label"
         //Para realizar la lectura del fichero emplearemos la clase BufferedReader, ya que es más eficiente

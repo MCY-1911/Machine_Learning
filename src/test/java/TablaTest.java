@@ -1,7 +1,9 @@
+import PR1.CSV;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,35 +11,58 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TablaTest {
 
-    PR1.Table tabla;
+
+    PR1.CSV csv = new CSV();
+    PR1.Table tabla1;
+    PR1.Table tabla2;
 
     PR1.TableWithLabels tablaLabels;
 
-    List headersPrueba  = new ArrayList<>();
+    List headersPrueba1  = new ArrayList<>();
+    List headersPrueba2 = new ArrayList<>();
     List rowPrueba1 = new ArrayList<>();
     List rowPrueba2 = new ArrayList<>();
     List rowPrueba3 = new ArrayList<>();
 
 
+
+
     @BeforeEach
-    void setUp(){
+    void setUp() throws IOException {
+        tabla1 = csv.readTable("miles_dollars.csv");
+        tablaLabels = csv.readTableWithLabels("iris.csv");
+
 
     }
     @Test
     void filas(){
-        assertEquals(25, tabla.getFilas());
+        assertEquals(25, tabla1.getFilas());
+        assertEquals(150, tablaLabels.getFilas());
     }
 
     @Test
     void columnas(){
-        assertEquals(2, tabla.getColumnas());
+        assertEquals(2, tabla1.getColumnas());
+        assertEquals(5, tablaLabels.getColumnas());
     }
 
     @Test
     void headers(){
-        headersPrueba.add("Miles");
-        headersPrueba.add("Dollars");
-        assertEquals(headersPrueba, tabla.getHeaders());
+        headersPrueba1.add("Miles");
+        headersPrueba1.add("Dollars");
+        assertEquals(headersPrueba1, tabla1.getHeaders());
+
+        headersPrueba2.add("sepal length");
+        headersPrueba2.add("sepal width");
+        headersPrueba2.add("petal length");
+        headersPrueba2.add("petal length");
+        headersPrueba2.add("petal width");
+        headersPrueba2.add("class");
+
+        assertEquals(headersPrueba2, tablaLabels.getHeaders());
+
+
+
     }
 
     @Test
@@ -67,9 +92,9 @@ public class TablaTest {
         rowPrueba3.add(6.0);
         rowPrueba3.add(1.8);
 
-    assertEquals(rowPrueba1, tabla.getRowAt(0).getData());
-    assertEquals(rowPrueba2, tabla.getRowAt(58).getData());
-    assertEquals(rowPrueba3, tabla.getRowAt(126).getData());
+    assertEquals(rowPrueba1, tablaLabels.getRowAt(0).getData());
+    assertEquals(rowPrueba2, tablaLabels.getRowAt(58).getData());
+    assertEquals(rowPrueba3, tablaLabels.getRowAt(126).getData());
 
     }
 }

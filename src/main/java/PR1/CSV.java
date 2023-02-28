@@ -1,10 +1,7 @@
 package PR1;
 
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class CSV {
 
@@ -20,7 +17,6 @@ public class CSV {
         if (comprobarFichero(nombreFichero) == false) {
             return Table.TABLA_NULA;
         }
-
         BufferedReader lector = new BufferedReader(new FileReader(nombreFichero));
         String[] cabeceraVec = lector.readLine().split(",");
         Table tabla = new Table(cabeceraVec);
@@ -52,8 +48,13 @@ public class CSV {
             String[] filaEnTexto = lineaActual.split(",");
             Double[] filaEnDouble = new Double[filaEnTexto.length];
             int indice = 0;
-            for (String dato: filaEnTexto)
-                filaEnDouble[indice++] = Double.parseDouble(dato);
+            int cont = 0;
+            for (String dato : filaEnTexto){
+                if (cont != filaEnTexto.length-1) {
+                    filaEnDouble[indice++] = Double.parseDouble(dato);
+                }
+            cont++;
+        }
             tablaConEtiquetas.add(filaEnDouble);
         }
         return tablaConEtiquetas;

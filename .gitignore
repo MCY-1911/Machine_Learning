@@ -4,3 +4,9 @@ target/classes/main/Main.class
 target/classes/main/Main.class
 target/classes/PR1/CSV.class
 target/classes/PR1/TableWithLabels.class
+target/classes/main/Main.class
+target/classes/PR1/CSV.class
+target/test-classes/TablaTest.class
+target/classes/PR1/TableWithLabels.class
+target/classes/PR1/Table.class
+target/classes/PR1/RowWithLabel.class

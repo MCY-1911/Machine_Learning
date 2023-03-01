@@ -40,7 +40,7 @@ public class CSV {
 
     }
 
-    public TableWithLabels readTableWithLabels(String nombreFichero) throws IOException {
+    public TableWithLabels readTableWithLabels(String nombreFichero) {
 
         try( BufferedReader lector = new BufferedReader(new FileReader(nombreFichero)) ) {
 

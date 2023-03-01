@@ -22,13 +22,11 @@ public class TableWithLabels extends Table{
     public TableWithLabels() {
         super();
         labelsToIndex = new HashMap<>();
-        headers.add("class-number");
     }
 
     public TableWithLabels(String[] cabecera) {
         super(cabecera);
         labelsToIndex = new HashMap<>();
-        headers.add("class-number");
     }
     public void add(Double[] datos, String clase) {
         if (!labelsToIndex.containsKey(clase))

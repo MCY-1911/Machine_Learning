@@ -46,6 +46,7 @@ public class CSV {
 
             // Creamos una tabla con etiquetas empleando como cabecera la primera fila del CSV
             String[] cabeceraEnArray = lector.readLine().split(",");
+            cabeceraEnArray[cabeceraEnArray.length-1] = "class-number";
             TableWithLabels tablaConEtiquetas = new TableWithLabels(cabeceraEnArray);
 
             // Leemos el resto del fichero línea a línea e insertamos en la tabla con etiquetas

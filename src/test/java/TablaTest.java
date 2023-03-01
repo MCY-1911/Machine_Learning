@@ -1,6 +1,4 @@
 import PR1.CSV;
-import PR1.Row;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -40,14 +38,14 @@ public class TablaTest {
     }
     @Test
     void filas(){
-        assertEquals(25, tabla1.getFilas());
-        assertEquals(150, tablaLabels.getFilas());
+        assertEquals(25, tabla1.getNumeroFilas());
+        assertEquals(150, tablaLabels.getNumeroFilas());
     }
 
     @Test
     void columnas(){
-        assertEquals(2, tabla1.getColumnas());
-        assertEquals(6, tablaLabels.getColumnas());
+        assertEquals(2, tabla1.getNumeroColumnas());
+        assertEquals(6, tablaLabels.getNumeroColumnas());
     }
 
     @Test

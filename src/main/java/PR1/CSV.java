@@ -9,71 +9,61 @@ public class CSV {
         super();
     }
 
-    public Table readTable(String nombreFichero) throws IOException {
+    public Table readTable(String nombreFichero) {
         //Método para leer datos de fichero CSV que no contienen el atributo "label"
         //Para realizar la lectura del fichero emplearemos la clase BufferedReader, ya que es más eficiente
         //gracias a su buffer. Este buffer permite reducir los accesos al disco.
 
-        if (comprobarFichero(nombreFichero) == false) {
-            return Table.TABLA_NULA;
-        }
-        BufferedReader lector = new BufferedReader(new FileReader(nombreFichero));
-        String[] cabeceraVec = lector.readLine().split(",");
-        Table tabla = new Table(cabeceraVec);
+        try( BufferedReader lector = new BufferedReader(new FileReader(nombreFichero)) ) {
 
-        String lineaActual;
-        while ((lineaActual = lector.readLine()) != null) {
-            String[] filaEnTexto = lineaActual.split(",");
-            Double[] filaEnDouble = new Double[filaEnTexto.length];
-            int indice = 0;
-            for (String dato: filaEnTexto)
-                filaEnDouble[indice++] = Double.parseDouble(dato);
-            tabla.add(filaEnDouble);
+            // Creamos una tabla con cabecera igual a la primera fila del CSV
+            String[] cabeceraEnArray = lector.readLine().split(",");
+            Table tabla = new Table(cabeceraEnArray);
+
+            // Leemos el resto del fichero línea a línea e insertamos en la tabla
+            String lineaActual;
+            while ((lineaActual = lector.readLine()) != null) {
+                String[] filaEnTexto = lineaActual.split(",");
+                Double[] filaEnDouble = new Double[filaEnTexto.length];
+                int indice = 0;
+                for (String dato : filaEnTexto)
+                    filaEnDouble[indice++] = Double.parseDouble(dato);
+                tabla.add(filaEnDouble);
+            }
+
+            // Una vez construida la tabla la devolvemos
+            return tabla;
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
-        return tabla;
+
     }
 
     public TableWithLabels readTableWithLabels(String nombreFichero) throws IOException {
 
-        if (comprobarFichero(nombreFichero) == false) {
+        try( BufferedReader lector = new BufferedReader(new FileReader(nombreFichero)) ) {
+
+            // Creamos una tabla con etiquetas empleando como cabecera la primera fila del CSV
+            String[] cabeceraEnArray = lector.readLine().split(",");
+            TableWithLabels tablaConEtiquetas = new TableWithLabels(cabeceraEnArray);
+
+            // Leemos el resto del fichero línea a línea e insertamos en la tabla con etiquetas
+            String lineaActual;
+            while ((lineaActual = lector.readLine()) != null) {
+                String[] filaEnTexto = lineaActual.split(",");
+                Double[] filaEnDouble = new Double[filaEnTexto.length-1];
+                for (int i = 0; i < filaEnDouble.length; i++) {
+                    filaEnDouble[i] = Double.parseDouble(filaEnTexto[i]);
+                }
+                String clase = filaEnTexto[filaEnTexto.length-1];
+                tablaConEtiquetas.add(filaEnDouble, clase);
+            }
+            return tablaConEtiquetas;
+
+        } catch (IOException e) {
             return TableWithLabels.TABLA_LABELS_NULA;
         }
-
-        BufferedReader lector = new BufferedReader(new FileReader(nombreFichero));
-        String[] cabeceraVec = lector.readLine().split(",");
-        TableWithLabels tablaConEtiquetas = new TableWithLabels(cabeceraVec);
-
-        String lineaActual;
-        while ((lineaActual = lector.readLine()) != null) {
-            String[] filaEnTexto = lineaActual.split(",");
-            Double[] filaEnDouble = new Double[filaEnTexto.length-1];
-            int indice = 0;
-            int cont = 0;
-            String clase = null;
-            for (String dato : filaEnTexto){
-                if (cont != filaEnTexto.length-1) {
-                    filaEnDouble[indice++] = Double.parseDouble(dato);
-                }
-                else{
-                     clase = dato;
-                }
-            cont++;
-        }
-            tablaConEtiquetas.add(filaEnDouble, clase);
-        }
-        return tablaConEtiquetas;
-    }
-
-    private boolean comprobarFichero(String nombreFichero) {
-        //Método auxiliar que comprueba si un fichero existe o no.
-        //False si no existe, true si existe
-        FileReader fichero;
-        try {
-            fichero = new FileReader(nombreFichero);
-        } catch (FileNotFoundException e) {
-            return false;
-        }
-        return true;
     }
 
 }

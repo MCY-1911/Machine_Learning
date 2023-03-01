@@ -9,12 +9,14 @@ public class TableWithLabels extends Table{
     private Map<String, Integer> labelsToIndex;
     public static final TableWithLabels TABLA_LABELS_NULA = new TableWithLabels();
     static {
-        List<String> headersTABLA_NULA = new ArrayList<>();
-        headersTABLA_NULA.add("Esta");
-        headersTABLA_NULA.add("tabla");
-        headersTABLA_NULA.add("es");
-        headersTABLA_NULA.add("NULA");
-        TABLA_LABELS_NULA.headers = headersTABLA_NULA;
+        List<String> headersTABLA_LABELS_NULA = new ArrayList<>();
+        headersTABLA_LABELS_NULA.add("Esta");
+        headersTABLA_LABELS_NULA.add("tabla");
+        headersTABLA_LABELS_NULA.add("con");
+        headersTABLA_LABELS_NULA.add("etiquetas");
+        headersTABLA_LABELS_NULA.add("es");
+        headersTABLA_LABELS_NULA.add("NULA");
+        TABLA_LABELS_NULA.headers = headersTABLA_LABELS_NULA;
     }
 
     public TableWithLabels() {

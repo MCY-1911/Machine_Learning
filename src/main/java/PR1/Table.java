@@ -56,11 +56,11 @@ public class Table {
         return resultado.toString();
     }
 
-    public int getFilas(){
+    public int getNumeroFilas(){
         return instancias.size();
     }
 
-    public int getColumnas(){
+    public int getNumeroColumnas(){
         return headers.size();
     }
 

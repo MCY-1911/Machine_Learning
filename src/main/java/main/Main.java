@@ -1,22 +1,12 @@
 package main;
 
-import PR1.CSV;
+import PR1.*;
 
-import java.io.IOException;
-
-import static PR1.Table.TABLA_NULA;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-
-
-        PR1.CSV csv = new CSV();
-        PR1.Table tabla;
-        PR1.TableWithLabels tablaLabels;
-
-        tabla = csv.readTableWithLabels("src/Files/iris.csv");
-
-        System.out.println(tabla);
+    public static void main(String[] args) {
+        CSV creadorTablas = new CSV();
+        Table tabla = creadorTablas.readTable("src/Files/miles_dollars.csv");
 
 
     }

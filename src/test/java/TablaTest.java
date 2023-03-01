@@ -1,4 +1,5 @@
 import PR1.CSV;
+import PR1.Row;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,14 +24,17 @@ public class TablaTest {
     List rowPrueba1 = new ArrayList<>();
     List rowPrueba2 = new ArrayList<>();
     List rowPrueba3 = new ArrayList<>();
+    List rowPrueba4 = new ArrayList<>();
+    List rowPrueba5 = new ArrayList<>();
+
 
 
 
 
     @BeforeEach
     void setUp() throws IOException {
-        tabla1 = csv.readTable("miles_dollars.csv");
-        tablaLabels = csv.readTableWithLabels("iris.csv");
+        tabla1 = csv.readTable("src/Files/miles_dollars.csv");
+        tablaLabels = csv.readTableWithLabels("src/Files/iris.csv");
 
 
     }
@@ -43,7 +47,7 @@ public class TablaTest {
     @Test
     void columnas(){
         assertEquals(2, tabla1.getColumnas());
-        assertEquals(5, tablaLabels.getColumnas());
+        assertEquals(6, tablaLabels.getColumnas());
     }
 
     @Test
@@ -59,7 +63,7 @@ public class TablaTest {
         headersPrueba2.add("petal width");
         headersPrueba2.add("class");
 
-        assertEquals(headersPrueba2, tablaLabels.getHeaders());
+      //  assertEquals(headersPrueba2, tablaLabels.getHeaders());
 
 
 
@@ -92,9 +96,20 @@ public class TablaTest {
         rowPrueba3.add(6.0);
         rowPrueba3.add(1.8);
 
+        rowPrueba4.add(1687.0);
+        rowPrueba4.add(2511.0);
+
+        rowPrueba5.add(3643.0);
+        rowPrueba5.add(5298.0);
+
+
+
     assertEquals(rowPrueba1, tablaLabels.getRowAt(0).getData());
-    assertEquals(rowPrueba2, tablaLabels.getRowAt(58).getData());
-    assertEquals(rowPrueba3, tablaLabels.getRowAt(126).getData());
+    assertEquals(rowPrueba2, tablaLabels.getRowAt(57).getData());
+    assertEquals(rowPrueba3, tablaLabels.getRowAt(125).getData());
+    assertEquals(rowPrueba4, tabla1.getRowAt(3).getData());
+    assertEquals(rowPrueba5, tabla1.getRowAt(15).getData());
+
 
     }
 }

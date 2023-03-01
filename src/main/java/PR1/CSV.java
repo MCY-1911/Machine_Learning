@@ -46,16 +46,20 @@ public class CSV {
         String lineaActual;
         while ((lineaActual = lector.readLine()) != null) {
             String[] filaEnTexto = lineaActual.split(",");
-            Double[] filaEnDouble = new Double[filaEnTexto.length];
+            Double[] filaEnDouble = new Double[filaEnTexto.length-1];
             int indice = 0;
             int cont = 0;
+            String clase = null;
             for (String dato : filaEnTexto){
                 if (cont != filaEnTexto.length-1) {
                     filaEnDouble[indice++] = Double.parseDouble(dato);
                 }
+                else{
+                     clase = dato;
+                }
             cont++;
         }
-            tablaConEtiquetas.add(filaEnDouble);
+            tablaConEtiquetas.add(filaEnDouble, clase);
         }
         return tablaConEtiquetas;
     }

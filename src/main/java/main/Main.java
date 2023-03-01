@@ -11,11 +11,13 @@ public class Main {
 
 
         PR1.CSV csv = new CSV();
-        PR1.Table tabla1;
+        PR1.Table tabla;
         PR1.TableWithLabels tablaLabels;
 
-        tablaLabels = csv.readTableWithLabels("src/Files/iris.csv");
+        tabla = csv.readTableWithLabels("src/Files/iris.csv");
 
-        System.out.println(tablaLabels);
+        System.out.println(tabla);
+
+
     }
 }

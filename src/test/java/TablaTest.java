@@ -2,20 +2,25 @@ import PR1.CSV;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static PR1.Table.TABLA_NULA;
+import static PR1.TableWithLabels.TABLA_LABELS_NULA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import PR1.*;
 public class TablaTest {
 
 
-    PR1.CSV csv = new CSV();
-    PR1.Table tabla1;
-    PR1.Table tabla2;
+    PR1.CSV constructorTablas = new CSV();
+    Table tabla;
+    TableWithLabels tablaLabels;
 
-    PR1.TableWithLabels tablaLabels;
+    Table tablaNoExistente;
+    TableWithLabels tablaConEtiquetasNoExistente;
 
     List headersPrueba1  = new ArrayList<>();
     List headersPrueba2 = new ArrayList<>();
@@ -26,25 +31,35 @@ public class TablaTest {
     List rowPrueba5 = new ArrayList<>();
 
 
-
-
-
     @BeforeEach
     void setUp() throws IOException {
-        tabla1 = csv.readTable("src/Files/miles_dollars.csv");
-        tablaLabels = csv.readTableWithLabels("src/Files/iris.csv");
-
+        System.out.println("Creamos dos tablas de pruebas.");
+        System.out.println("Tabla sin etiquetas (miles_dollars.csv):");
+        tabla = constructorTablas.readTable("src" + File.separator + "Files" + File.separator + "miles_dollars.csv");
+        System.out.println(tabla);
+        System.out.println("Tabla sin etiquetas (iris.csv):");
+        tablaLabels = constructorTablas.readTableWithLabels("src" + File.separator + "Files" + File.separator + "iris.csv");
+        System.out.println(tablaLabels);
+        System.out.println("Y una tabla de cada tipo a partir de un fichero inexistente.");
+        tablaNoExistente = constructorTablas.readTable("Este fichero no existe");
+        tablaConEtiquetasNoExistente = constructorTablas.readTableWithLabels("Este fichero no existe");
 
     }
     @Test
-    void filas(){
-        assertEquals(25, tabla1.getNumeroFilas());
+    void TestFicheroNoValido(){
+        assertEquals(TABLA_NULA, tablaNoExistente);
+        assertEquals(TABLA_LABELS_NULA, tablaConEtiquetasNoExistente);
+    }
+
+    @Test
+    void TestNumeroFilas(){
+        assertEquals(25, tabla.getNumeroFilas());
         assertEquals(150, tablaLabels.getNumeroFilas());
     }
 
     @Test
-    void columnas(){
-        assertEquals(2, tabla1.getNumeroColumnas());
+    void TestNumeroColumnas(){
+        assertEquals(2, tabla.getNumeroColumnas());
         assertEquals(6, tablaLabels.getNumeroColumnas());
     }
 
@@ -52,7 +67,7 @@ public class TablaTest {
     void headers(){
         headersPrueba1.add("Miles");
         headersPrueba1.add("Dollars");
-        assertEquals(headersPrueba1, tabla1.getHeaders());
+        assertEquals(headersPrueba1, tabla.getHeaders());
 
         headersPrueba2.add("sepal length");
         headersPrueba2.add("sepal width");
@@ -105,8 +120,8 @@ public class TablaTest {
     assertEquals(rowPrueba1, tablaLabels.getRowAt(0).getData());
     assertEquals(rowPrueba2, tablaLabels.getRowAt(57).getData());
     assertEquals(rowPrueba3, tablaLabels.getRowAt(125).getData());
-    assertEquals(rowPrueba4, tabla1.getRowAt(3).getData());
-    assertEquals(rowPrueba5, tabla1.getRowAt(15).getData());
+    assertEquals(rowPrueba4, tabla.getRowAt(3).getData());
+    assertEquals(rowPrueba5, tabla.getRowAt(15).getData());
 
 
     }

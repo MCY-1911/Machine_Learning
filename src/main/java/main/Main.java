@@ -12,6 +12,8 @@ public class Main {
         TableWithLabels tablaConEtiquetas = creadorTablas.readTableWithLabels("src/Files/iris.csv");
         System.out.println("La tabla nula:\n" + TABLA_NULA);
         System.out.println("La tabla nula con etiquetas:\n" + TABLA_LABELS_NULA);
+        System.out.println("La tabla de miles_dollars.csv:\n" + tabla);
+        System.out.println("La tabla de iris.csv:\n" + tablaConEtiquetas);
 
 
     }

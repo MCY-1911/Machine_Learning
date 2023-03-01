@@ -35,7 +35,7 @@ public class CSV {
             return tabla;
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return Table.TABLA_NULA;
         }
 
     }

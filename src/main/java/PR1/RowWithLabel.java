@@ -19,6 +19,7 @@ public class RowWithLabel extends Row{
     public String toString() {
         StringBuilder resultado = new StringBuilder(super.toString());
         resultado.append(numberClass);
+        resultado.append("\t|\t");
         return resultado.toString();
     }
 }

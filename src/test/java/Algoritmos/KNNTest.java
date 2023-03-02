@@ -26,7 +26,29 @@ class KNNTest {
 
     @Test
     void estimate() {
-        
+        List<Double> listaPrueba1 = new ArrayList<>();
+        listaPrueba1.add(5.7);
+        listaPrueba1.add(3.8);
+        listaPrueba1.add(1.7);
+        listaPrueba1.add(0.4);
+
+        List<Double> listaPrueba2 = new ArrayList<>();
+        listaPrueba2.add(5.7);
+        listaPrueba2.add(2.6);
+        listaPrueba2.add(3.5);
+        listaPrueba2.add(1.1);
+
+        List<Double> listaPrueba3 = new ArrayList<>();
+        listaPrueba3.add(6.3);
+        listaPrueba3.add(2.7);
+        listaPrueba3.add(4.9);
+        listaPrueba3.add(1.7);
+
+
+
+        assertEquals(estimador.estimate(listaPrueba1), 0);
+        assertEquals(estimador.estimate(listaPrueba2), 1);
+        assertEquals(estimador.estimate(listaPrueba3), 2);
     }
 
     @Test

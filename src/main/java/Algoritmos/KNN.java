@@ -20,7 +20,6 @@ public class KNN {
 
         double distanciaMin = Double.MAX_VALUE;
         int numeroClaseEstimado = 0;
-
         for(int indiceTabla = 0; indiceTabla < muestra.getNumeroFilas(); indiceTabla++) {
             RowWithLabel candidato = muestra.getRowAt(indiceTabla);
             Double distancia = getDistancia(data, candidato);

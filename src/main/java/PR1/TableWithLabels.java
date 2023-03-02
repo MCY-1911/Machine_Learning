@@ -35,6 +35,7 @@ public class TableWithLabels extends Table{
         instancias.add(fila);
     }
 
+    @Override
     public RowWithLabel getRowAt(int rowNumber) {
         return (RowWithLabel) instancias.get(rowNumber);
     }

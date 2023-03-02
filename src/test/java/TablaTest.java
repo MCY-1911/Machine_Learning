@@ -86,9 +86,9 @@ public class TablaTest {
     @Test
     void TestObtenerNumeroClase(){
         System.out.println("En este test comprobaremos la asignación de los números de clase");
-        assertEquals(0, tablaLabels.getRowAt(1).getNumbreClass());
-        assertEquals(1, tablaLabels.getRowAt(53).getNumbreClass());
-        assertEquals(2,tablaLabels.getRowAt(119).getNumbreClass());
+        assertEquals(0, tablaLabels.getRowAt(1).getNumberClass());
+        assertEquals(1, tablaLabels.getRowAt(53).getNumberClass());
+        assertEquals(2,tablaLabels.getRowAt(119).getNumberClass());
 
     }
 

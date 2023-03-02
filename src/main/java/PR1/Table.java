@@ -32,6 +32,10 @@ public class Table {
         return headers;
     }
 
+    public List<Row> getInstancias() {
+        return instancias;
+    }
+
     public void add(Double[] datos) {
         Row fila = new Row(datos);
         instancias.add(fila);

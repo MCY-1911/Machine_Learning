@@ -11,7 +11,7 @@ public class RowWithLabel extends Row{
         numberClass = numeroClase;
     }
 
-    public int getNumbreClass(){
+    public int getNumberClass(){
         return numberClass;
     }
 

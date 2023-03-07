@@ -68,4 +68,8 @@ public class Table {
         return headers.size();
     }
 
+    public int getPoicionFila(Row fila) {
+        return instancias.indexOf(fila);
+    }
+
 }

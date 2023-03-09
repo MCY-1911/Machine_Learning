@@ -20,38 +20,21 @@ public class Kmeans {
     public void train(Table datos) {
 
         List<Row> centroides = centroidesAleatorios(datos);
-
-        // Creamos un mapa para asignar a cada centroide sus datos más cercanos.
-        // La KEY será un Row que represente el centroide
-        // El VALUE será un SET de INTEGER que representarás la posición de cada dato en la tabla
-        // El número que representa el centroide corresponderá con su posición en la lista
-        Map<Row, Set<Integer>> asignaciones = new HashMap<>();
-        ArrayList<Row> CentroidesOrdenados = new ArrayList<>();
+        Map<Integer, Set<Integer>> asignaciones = new HashMap<>();
+        // La KEY representará la posición del centroide en la lista
+        // El VALUE será un conjunto de las posiciones de los datos en la tabla
+        for(int i = 0; i < centroides.size(); i++)
+            asignaciones.put(i, new HashSet<>());
 
 
-        // Repetimos el algoritmo numIteraciones veces
-        for(int i = 0; i < numIteraciones ; i++) {
-            // Asignación de los datos a
-            for(Row instancia: datos.getInstancias()) {
-                double distanciaMin = Double.MAX_VALUE;
-                int posCentroideMasCercano = -1;
-                double distancia = 0.0;
-                List<Double> coordenadasDato = instancia.getData();
-                for(Row centroide : CentroidesOrdenados) {
-                    List<Double> coordenadasCentroide = centroide.getData();
-                    for(int posCoordenada = 0; posCoordenada < coordenadasDato.size() ; posCoordenada++) {
-                        distancia = Math.pow(coordenadasCentroide.get(posCoordenada) - coordenadasDato.get(posCoordenada), 2);
-                    }
-                    distancia = Math.sqrt(distancia);
-                    if(distancia < distanciaMin) {
-                        distanciaMin = distancia;
-                        posCentroideMasCercano = CentroidesOrdenados.indexOf(centroide);
-                    }
-                }
-                asignaciones.get(CentroidesOrdenados.get(posCentroideMasCercano)).add(datos.getPoicionFila(instancia));
+        for (int indiceIteracion = 0; indiceIteracion < numIteraciones; indiceIteracion++) {
+            for (int indiceFila = 0; indiceFila < datos.getNumeroFilas(); indiceFila++) {
+                int centroideMasCercano = centroideMasCercano(centroides, datos.getRowAt(indiceFila).getData());
+                asignaciones.get(centroideMasCercano).add(indiceFila);
             }
+
             // Cálculo de los nuevos centroides
-            ArrayList<Row> nuevosCentroides = new ArrayList<>();
+/*            ArrayList<Row> nuevosCentroides = new ArrayList<>();
             for(Row centroide: asignaciones.keySet()) {
                 List<Double> sumatorios = new ArrayList<>();
                 for(int j = 0; j < centroide.getData().size(); j++)
@@ -68,7 +51,7 @@ public class Kmeans {
                 Double[] array = new Double[sumatorios.size()];
                 Row nuevoCentroide = new Row(sumatorios.toArray(array));
                 nuevosCentroides.add(nuevoCentroide);
-                asignaciones.put(nuevoCentroide, new HashSet<>());
+                asignaciones.put(nuevoCentroide, new HashSet<>());*/
             }
         }
 
@@ -104,6 +87,21 @@ public class Kmeans {
         }
         distancia = Math.sqrt(distancia);
         return distancia;
+    }
+
+    private int centroideMasCercano(List<Row> centroides, List<Double> fila) {
+        // Suponemos que la cantidad de centroides nunca es cero
+        double distanciaMin = Double.MAX_VALUE;
+        int centroideMasCercano = -1;
+        for (int indiceCentroide = 0; indiceCentroide < centroides.size(); indiceCentroide++) {
+            List<Double> datosCentroideActual = centroides.get(indiceCentroide).getData();
+            double distancia = getDistanciaEuclidiana(fila, datosCentroideActual);
+            if (distancia <= distanciaMin) {
+                distanciaMin = distancia;
+                centroideMasCercano = indiceCentroide;
+            }
+        }
+        return centroideMasCercano;
     }
 
 }

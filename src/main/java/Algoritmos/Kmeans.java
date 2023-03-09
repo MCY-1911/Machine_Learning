@@ -19,8 +19,7 @@ public class Kmeans {
 
     public void train(Table datos) {
 
-        // Establecemos la semilla (necesario para que todas las pruebas se ejecuten igual)
-        Random random = new Random(seed);
+        List<Row> centroides = centroidesAleatorios(datos);
 
         // Creamos un mapa para asignar a cada centroide sus datos más cercanos.
         // La KEY será un Row que represente el centroide
@@ -28,18 +27,7 @@ public class Kmeans {
         // El número que representa el centroide corresponderá con su posición en la lista
         Map<Row, Set<Integer>> asignaciones = new HashMap<>();
         ArrayList<Row> CentroidesOrdenados = new ArrayList<>();
-
-        for (int i = 0; i < numClusters; i++) {
-            int posCentroideTabla = random.nextInt(datos.getNumeroFilas());
-            // Para escoger centroides diferentes
-            while(asignaciones.containsKey(posCentroideTabla))
-                posCentroideTabla = random.nextInt(datos.getNumeroFilas());
-
-            // Añadimos el centroide a las estructuras de datos correspondientes
-            Row centroide = datos.getRowAt(posCentroideTabla);
-            CentroidesOrdenados.add(centroide);
-            asignaciones.put(centroide, new HashSet<>());
-        }
+        
 
         // Repetimos el algoritmo numIteraciones veces
         for(int i = 0; i < numIteraciones ; i++) {
@@ -88,6 +76,24 @@ public class Kmeans {
 
     public Integer estimate(List<Double> dato) {
         return 0;
+    }
+
+    private List<Row> centroidesAleatorios(Table datos) {
+
+        Random random = new Random(seed);
+        ArrayList<Row> centroidesEscogidos = new ArrayList<>();
+        int indiceCentroideActual;
+
+        for (int i = 0; i < numClusters; i++) {
+            // Generamos aleatoriamente índices dentro del rango de filas de la tabla
+            // Si una fila ya la hemos tomado como Centroide. Generamos otro índice
+            do {
+                indiceCentroideActual = random.nextInt(datos.getNumeroFilas());
+            } while (centroidesEscogidos.contains(datos.getRowAt(indiceCentroideActual)));
+            // Una vez nos hemos asegurado de que es un Centroide nuevo, lo añadimos a la lista
+            centroidesEscogidos.add(datos.getRowAt(indiceCentroideActual));
+        }
+        return centroidesEscogidos;
     }
 
 }

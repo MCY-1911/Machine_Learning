@@ -19,6 +19,7 @@ public class Kmeans {
 
     public void train(Table datos) {
 
+        // Estructuras de datos que emplearemos en el algoritmo
         List<Row> centroides = centroidesAleatorios(datos);
         Map<Integer, Set<Integer>> asignaciones = new HashMap<>();
         // La KEY representará la posición del centroide en la lista
@@ -26,35 +27,20 @@ public class Kmeans {
         for(int i = 0; i < centroides.size(); i++)
             asignaciones.put(i, new HashSet<>());
 
-
+        //
         for (int indiceIteracion = 0; indiceIteracion < numIteraciones; indiceIteracion++) {
+            // Asignamos cada dato a su centroide más cercano
             for (int indiceFila = 0; indiceFila < datos.getNumeroFilas(); indiceFila++) {
                 int centroideMasCercano = centroideMasCercano(centroides, datos.getRowAt(indiceFila).getData());
                 asignaciones.get(centroideMasCercano).add(indiceFila);
             }
+            // Calculamos los nuevos centroides
+            centroides = nuevosCentroides(centroides, asignaciones, datos);
+            asignaciones = new HashMap<>();
+            for(int i = 0; i < centroides.size(); i++)
+                asignaciones.put(i, new HashSet<>());
 
-            // Cálculo de los nuevos centroides
-/*            ArrayList<Row> nuevosCentroides = new ArrayList<>();
-            for(Row centroide: asignaciones.keySet()) {
-                List<Double> sumatorios = new ArrayList<>();
-                for(int j = 0; j < centroide.getData().size(); j++)
-                    sumatorios.add(0.0);
-                Set<Integer> grupo = asignaciones.get(centroide);
-                for(Integer posFila: grupo) {
-                    List<Double> coordenadas = datos.getRowAt(posFila).getData();
-                    for(int j = 0; j < sumatorios.size() ; j++)
-                        sumatorios.set(j, coordenadas.get(j) + sumatorios.get(j));
-
-                }
-                for(int j = 0; j < centroide.getData().size(); j++)
-                    sumatorios.set(j, sumatorios.get(j) / grupo.size());
-                Double[] array = new Double[sumatorios.size()];
-                Row nuevoCentroide = new Row(sumatorios.toArray(array));
-                nuevosCentroides.add(nuevoCentroide);
-                asignaciones.put(nuevoCentroide, new HashSet<>());*/
-            }
         }
-
     }
 
     public Integer estimate(List<Double> dato) {
@@ -102,6 +88,30 @@ public class Kmeans {
             }
         }
         return centroideMasCercano;
+    }
+
+    private List<Row> nuevosCentroides(List<Row> centroidesActuales, Map<Integer, Set<Integer>> asignaciones, Table datos) {
+
+            ArrayList<Row> nuevosCentroides = new ArrayList<>();
+
+            for (int keyCentroide = 0; keyCentroide < centroidesActuales.size(); keyCentroide++) {
+                Set<Integer> indicesFilasAsignadas = asignaciones.get(keyCentroide);
+                // Creamos un array que representará al nuevo Centroide
+                Double[] datosNuevoCentroide = new Double[centroidesActuales.get(keyCentroide).getData().size()];
+                for(int indiceFila: indicesFilasAsignadas) {
+                    List<Double> datosFila = datos.getRowAt(indiceFila).getData();
+                    for (int atributo = 0; atributo < datosNuevoCentroide.length; atributo++) {
+                        datosNuevoCentroide[atributo] += datosFila.get(atributo);
+                    }
+                }
+                // Dividimos por la cantidad de filas que representa el nuevo centroide
+                for (int i = 0; i < datosNuevoCentroide.length; i++) {
+                    datosNuevoCentroide[i] /= asignaciones.get(keyCentroide).size();
+                }
+                // Añadimos el nuevo centroide a la lista
+                nuevosCentroides.add(new Row(datosNuevoCentroide));
+            }
+            return nuevosCentroides;
     }
 
 }

@@ -19,32 +19,35 @@ public class Kmeans {
 
     public void train(Table datos) {
 
-        // Estructuras de datos que emplearemos en el algoritmo
         List<Row> centroides = centroidesAleatorios(datos);
-        Map<Integer, Set<Integer>> asignaciones = new HashMap<>();
-        // La KEY representará la posición del centroide en la lista
-        // El VALUE será un conjunto de las posiciones de los datos en la tabla
-        for(int i = 0; i < centroides.size(); i++)
-            asignaciones.put(i, new HashSet<>());
+        Map<Integer, Set<Integer>> asignaciones = crearEstructuraDatosParaAsignaciones();
 
-        //
         for (int indiceIteracion = 0; indiceIteracion < numIteraciones; indiceIteracion++) {
             // Asignamos cada dato a su centroide más cercano
             for (int indiceFila = 0; indiceFila < datos.getNumeroFilas(); indiceFila++) {
                 int centroideMasCercano = centroideMasCercano(centroides, datos.getRowAt(indiceFila).getData());
                 asignaciones.get(centroideMasCercano).add(indiceFila);
             }
+
             // Calculamos los nuevos centroides
             centroides = nuevosCentroides(centroides, asignaciones, datos);
-            asignaciones = new HashMap<>();
-            for(int i = 0; i < centroides.size(); i++)
-                asignaciones.put(i, new HashSet<>());
+            asignaciones = crearEstructuraDatosParaAsignaciones();
 
         }
     }
 
     public Integer estimate(List<Double> dato) {
         return 0;
+    }
+
+    private Map<Integer, Set<Integer>> crearEstructuraDatosParaAsignaciones(){
+        // La KEY representará la posición del centroide en la lista "centroides"
+        // El VALUE será un conjunto de enteros
+        // Cada entero representa la posición de un dato concreto en la tabla
+        Map<Integer, Set<Integer>> asignaciones = new HashMap<>();
+        for(int i = 0; i < numClusters; i++)
+            asignaciones.put(i, new HashSet<>());
+        return asignaciones;
     }
 
     private List<Row> centroidesAleatorios(Table datos) {
@@ -75,13 +78,14 @@ public class Kmeans {
         return distancia;
     }
 
-    private int centroideMasCercano(List<Row> centroides, List<Double> fila) {
+    private int centroideMasCercano(List<Row> centroides, List<Double> datosFila) {
         // Suponemos que la cantidad de centroides nunca es cero
+        // Además los centroides tendrán una distancia muy próxima a la nube de puntos
         double distanciaMin = Double.MAX_VALUE;
         int centroideMasCercano = -1;
-        for (int indiceCentroide = 0; indiceCentroide < centroides.size(); indiceCentroide++) {
+        for (int indiceCentroide = 0; indiceCentroide < numClusters; indiceCentroide++) {
             List<Double> datosCentroideActual = centroides.get(indiceCentroide).getData();
-            double distancia = getDistanciaEuclidiana(fila, datosCentroideActual);
+            double distancia = getDistanciaEuclidiana(datosFila, datosCentroideActual);
             if (distancia <= distanciaMin) {
                 distanciaMin = distancia;
                 centroideMasCercano = indiceCentroide;

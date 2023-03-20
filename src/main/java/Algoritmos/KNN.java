@@ -4,7 +4,7 @@ import Interfaces.Algorithm;
 import PR1.*;
 import java.util.List;
 
-public class KNN implements Algorithm {
+public class KNN  {
 
     TableWithLabels muestra;
 
@@ -13,7 +13,7 @@ public class KNN implements Algorithm {
         muestra = new TableWithLabels();
     }
 
-    @Override
+    //@Override
     public void train(TableWithLabels data) {
         this.muestra = data;
     }

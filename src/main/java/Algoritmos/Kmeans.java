@@ -6,7 +6,7 @@ import PR1.Table;
 
 import java.util.*;
 
-public class Kmeans implements Algorithm {
+public class Kmeans {
 
     private int numClusters; // Cluster = grupo
     private int numIteraciones;
@@ -19,7 +19,7 @@ public class Kmeans implements Algorithm {
         this.seed = seed;
         representates = new ArrayList<>(numClusters);
     }
-    @Override
+    //@Override
     public void train(Table datos) {
 
         List<Row> centroides = centroidesAleatorios(datos);
@@ -40,7 +40,6 @@ public class Kmeans implements Algorithm {
 
         representates = centroides;
     }
-
 
     //@Override
     public Integer estimate(List<Double> dato) {

@@ -10,11 +10,13 @@ public class Kmeans {
     private int numClusters; // Cluster = grupo
     private int numIteraciones;
     private long seed;
+    private List<Row> representates;
 
     public Kmeans(int numClusters, int numIterations, long seed) {
         this.numClusters =  numClusters;
         this.numIteraciones = numIterations;
         this.seed = seed;
+        representates = new ArrayList<>(numClusters);
     }
 
     public void train(Table datos) {
@@ -34,10 +36,13 @@ public class Kmeans {
             asignaciones = crearEstructuraDatosParaAsignaciones();
 
         }
+
+        representates = centroides;
     }
 
     public Integer estimate(List<Double> dato) {
-        return 0;
+        // El +1 corresponde al que el rango de índices de grupo empieza en 1; (1,...,K)
+        return centroideMasCercano(representates, dato) + 1;
     }
 
     private Map<Integer, Set<Integer>> crearEstructuraDatosParaAsignaciones(){

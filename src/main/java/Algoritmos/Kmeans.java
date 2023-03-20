@@ -1,11 +1,12 @@
 package Algoritmos;
 
+import Interfaces.Algorithm;
 import PR1.Row;
 import PR1.Table;
 
 import java.util.*;
 
-public class Kmeans {
+public class Kmeans implements Algorithm {
 
     private int numClusters; // Cluster = grupo
     private int numIteraciones;
@@ -18,7 +19,7 @@ public class Kmeans {
         this.seed = seed;
         representates = new ArrayList<>(numClusters);
     }
-
+    @Override
     public void train(Table datos) {
 
         List<Row> centroides = centroidesAleatorios(datos);
@@ -40,6 +41,8 @@ public class Kmeans {
         representates = centroides;
     }
 
+
+    //@Override
     public Integer estimate(List<Double> dato) {
         // El +1 corresponde al que el rango de índices de grupo empieza en 1; (1,...,K)
         return centroideMasCercano(representates, dato) + 1;

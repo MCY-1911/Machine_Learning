@@ -1,5 +1,6 @@
 package Algoritmos;
 
+import Exceptions.MasDatosQueGruposException;
 import Interfaces.Algorithm;
 import PR1.Row;
 import PR1.Table;
@@ -20,7 +21,11 @@ public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
         representates = new ArrayList<>(numClusters);
     }
     @Override
-    public void train(Table datos) {
+    public void train(Table datos) throws MasDatosQueGruposException {
+
+        if(numClusters > datos.getNumeroFilas()){
+            throw new MasDatosQueGruposException();
+        }
 
         List<Row> centroides = centroidesAleatorios(datos);
         Map<Integer, Set<Integer>> asignaciones = crearEstructuraDatosParaAsignaciones();
@@ -38,10 +43,12 @@ public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
 
         }
 
+
+
         representates = centroides;
     }
 
-    //@Override
+    @Override
     public Integer estimate(List<Double> dato) {
         // El +1 corresponde al que el rango de índices de grupo empieza en 1; (1,...,K)
         return centroideMasCercano(representates, dato) + 1;

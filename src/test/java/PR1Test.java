@@ -12,7 +12,7 @@ import static PR1.TableWithLabels.TABLA_LABELS_NULA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import PR1.*;
-public class TablaTest {
+public class PR1Test {
 
 
     PR1.CSV constructorTablas = new CSV();

@@ -4,7 +4,7 @@ import Interfaces.Algorithm;
 import PR1.*;
 import java.util.List;
 
-public class KNN  {
+public class KNN implements Algorithm<TableWithLabels,Integer, List<Double>> {
 
     TableWithLabels muestra;
 
@@ -13,13 +13,8 @@ public class KNN  {
         muestra = new TableWithLabels();
     }
 
-    //@Override
-    public void train(TableWithLabels data) {
-        this.muestra = data;
-    }
 
-
-    //@Override
+    @Override
     public Integer estimate(List<Double> data) {
 
         double distanciaMin = Double.MAX_VALUE;
@@ -43,5 +38,10 @@ public class KNN  {
         }
         distancia = Math.sqrt(distancia);
         return distancia;
+    }
+
+    @Override
+    public void train(TableWithLabels datos) {
+
     }
 }

@@ -37,15 +37,19 @@ public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
                 asignaciones.get(centroideMasCercano).add(indiceFila);
             }
 
+
             // Calculamos los nuevos centroides
             centroides = nuevosCentroides(centroides, asignaciones, datos);
+
             asignaciones = crearEstructuraDatosParaAsignaciones();
+
 
         }
 
 
 
         representates = centroides;
+
     }
 
     @Override
@@ -107,21 +111,27 @@ public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
         }
         return centroideMasCercano;
     }
-
+    //<>
     private List<Row> nuevosCentroides(List<Row> centroidesActuales, Map<Integer, Set<Integer>> asignaciones, Table datos) {
 
             ArrayList<Row> nuevosCentroides = new ArrayList<>();
-
             for (int keyCentroide = 0; keyCentroide < centroidesActuales.size(); keyCentroide++) {
                 Set<Integer> indicesFilasAsignadas = asignaciones.get(keyCentroide);
+
                 // Creamos un array que representará al nuevo Centroide
                 Double[] datosNuevoCentroide = new Double[centroidesActuales.get(keyCentroide).getData().size()];
+                for(int i = 0; datosNuevoCentroide.length>i; i++ ) datosNuevoCentroide[i] = 0.0;
+
                 for(int indiceFila: indicesFilasAsignadas) {
                     List<Double> datosFila = datos.getRowAt(indiceFila).getData();
+
                     for (int atributo = 0; atributo < datosNuevoCentroide.length; atributo++) {
+
                         datosNuevoCentroide[atributo] += datosFila.get(atributo);
+
                     }
                 }
+
                 // Dividimos por la cantidad de filas que representa el nuevo centroide
                 for (int i = 0; i < datosNuevoCentroide.length; i++) {
                     datosNuevoCentroide[i] /= asignaciones.get(keyCentroide).size();

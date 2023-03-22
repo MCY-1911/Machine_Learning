@@ -1,5 +1,6 @@
 package Algoritmos;
 
+import Exceptions.MasDatosQueGruposException;
 import Interfaces.Algorithm;
 import PR1.Row;
 import PR1.Table;
@@ -10,8 +11,9 @@ import java.util.List;
 public class RecSys {
 
     Algorithm algorithm ;
+
     List<String> testItemNames;
-    List<Integer> grupos;
+    List<Integer> grupos = new ArrayList<>();
 
     Table testData;
 
@@ -24,8 +26,8 @@ public class RecSys {
         this.algorithm = algorithm;
     }
 
-    public void train(Table trainData){
-
+    public void train(Table trainData) throws MasDatosQueGruposException {
+        algorithm.train(trainData);
     }
     //<>
     public void run(Table testData, List<String> testItemNames){
@@ -44,13 +46,13 @@ public class RecSys {
 
     public List<String> recommend(String nameLikedItem, int numRecommendations){
        // buscamos el grupo del nombre que nos pasan
-        int indice = find(testItemNames, nameLikedItem);
+        int indice = findName(nameLikedItem);
         Integer grupo = grupos.get(indice);
 
         List<Integer> listaDeIndices = new ArrayList<>();
         //Encontramos los indices de todos los datos que tengan el mismo grupo
         for (int i = 0; i< grupos.size(); i++ ){
-            if (grupos.get(i) == grupo){
+            if (grupos.get(i) == grupo && indice != i){
                 listaDeIndices.add(i);
                 if(listaDeIndices.size() == numRecommendations){
                     break;
@@ -66,10 +68,9 @@ public class RecSys {
         return recomendaciones;
     }
 
-    public int find(List<String> list, String nombre){
+    private int findName( String nombre){
         int i = 0;
-        for(String dato: list){
-
+        for(String dato: testItemNames){
             if (dato.equals(nombre)){
                 return i;
             }
@@ -77,5 +78,8 @@ public class RecSys {
         }
         return -1;
     }
+
+
+
 
 }

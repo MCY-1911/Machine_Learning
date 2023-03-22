@@ -22,7 +22,7 @@ class KmeansTest {
 
     @BeforeEach
     void setUp() throws MasDatosQueGruposException {
-        grupo1 = constructorTablas.readTable("src" + File.separator + "Files" + File.separator + "PruebaKmeans.csv");
+        grupo1 = constructorTablas.readTable("src" + File.separator + "Files" +File.separator + "PruebaKmeans.csv");
         estimador1.train(grupo1);
 
     }

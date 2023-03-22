@@ -8,7 +8,7 @@ import PR1.Table;
 import java.util.*;
 
 public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
-//<>
+
     private int numClusters; // Cluster = grupo
     private int numIteraciones;
     private long seed;

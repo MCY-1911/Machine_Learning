@@ -15,35 +15,38 @@ import static org.junit.jupiter.api.Assertions.*;
 class KmeansTest {
 
     CSV constructorTablas = new CSV();
-    Kmeans estimador1 = new Kmeans(2, 10, 4l);
-    Kmeans estimador2 = new Kmeans(28,10, 4);
+    // Con esta semilla los puntos el centroide del grupo de puntos del 3º Cuadrante corresponde al 1
+    Kmeans estimador2Clusters = new Kmeans(2, 10, 4l);
+    Kmeans estimador28Clusters = new Kmeans(28,10, 4);
+    List<Double> punto1rCuadrante = new ArrayList();
+    List<Double> punto3rCuadrante = new ArrayList();
 
-    Table grupo1;
+    Table TablaGruposPrimerYTercerCuadrante;
 
     @BeforeEach
     void setUp() throws MasDatosQueGruposException {
-        grupo1 = constructorTablas.readTable("src" + File.separator + "Files" +File.separator + "PruebaKmeans.csv");
-        estimador1.train(grupo1);
+        TablaGruposPrimerYTercerCuadrante = constructorTablas.readTable("src" + File.separator + "Files" +File.separator + "PruebaKmeans.csv");
+        estimador2Clusters.train(TablaGruposPrimerYTercerCuadrante);
 
     }
 
 
     @Test
-    void estimate() throws MasDatosQueGruposException {
+    void estimatePunto1ºCuadrante()  {
+        punto1rCuadrante.add(20.0);
+        punto1rCuadrante.add(22.0);
+        assertEquals(2, estimador2Clusters.estimate(punto1rCuadrante));
+    }
 
-        List<Double> list1 = new ArrayList();
-        List<Double> list2 = new ArrayList();
-        list1.add(0.0);
-        list2.add(20.0);
+    @Test
+    void estimatePunto3ºCuadrante()  {
+        punto3rCuadrante.add(-7.0);
+        punto3rCuadrante.add(-7.0);
+        assertEquals(1, estimador2Clusters.estimate(punto3rCuadrante));
+    }
 
-        assertEquals(1, estimador1.estimate(list1));
-        assertNotEquals(2, estimador1.estimate(list1));
-
-        assertEquals(2, estimador1.estimate(list2));
-        assertNotEquals(1, estimador1.estimate(list2));
-        assertThrows(MasDatosQueGruposException.class, () -> estimador2.train(grupo1));
-
-
-
+    @Test
+    void TestExcepción() throws MasDatosQueGruposException {
+        assertThrows(MasDatosQueGruposException.class, () -> estimador28Clusters.train(TablaGruposPrimerYTercerCuadrante));
     }
 }

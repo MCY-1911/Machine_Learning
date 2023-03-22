@@ -37,17 +37,11 @@ public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
                 asignaciones.get(centroideMasCercano).add(indiceFila);
             }
 
-
             // Calculamos los nuevos centroides
             centroides = nuevosCentroides(centroides, asignaciones, datos);
-
             asignaciones = crearEstructuraDatosParaAsignaciones();
 
-
         }
-
-
-
         representates = centroides;
 
     }

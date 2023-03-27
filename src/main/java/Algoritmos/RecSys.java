@@ -52,7 +52,7 @@ public class RecSys {
         List<Integer> listaDeIndices = selectItems(indiceLiked, labelLiked, numRecommendations);
 
         //Asignamos el nombre correspondiente de cada indice y devolvemos
-        return getNamesSelectedItems();
+        return getNamesSelectedItems(listaDeIndices);
     }
 
     private int findName(String nombre){

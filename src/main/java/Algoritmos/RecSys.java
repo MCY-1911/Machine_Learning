@@ -84,5 +84,28 @@ public class RecSys {
         return listaDeNombres;
     }
 
+    public int getIdentificador(String name){
+        return identificadorGrupoDeCadaTitulo.get(titulos.indexOf(name));
+    }
+
+    public List<String> devuelveCancionesConMismoGrupo(int grupo) {
+        List<String> ListaGrupos = new ArrayList<>();
+        String cancion;
+        List<Integer> Listaindices = new ArrayList<>();
+
+
+
+        for (int i = 0; i<identificadorGrupoDeCadaTitulo.size(); i++){
+            if( identificadorGrupoDeCadaTitulo.get(i) == grupo){
+                Listaindices.add(i);
+            }
+        }
+
+        for (int i : Listaindices){
+            cancion = titulos.get(i);
+            ListaGrupos.add(cancion+"  || Grupo: "+getIdentificador(cancion));
+        }
+        return ListaGrupos;
+    }
 
 }

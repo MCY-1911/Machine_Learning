@@ -1,0 +1,18 @@
+//
+// - Debes usar su propio espacio de nombres único, como hemos visto en la práctica 0 (es.uji.<usuario>)
+// - ¡Intenta usar nombres significativos! (p.e. paquete PR1)
+
+// KNN
+// -  Más lógico sería calcular distancia entre dos puntos, en lugar de entre un punto y un RowWithLabels.
+//
+// TABLE
+//
+// - es una buena práctica (pero no obligatorio) usar "super." cuando se hace referencia (super.instancias.add) a un atributo de la madre,
+// o mejor aún sería usar el método de la madre para añadir un row (requeriría cambios en tu implementación de Table)
+//
+// PRUEBAS
+// - hace falta cada vez (@BeforeEach) leer de nuevo el fichero y hacer el train()?
+// - también en TableTest: el @BeforeEach se ejecuta antes de cada prueba, mientras que las instancias creadas en @BeforeEach no siempre se necesitan
+// (y leer un fichero innecesariamente es caro)
+//
+// A pesar de los comentarios, no hay grandes errores y, en general, un código muy bien. ¡Bien hecho!

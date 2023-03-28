@@ -52,10 +52,14 @@ class SongRecSys {
 
         // Given a liked item, ask for a number of recomendations
         String liked_name = "Lootkemia";
-        List<String> recommended_items = this.recsys.recommend(liked_name,5);
+        List<String> recommended_items = this.recsys.recommend(liked_name,7);
 
         // Display the recommendation text (to be replaced with graphical display with JavaFX implementation)
+
+
+
         reportRecommendation(liked_name,recommended_items);
+
     }
 
     private List<String> readNames(String fileOfItemNames) throws IOException {
@@ -71,15 +75,17 @@ class SongRecSys {
     }
 
     private void reportRecommendation(String liked_name, List<String> recommended_items) {
-        System.out.println("If you liked \""+liked_name+"\" then you might like:");
+        System.out.println("If you liked \""+liked_name+ "("+ recsys.getIdentificador(liked_name)+")"+"\" then you might like:");
         for (String name : recommended_items)
         {
-            System.out.println("\t * "+name);
+            System.out.println("\t * "+name+"("+ recsys.getIdentificador(name) +")");
         }
     }
 
     public static void main(String[] args) throws Exception {
         new SongRecSys("knn");
         new SongRecSys("kmeans");
+
+
     }
 }

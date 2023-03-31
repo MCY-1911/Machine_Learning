@@ -77,10 +77,10 @@ class SongRecSys {
     }
 
     private void reportRecommendation(String liked_name, List<String> recommended_items) {
-        System.out.println("If you liked \""+liked_name+ "("+ recsys.getIdentificador(liked_name)+")"+"\" then you might like:");
+        System.out.println("If you liked \""+liked_name+"\" then you might like:");
         for (String name : recommended_items)
         {
-            System.out.println("\t * "+name+"("+ recsys.getIdentificador(name) +")");
+            System.out.println("\t * "+name);
         }
     }
 

@@ -80,16 +80,6 @@ public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
         return centroidesEscogidos;
     }
 
-    private double getDistanciaEuclidiana(List<Double> vector1, List<Double> vector2) {
-        // Supondremos que ambos vectores tienen el mismo tamaño
-        double distancia = 0.0;
-        for (int i = 0; i < vector1.size(); i++) {
-            distancia += Math.pow(vector1.get(i)- vector2.get(i), 2);
-        }
-        distancia = Math.sqrt(distancia);
-        return distancia;
-    }
-
     private int centroideMasCercano(List<Row> centroides, List<Double> datosFila) {
         // Suponemos que la cantidad de centroides nunca es cero
         // Además los centroides tendrán una distancia muy próxima a la nube de puntos
@@ -97,7 +87,7 @@ public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
         int centroideMasCercano = -1;
         for (int indiceCentroide = 0; indiceCentroide < numClusters; indiceCentroide++) {
             List<Double> datosCentroideActual = centroides.get(indiceCentroide).getData();
-            double distancia = getDistanciaEuclidiana(datosFila, datosCentroideActual);
+            double distancia = Mates.Distancia.getDistanciaEuclidiana(datosFila, datosCentroideActual);
             if (distancia <= distanciaMin) {
                 distanciaMin = distancia;
                 centroideMasCercano = indiceCentroide;

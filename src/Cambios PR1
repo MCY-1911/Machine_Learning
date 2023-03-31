@@ -1,9 +1,4 @@
-//
-// - ¡Intenta usar nombres significativos! (p.e. paquete PR1)
 
-// KNN
-// -  Más lógico sería calcular distancia entre dos puntos, en lugar de entre un punto y un RowWithLabels.
-//
 // TABLE
 //
 // - es una buena práctica (pero no obligatorio) usar "super." cuando se hace referencia (super.instancias.add) a un atributo de la madre,

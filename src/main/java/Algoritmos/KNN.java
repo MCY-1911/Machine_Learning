@@ -23,7 +23,7 @@ public class KNN implements Algorithm<TableWithLabels,Integer, List<Double>> {
         int numeroClaseEstimado = 0;
         for(int indiceTabla = 0; indiceTabla < muestra.getNumeroFilas(); indiceTabla++) {
             RowWithLabel candidato = muestra.getRowAt(indiceTabla);
-            Double distancia = getDistancia(data, candidato);
+            Double distancia = Mates.Distancia.getDistanciaEuclidiana(data, candidato.getData());
             if (distancia < distanciaMin) {
                 distanciaMin = distancia;
                 numeroClaseEstimado = candidato.getNumberClass();
@@ -33,17 +33,8 @@ public class KNN implements Algorithm<TableWithLabels,Integer, List<Double>> {
         return numeroClaseEstimado;
     }
 
-    public Double getDistancia(List<Double> ejemplar, RowWithLabel candidato) {
-        double distancia = 0.0;
-        for (int posAtributo = 0; posAtributo < ejemplar.size(); posAtributo++) {
-            distancia += Math.pow((ejemplar.get(posAtributo) - candidato.getData().get(posAtributo)), 2);
-        }
-        distancia = Math.sqrt(distancia);
-        return distancia;
-    }
-
     @Override
     public void train(TableWithLabels datos) {
-
+        muestra = datos;
     }
 }

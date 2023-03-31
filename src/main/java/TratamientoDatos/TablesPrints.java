@@ -8,7 +8,7 @@ import static TratamientoDatos.Tablas.Table.TABLA_NULA;
 import static TratamientoDatos.Tablas.TableWithLabels.TABLA_LABELS_NULA;
 
 
-public class Main {
+public class TablesPrints {
     public static void main(String[] args) {
         CSV creadorTablas = new CSV();
         Table tabla = creadorTablas.readTable("src/Files/miles_dollars.csv");

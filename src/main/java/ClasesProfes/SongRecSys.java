@@ -1,5 +1,8 @@
-package Algoritmos;
+package ClasesProfes;
 
+import Algoritmos.KNN;
+import Algoritmos.Kmeans;
+import Algoritmos.RecSys;
 import Interfaces.Algorithm;
 import TratamientoDatos.Lectores.CSV;
 import TratamientoDatos.Tablas.Table;

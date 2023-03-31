@@ -35,12 +35,12 @@ public class TableWithLabels extends Table{
         if (!labelsToIndex.containsKey(clase))
             labelsToIndex.put(clase, labelsToIndex.size());
         Row fila = new RowWithLabel(datos, labelsToIndex.get(clase));
-        instancias.add(fila);
+        super.instancias.add(fila);
     }
 
     @Override
     public RowWithLabel getRowAt(int rowNumber) {
-        return (RowWithLabel) instancias.get(rowNumber);
+        return (RowWithLabel) super.getRowAt(rowNumber);
     }
 
     @Override

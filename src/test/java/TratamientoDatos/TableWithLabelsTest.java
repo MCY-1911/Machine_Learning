@@ -16,25 +16,16 @@ public class TableWithLabelsTest {
 
     CSV constructorTabla;
     TableWithLabels tablaLabels;
-    TableWithLabels tablaConEtiquetasNoExistente;
-    List headersPruebaIris;
-    List row0TableWithLabels;
-    List row58TableWithLabels;
-    List row126TableWithLabels;
+
     public TableWithLabelsTest() {
         constructorTabla = new CSV();
         tablaLabels = constructorTabla.readTableWithLabels("src" + File.separator + "Files" + File.separator + "iris.csv");
-        tablaConEtiquetasNoExistente = constructorTabla.readTableWithLabels("Este fichero no existe");
-        headersPruebaIris = new ArrayList<>();
-        row0TableWithLabels = new ArrayList<>();
-        row58TableWithLabels = new ArrayList<>();
-        row126TableWithLabels = new ArrayList<>();
-
     }
 
     @Test
     void TestFicheroNoValido(){
         System.out.println("En este test comprobaremos si CSV maneja bien los ficheros no encontrados.");
+        TableWithLabels tablaConEtiquetasNoExistente = constructorTabla.readTableWithLabels("Este fichero no existe");
         assertEquals(TABLA_LABELS_NULA, tablaConEtiquetasNoExistente);
     }
 
@@ -53,6 +44,7 @@ public class TableWithLabelsTest {
     @Test
     void TestHeaders(){
         System.out.println("En este test comprobamos si las cabeceras son correctas");
+        List<String> headersPruebaIris = new ArrayList<>();
         headersPruebaIris.add("sepal length");
         headersPruebaIris.add("sepal width");
         headersPruebaIris.add("petal length");
@@ -74,6 +66,10 @@ public class TableWithLabelsTest {
     @Test
     void TestRecuperarFilas(){
         System.out.println("Test para recuperar filas de la tabla.");
+
+        List row0TableWithLabels = new ArrayList<>();;
+        List row58TableWithLabels = new ArrayList<>();;
+        List row126TableWithLabels = new ArrayList<>();;
 
         row0TableWithLabels.add(5.1);
         row0TableWithLabels.add(3.5);

@@ -13,23 +13,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TableTest {
     CSV constructorTabla;
     Table tabla;
-    Table tablaNoExistente;
-    List headersPruebaMilesDollars;
-    List row3Table;
-    List row15Table;
 
     public TableTest(){
         constructorTabla = new CSV();
         tabla = constructorTabla.readTable("src" + File.separator + "Files" + File.separator + "miles_dollars.csv");
-        tablaNoExistente = constructorTabla.readTable("Este fichero no existe");
-        headersPruebaMilesDollars  = new ArrayList<>();
-        row3Table = new ArrayList<>();
-        row15Table = new ArrayList<>();
     }
 
     @Test
     void TestFicheroNoValido(){
         System.out.println("En este test comprobaremos si CSV maneja bien los ficheros no encontrados.");
+        Table tablaNoExistente = constructorTabla.readTable("Este fichero no existe");
         assertEquals(TABLA_NULA, tablaNoExistente);
     }
 
@@ -48,6 +41,7 @@ public class TableTest {
     @Test
     void TestHeaders() {
         System.out.println("En este test comprobamos si las cabeceras son correctas");
+        List<String> headersPruebaMilesDollars  = new ArrayList<>();
         headersPruebaMilesDollars.add("Miles");
         headersPruebaMilesDollars.add("Dollars");
         System.out.println("Headers esperados: " + headersPruebaMilesDollars);
@@ -59,9 +53,11 @@ public class TableTest {
     void TestRecuperarFilas(){
         System.out.println("Test para recuperar filas de la tabla.");
 
+        List<Double> row3Table = new ArrayList<>();
         row3Table.add(1687.0);
         row3Table.add(2511.0);
 
+        List<Double> row15Table = new ArrayList<>();
         row15Table.add(3643.0);
         row15Table.add(5298.0);
 

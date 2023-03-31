@@ -1,4 +1,4 @@
-package PR1;
+package TratamientoDatos.Filas;
 
 public class RowWithLabel extends Row{
     protected int numberClass;

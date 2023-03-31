@@ -2,8 +2,8 @@ package Algoritmos;
 
 import Exceptions.MasDatosQueGruposException;
 import Interfaces.Algorithm;
-import PR1.Row;
-import PR1.Table;
+import TratamientoDatos.Filas.Row;
+import TratamientoDatos.Tablas.Table;
 
 import java.util.*;
 

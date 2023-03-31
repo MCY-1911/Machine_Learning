@@ -1,4 +1,7 @@
-package PR1;
+package TratamientoDatos.Tablas;
+
+import TratamientoDatos.Filas.Row;
+import TratamientoDatos.Filas.RowWithLabel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

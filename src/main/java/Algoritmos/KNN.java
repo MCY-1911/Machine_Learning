@@ -1,7 +1,9 @@
 package Algoritmos;
 
 import Interfaces.Algorithm;
-import PR1.*;
+import TratamientoDatos.Filas.RowWithLabel;
+import TratamientoDatos.Tablas.TableWithLabels;
+
 import java.util.List;
 
 public class KNN implements Algorithm<TableWithLabels,Integer, List<Double>> {

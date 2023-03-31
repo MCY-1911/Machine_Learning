@@ -1,10 +1,8 @@
 package Algoritmos;
 
 import Exceptions.MasDatosQueGruposException;
-import PR1.CSV;
-import PR1.Table;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
+import TratamientoDatos.Lectores.CSV;
+import TratamientoDatos.Tablas.Table;
 import org.junit.jupiter.api.Test;
 
 import java.io.BufferedReader;

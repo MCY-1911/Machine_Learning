@@ -1,5 +1,8 @@
-package PR1;
+package TratamientoDatos.Lectores;
 
+
+import TratamientoDatos.Tablas.Table;
+import TratamientoDatos.Tablas.TableWithLabels;
 
 import java.io.*;
 

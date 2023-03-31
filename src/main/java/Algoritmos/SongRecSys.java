@@ -1,9 +1,8 @@
 package Algoritmos;
 
-import Algoritmos.RecSys;
 import Interfaces.Algorithm;
-import PR1.CSV;
-import PR1.Table;
+import TratamientoDatos.Lectores.CSV;
+import TratamientoDatos.Tablas.Table;
 
 import java.io.BufferedReader;
 import java.io.File;

@@ -1,8 +1,11 @@
-package main;
+package TratamientoDatos;
 
-import  PR1.*;
-import static PR1.Table.TABLA_NULA;
-import static PR1.TableWithLabels.TABLA_LABELS_NULA;
+import TratamientoDatos.Lectores.CSV;
+import TratamientoDatos.Tablas.Table;
+import TratamientoDatos.Tablas.TableWithLabels;
+
+import static TratamientoDatos.Tablas.Table.TABLA_NULA;
+import static TratamientoDatos.Tablas.TableWithLabels.TABLA_LABELS_NULA;
 
 
 public class Main {

@@ -1,8 +1,8 @@
 package Algoritmos;
 
 import Exceptions.MasDatosQueGruposException;
-import PR1.CSV;
-import PR1.Table;
+import TratamientoDatos.Lectores.CSV;
+import TratamientoDatos.Tablas.Table;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

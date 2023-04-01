@@ -43,7 +43,6 @@ class KmeansTest {
         List<Double> punto1rCuadrante = new ArrayList();
         punto1rCuadrante.add(20.0);
         punto1rCuadrante.add(22.0);
-        System.out.println(estimador2Clusters.estimate(punto1rCuadrante));
         assertEquals(2, estimador2Clusters.estimate(punto1rCuadrante));
     }
 

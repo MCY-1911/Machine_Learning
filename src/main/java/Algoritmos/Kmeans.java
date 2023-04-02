@@ -104,7 +104,7 @@ public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
 
                 // Creamos un array que representará al nuevo Centroide
                 Double[] datosNuevoCentroide = new Double[centroidesActuales.get(keyCentroide).getData().size()];
-                for(int i = 0; datosNuevoCentroide.length>i; i++ ) datosNuevoCentroide[i] = 0.0;
+                Arrays.fill(datosNuevoCentroide, 0.0);
 
                 for(int indiceFila: indicesFilasAsignadas) {
                     List<Double> datosFila = datos.getRowAt(indiceFila).getData();

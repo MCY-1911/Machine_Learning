@@ -4,7 +4,6 @@ import Exceptions.MasDatosQueGruposException;
 import TratamientoDatos.Filas.Row;
 import TratamientoDatos.Lectores.CSV;
 import TratamientoDatos.Tablas.Table;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -19,7 +18,7 @@ class KmeansTest {
 
     CSV constructorTablas = new CSV();
     // Con esta semilla los puntos el centroide del grupo de puntos del 3º Cuadrante corresponde al 1
-    Kmeans estimador2Clusters = new Kmeans(2, 20, 4l);
+    Kmeans estimador2Clusters = new Kmeans(2, 20, 4);
     Kmeans estimador28Clusters = new Kmeans(28,10, 4);
 
 
@@ -39,16 +38,16 @@ class KmeansTest {
 
 
     @Test
-    void estimatePunto1ºCuadrante()  {
-        List<Double> punto1rCuadrante = new ArrayList();
+    void estimatePunto1rCuadrante()  {
+        List<Double> punto1rCuadrante = new ArrayList<>();
         punto1rCuadrante.add(20.0);
         punto1rCuadrante.add(22.0);
         assertEquals(2, estimador2Clusters.estimate(punto1rCuadrante));
     }
 
     @Test
-    void estimatePunto3ºCuadrante()  {
-        List<Double> punto3rCuadrante = new ArrayList();
+    void estimatePunto3rCuadrante()  {
+        List<Double> punto3rCuadrante = new ArrayList<>();
         punto3rCuadrante.add(-7.0);
         punto3rCuadrante.add(-7.0);
         assertEquals(1, estimador2Clusters.estimate(punto3rCuadrante));
@@ -56,10 +55,10 @@ class KmeansTest {
 
     @Test
     void estimatePuntosDiferentesCuadrantes() {
-        List<Double> punto1rCuadrante = new ArrayList();
+        List<Double> punto1rCuadrante = new ArrayList<>();
         punto1rCuadrante.add(20.0);
         punto1rCuadrante.add(22.0);
-        List<Double> punto3rCuadrante = new ArrayList();
+        List<Double> punto3rCuadrante = new ArrayList<>();
         punto3rCuadrante.add(-7.0);
         punto3rCuadrante.add(-7.0);
         assertNotEquals(estimador2Clusters.estimate(punto1rCuadrante), estimador2Clusters.estimate(punto3rCuadrante));
@@ -67,7 +66,7 @@ class KmeansTest {
     }
 
     @Test
-    void TestExcepción() throws MasDatosQueGruposException {
+    void TestExcepcion(){
         assertThrows(MasDatosQueGruposException.class, () -> estimador28Clusters.train(TablaGruposPrimerYTercerCuadrante));
     }
 

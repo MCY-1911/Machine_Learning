@@ -1,19 +1,22 @@
 package Algoritmos;
 
 import Interfaces.Algorithm;
-import Mates.EuclideanDistance;
+import Interfaces.Distance;
+import Interfaces.DistanceClient;
 import TratamientoDatos.Filas.RowWithLabel;
 import TratamientoDatos.Tablas.TableWithLabels;
 
 import java.util.List;
 
-public class KNN implements Algorithm<TableWithLabels,Integer, List<Double>> {
+public class KNN implements Algorithm<TableWithLabels,Integer, List<Double>>, DistanceClient {
 
     TableWithLabels muestra;
+    Distance distance;
 
-    public KNN(){
+    public KNN(Distance distancia){
         super();
         muestra = new TableWithLabels();
+        distance = distancia;
     }
 
 
@@ -24,7 +27,7 @@ public class KNN implements Algorithm<TableWithLabels,Integer, List<Double>> {
         int numeroClaseEstimado = 0;
         for(int indiceTabla = 0; indiceTabla < muestra.getNumeroFilas(); indiceTabla++) {
             RowWithLabel candidato = muestra.getRowAt(indiceTabla);
-            Double distancia = new EuclideanDistance().calculateDistance(data, candidato.getData());
+            Double distancia = distance.calculateDistance(data, candidato.getData());
             if (distancia < distanciaMin) {
                 distanciaMin = distancia;
                 numeroClaseEstimado = candidato.getNumberClass();
@@ -37,5 +40,10 @@ public class KNN implements Algorithm<TableWithLabels,Integer, List<Double>> {
     @Override
     public void train(TableWithLabels datos) {
         muestra = datos;
+    }
+
+    @Override
+    public void setDistance(Distance distance) {
+        this.distance = distance;
     }
 }

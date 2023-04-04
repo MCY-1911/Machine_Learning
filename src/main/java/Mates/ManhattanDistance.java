@@ -10,7 +10,7 @@ public class ManhattanDistance implements Distance {
         // Supondremos que ambos vectores tienen el mismo tamaño
         double distancia = 0.0;
         for (int i = 0; i < p.size(); i++)
-            distancia += (p.get(i)-q.get(i));
+            distancia += Math.abs(p.get(i) - q.get(i));
         return distancia;
     }
 }

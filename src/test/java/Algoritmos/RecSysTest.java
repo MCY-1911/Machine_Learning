@@ -1,6 +1,7 @@
 package Algoritmos;
 
 import Exceptions.MasDatosQueGruposException;
+import Mates.EuclideanDistance;
 import TratamientoDatos.Lectores.CSV;
 import TratamientoDatos.Tablas.Table;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RecSysTest {
 
-    RecSys recsysKnn = new RecSys(new KNN());
-    RecSys recsysKmeans = new RecSys(new Kmeans(15, 200, 4321));
+    RecSys recsysKnn = new RecSys(new KNN(new EuclideanDistance()));
+    RecSys recsysKmeans = new RecSys(new Kmeans(15, 200, 4321, new EuclideanDistance()));
     Map<String, String> filenames = new HashMap<>();
     Map<String, Table> tables = new HashMap<>();
     List<String> names;

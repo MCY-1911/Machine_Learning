@@ -1,6 +1,7 @@
 package Algoritmos;
 
 import Interfaces.Algorithm;
+import Mates.EuclideanDistance;
 import TratamientoDatos.Filas.RowWithLabel;
 import TratamientoDatos.Tablas.TableWithLabels;
 
@@ -23,7 +24,7 @@ public class KNN implements Algorithm<TableWithLabels,Integer, List<Double>> {
         int numeroClaseEstimado = 0;
         for(int indiceTabla = 0; indiceTabla < muestra.getNumeroFilas(); indiceTabla++) {
             RowWithLabel candidato = muestra.getRowAt(indiceTabla);
-            Double distancia = Mates.Distancia.getDistanciaEuclidiana(data, candidato.getData());
+            Double distancia = new EuclideanDistance().calculateDistance(data, candidato.getData());
             if (distancia < distanciaMin) {
                 distanciaMin = distancia;
                 numeroClaseEstimado = candidato.getNumberClass();

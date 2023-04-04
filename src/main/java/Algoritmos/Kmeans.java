@@ -2,6 +2,7 @@ package Algoritmos;
 
 import Exceptions.MasDatosQueGruposException;
 import Interfaces.Algorithm;
+import Mates.EuclideanDistance;
 import TratamientoDatos.Filas.Row;
 import TratamientoDatos.Tablas.Table;
 
@@ -87,7 +88,7 @@ public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
         int centroideMasCercano = -1;
         for (int indiceCentroide = 0; indiceCentroide < numClusters; indiceCentroide++) {
             List<Double> datosCentroideActual = centroides.get(indiceCentroide).getData();
-            double distancia = Mates.Distancia.getDistanciaEuclidiana(datosFila, datosCentroideActual);
+            double distancia = new EuclideanDistance().calculateDistance(datosFila, datosCentroideActual);
             if (distancia <= distanciaMin) {
                 distanciaMin = distancia;
                 centroideMasCercano = indiceCentroide;

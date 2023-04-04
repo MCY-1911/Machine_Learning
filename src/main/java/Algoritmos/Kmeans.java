@@ -1,6 +1,7 @@
 package Algoritmos;
 
 import Exceptions.MasDatosQueGruposException;
+import Exceptions.PuntosDiferentesDimensiones;
 import Interfaces.Algorithm;
 import Interfaces.Distance;
 import Interfaces.DistanceClient;
@@ -91,7 +92,12 @@ public class Kmeans implements Algorithm<Table ,Integer, List<Double>>, Distance
         int centroideMasCercano = -1;
         for (int indiceCentroide = 0; indiceCentroide < numClusters; indiceCentroide++) {
             List<Double> datosCentroideActual = centroides.get(indiceCentroide).getData();
-            double distancia = distance.calculateDistance(datosFila, datosCentroideActual);
+            double distancia = 0;
+            try {
+                distancia = distance.calculateDistance(datosFila, datosCentroideActual);
+            } catch (PuntosDiferentesDimensiones e) {
+                e.printStackTrace();
+            }
             if (distancia <= distanciaMin) {
                 distanciaMin = distancia;
                 centroideMasCercano = indiceCentroide;

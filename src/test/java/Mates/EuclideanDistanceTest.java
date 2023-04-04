@@ -1,5 +1,6 @@
 package Mates;
 
+import Exceptions.PuntosDiferentesDimensiones;
 import Interfaces.Distance;
 import org.junit.jupiter.api.Test;
 
@@ -14,6 +15,7 @@ class EuclideanDistanceTest {
     List<Double> origen;
     List<Double> puntoA;
     List<Double> puntoB;
+    List<Double> punto3dimensiones;
 
     public EuclideanDistanceTest(){
         calculadora = new EuclideanDistance();
@@ -26,11 +28,20 @@ class EuclideanDistanceTest {
         puntoB = new ArrayList<>(2);
         puntoB.add(3.0);
         puntoB.add(4.0);
+        punto3dimensiones = new ArrayList<>(3);
+        punto3dimensiones.add(1.0);
+        punto3dimensiones.add(1.0);
+        punto3dimensiones.add(1.0);
     }
 
     @Test
-    void calculateDistance() {
+    void calculateDistance() throws PuntosDiferentesDimensiones {
         assertEquals(3, calculadora.calculateDistance(origen, puntoA));
         assertEquals(5, calculadora.calculateDistance(origen, puntoB));
+    }
+
+    @Test
+    void TestException() {
+        assertThrows(PuntosDiferentesDimensiones.class, () -> calculadora.calculateDistance(origen, punto3dimensiones));
     }
 }

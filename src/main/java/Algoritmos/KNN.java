@@ -1,5 +1,6 @@
 package Algoritmos;
 
+import Exceptions.PuntosDiferentesDimensiones;
 import Interfaces.Algorithm;
 import Interfaces.Distance;
 import Interfaces.DistanceClient;
@@ -27,7 +28,12 @@ public class KNN implements Algorithm<TableWithLabels,Integer, List<Double>>, Di
         int numeroClaseEstimado = 0;
         for(int indiceTabla = 0; indiceTabla < muestra.getNumeroFilas(); indiceTabla++) {
             RowWithLabel candidato = muestra.getRowAt(indiceTabla);
-            Double distancia = distance.calculateDistance(data, candidato.getData());
+            Double distancia = null;
+            try {
+                distancia = distance.calculateDistance(data, candidato.getData());
+            } catch (PuntosDiferentesDimensiones e) {
+                e.printStackTrace();
+            }
             if (distancia < distanciaMin) {
                 distanciaMin = distancia;
                 numeroClaseEstimado = candidato.getNumberClass();

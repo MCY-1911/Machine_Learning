@@ -1,6 +1,7 @@
 package Algoritmos;
 
 import Exceptions.MasDatosQueGruposException;
+import Mates.EuclideanDistance;
 import TratamientoDatos.Filas.Row;
 import TratamientoDatos.Lectores.CSV;
 import TratamientoDatos.Tablas.Table;
@@ -18,8 +19,8 @@ class KmeansTest {
 
     CSV constructorTablas = new CSV();
     // Con esta semilla los puntos el centroide del grupo de puntos del 3º Cuadrante corresponde al 1
-    Kmeans estimador2Clusters = new Kmeans(2, 20, 4);
-    Kmeans estimador28Clusters = new Kmeans(28,10, 4);
+    Kmeans estimador2Clusters = new Kmeans(2, 20, 4, new EuclideanDistance());
+    Kmeans estimador28Clusters = new Kmeans(28,10, 4, new EuclideanDistance());
 
 
     Table TablaGruposPrimerYTercerCuadrante;

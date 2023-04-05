@@ -1,24 +1,29 @@
 package Algoritmos;
 
 import Exceptions.MasDatosQueGruposException;
+import Exceptions.PuntosDiferentesDimensiones;
 import Interfaces.Algorithm;
+import Interfaces.Distance;
+import Interfaces.DistanceClient;
 import TratamientoDatos.Filas.Row;
 import TratamientoDatos.Tablas.Table;
 
 import java.util.*;
 
-public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
+public class Kmeans implements Algorithm<Table ,Integer, List<Double>>, DistanceClient {
 
     private int numClusters; // Cluster = grupo
     private int numIteraciones;
     private long seed;
     private List<Row> representates;
+    Distance distance;
 
-    public Kmeans(int numClusters, int numIterations, long seed) {
+    public Kmeans(int numClusters, int numIterations, long seed, Distance distancia) {
         this.numClusters =  numClusters;
         this.numIteraciones = numIterations;
         this.seed = seed;
         representates = new ArrayList<>(numClusters);
+        distance = distancia;
     }
     @Override
     public void train(Table datos) throws MasDatosQueGruposException {
@@ -87,7 +92,12 @@ public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
         int centroideMasCercano = -1;
         for (int indiceCentroide = 0; indiceCentroide < numClusters; indiceCentroide++) {
             List<Double> datosCentroideActual = centroides.get(indiceCentroide).getData();
-            double distancia = Mates.Distancia.getDistanciaEuclidiana(datosFila, datosCentroideActual);
+            double distancia = 0;
+            try {
+                distancia = distance.calculateDistance(datosFila, datosCentroideActual);
+            } catch (PuntosDiferentesDimensiones e) {
+                e.printStackTrace();
+            }
             if (distancia <= distanciaMin) {
                 distanciaMin = distancia;
                 centroideMasCercano = indiceCentroide;
@@ -126,4 +136,8 @@ public class Kmeans implements Algorithm<Table ,Integer, List<Double>> {
             return nuevosCentroides;
     }
 
+    @Override
+    public void setDistance(Distance distance) {
+        this.distance = distance;
+    }
 }

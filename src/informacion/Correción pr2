@@ -1,8 +1,0 @@
-// APTO
-//
-// - Convenciones de nomenclatura: paquetes en minúsculas.
-// ¡Use nombres significativos! (ClaseProfes)
-// - Es mejor poner las excepciones en el paquete al que pertenecen (junto con las clases que pueden causar la excepción) en lugar de en un paquete separado. Lo mismo para interfaces.
-// public void saveTableWithPredictions —>  no me parece un método para poner en la prueba (KmeansTest)
-// ¡Te felicito por la optimización y la legibilidad de tu código!
-// - En general, ¡una excelente solución!

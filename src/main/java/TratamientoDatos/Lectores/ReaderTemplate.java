@@ -1,12 +1,16 @@
 package TratamientoDatos.Lectores;
 
 import TratamientoDatos.Tablas.Table;
+import java.util.Scanner;
 
 public abstract class ReaderTemplate {
 
     String fileName;
     Table datos;
-    abstract void createTable(); // Método para crear la Tabla correspondiente
+    Scanner csv;
+    String line;
+
+
     abstract void openSource(String source);
     abstract void processHeaders(String headers);
     abstract void processData(String data);
@@ -20,7 +24,6 @@ public abstract class ReaderTemplate {
     }
 
     public final Table readTableFromSource() {
-        createTable();
         openSource(fileName);
         processHeaders(getNextData());
         while(hasMoreData())

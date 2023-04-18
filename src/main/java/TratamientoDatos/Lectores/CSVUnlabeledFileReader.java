@@ -2,41 +2,52 @@ package TratamientoDatos.Lectores;
 
 import TratamientoDatos.Tablas.Table;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class CSVUnlabeledFileReader extends ReaderTemplate{
-    @Override
-    void createTable() {
-        datos = new Table();
+    public CSVUnlabeledFileReader(String fileName) {
+        super(fileName);
     }
 
     @Override
     void openSource(String source) {
         try {
-
+            csv = new Scanner(new File(fileName));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     void processHeaders(String headers) {
-
+        String[] cabeceraEnArray = getNextData().split(",");
+        datos = new Table(cabeceraEnArray);
     }
 
     @Override
     void processData(String data) {
-
+        String[] filaEnTexto = getNextData().split(",");
+        Double[] filaEnDouble = new Double[filaEnTexto.length];
+        int indice = 0;
+        for (String dato : filaEnTexto)
+            filaEnDouble[indice++] = Double.parseDouble(dato);
+        datos.add(filaEnDouble);
     }
 
     @Override
     void closeSource() {
-
+        csv.close();
     }
 
     @Override
     boolean hasMoreData() {
-        return false;
+      return csv.hasNextLine();
     }
 
     @Override
     String getNextData() {
-        return null;
+        return csv.nextLine();
     }
 }

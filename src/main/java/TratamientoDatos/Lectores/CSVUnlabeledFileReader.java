@@ -12,12 +12,8 @@ public class CSVUnlabeledFileReader extends ReaderTemplate{
     }
 
     @Override
-    void openSource(String source) {
-        try {
+    void openSource(String source) throws FileNotFoundException {
             csv = new Scanner(new File(fileName));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override

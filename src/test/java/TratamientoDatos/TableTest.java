@@ -1,6 +1,9 @@
 package TratamientoDatos;
 
 import TratamientoDatos.Lectores.CSV;
+import TratamientoDatos.Lectores.CSVLabeledFileReader;
+import TratamientoDatos.Lectores.CSVUnlabeledFileReader;
+import TratamientoDatos.Lectores.ReaderTemplate;
 import TratamientoDatos.Tablas.Table;
 import static TratamientoDatos.Tablas.Table.TABLA_NULA;
 import org.junit.jupiter.api.Test;
@@ -11,12 +14,12 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class TableTest {
-    CSV constructorTabla;
+    ReaderTemplate constructorTabla;
     Table tabla;
 
     public TableTest(){
-        constructorTabla = new CSV();
-        tabla = constructorTabla.readTable("src" + File.separator + "Files" + File.separator + "miles_dollars.csv");
+        constructorTabla = new CSVUnlabeledFileReader("src" + File.separator + "Files" + File.separator + "miles_dollars.csv");
+        tabla = constructorTabla.readTableFromSource();
     }
 
     @Test

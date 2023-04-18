@@ -1,6 +1,7 @@
 package TratamientoDatos.Lectores;
 
 import TratamientoDatos.Tablas.Table;
+import TratamientoDatos.Tablas.TableWithLabels;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -8,13 +9,13 @@ import java.util.Scanner;
 
 public abstract class ReaderTemplate {
 
-    String fileName;
+    String source;
     Table datos;
-    Scanner csv;
+    Scanner csv = null;
 
     public ReaderTemplate(String fileName) {
         super();
-        this.fileName = fileName;
+        this.source = fileName;
     }
 
     abstract void openSource(String source) throws FileNotFoundException;
@@ -26,10 +27,13 @@ public abstract class ReaderTemplate {
 
     public final Table readTableFromSource() {
         try {
-            openSource(fileName);
+            openSource(source);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // Si el fichero no se puede procesar devolvemos una tabla nula, sea o no con etiquetas
+        if (datos==Table.TABLA_NULA || datos== TableWithLabels.TABLA_LABELS_NULA)
+            return datos;
         processHeaders(getNextData());
         while(hasMoreData())
             processData(getNextData());

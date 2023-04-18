@@ -1,7 +1,5 @@
 package TratamientoDatos;
 
-import TratamientoDatos.Lectores.CSV;
-import TratamientoDatos.Lectores.CSVLabeledFileReader;
 import TratamientoDatos.Lectores.CSVUnlabeledFileReader;
 import TratamientoDatos.Lectores.ReaderTemplate;
 import TratamientoDatos.Tablas.Table;
@@ -25,7 +23,8 @@ public class TableTest {
     @Test
     void TestFicheroNoValido(){
         System.out.println("En este test comprobaremos si CSV maneja bien los ficheros no encontrados.");
-        Table tablaNoExistente = constructorTabla.readTable("Este fichero no existe");
+        ReaderTemplate constructorTablaNoExistente = new CSVUnlabeledFileReader("Este fichero no existe");
+        Table tablaNoExistente = constructorTablaNoExistente.readTableFromSource();
         assertEquals(TABLA_NULA, tablaNoExistente);
     }
 

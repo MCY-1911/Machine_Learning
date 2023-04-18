@@ -1,6 +1,7 @@
 package TratamientoDatos;
 
-import TratamientoDatos.Lectores.CSV;
+import TratamientoDatos.Lectores.CSVLabeledFileReader;
+import TratamientoDatos.Lectores.ReaderTemplate;
 import TratamientoDatos.Tablas.TableWithLabels;
 import org.junit.jupiter.api.Test;
 
@@ -8,24 +9,24 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static TratamientoDatos.Tablas.Table.TABLA_NULA;
 import static TratamientoDatos.Tablas.TableWithLabels.TABLA_LABELS_NULA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TableWithLabelsTest {
 
-    CSV constructorTabla;
+    ReaderTemplate constructorTabla;
     TableWithLabels tablaLabels;
 
     public TableWithLabelsTest() {
-        constructorTabla = new CSV();
-        tablaLabels = constructorTabla.readTableWithLabels("src" + File.separator + "Files" + File.separator + "iris.csv");
+        constructorTabla = new CSVLabeledFileReader("src" + File.separator + "Files" + File.separator + "iris.csv");
+        tablaLabels = (TableWithLabels) constructorTabla.readTableFromSource();
     }
 
     @Test
     void TestFicheroNoValido(){
         System.out.println("En este test comprobaremos si CSV maneja bien los ficheros no encontrados.");
-        TableWithLabels tablaConEtiquetasNoExistente = constructorTabla.readTableWithLabels("Este fichero no existe");
+        ReaderTemplate constructorTablaConEtiquetasNoExistente = new CSVLabeledFileReader("Este fichero no existe");
+        TableWithLabels tablaConEtiquetasNoExistente = (TableWithLabels) constructorTablaConEtiquetasNoExistente.readTableFromSource();
         assertEquals(TABLA_LABELS_NULA, tablaConEtiquetasNoExistente);
     }
 
@@ -67,9 +68,9 @@ public class TableWithLabelsTest {
     void TestRecuperarFilas(){
         System.out.println("Test para recuperar filas de la tabla.");
 
-        List row0TableWithLabels = new ArrayList<>();;
-        List row58TableWithLabels = new ArrayList<>();;
-        List row126TableWithLabels = new ArrayList<>();;
+        List<Double> row0TableWithLabels = new ArrayList<>();
+        List<Double> row58TableWithLabels = new ArrayList<>();
+        List<Double> row126TableWithLabels = new ArrayList<>();
 
         row0TableWithLabels.add(5.1);
         row0TableWithLabels.add(3.5);

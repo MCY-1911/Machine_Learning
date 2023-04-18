@@ -78,8 +78,8 @@ class RecSysTest {
         // un conjunto con todos los titulos de un grupo determinado, cogeremos algunos de estos y pediremos recomendaciones
         // si dichas recomendaciones pertenecen al conjunto del grupo. La recomendación la damos por buena.
         // PUEDE FALLAR SI ESCOGE UNA CANCIÓN QUE PERTENECE A DIFERENTES GRUPOS (por qué su título se repite)
-        System.out.println("Este test crea un conjunto con todos los titulos que forman parte de un grupo, escoge uno" +
-                "para buscar recomendaciones y comprueba si las recomendaciones son del grupo correcto.");
+        System.out.print("Este test crea un conjunto con todos los títulos que forman parte de un grupo,\n" +
+                "escoge uno para buscar recomendaciones y comprueba si las recomendaciones son del grupo correcto.\n");
         Set<String> titulosMismoGrupoKNN = recsysKnn.devuelveCancionesConMismoGrupo(0);
         Set<String> titulosMismoGrupoKmeans = recsysKmeans.devuelveCancionesConMismoGrupo(14);
 

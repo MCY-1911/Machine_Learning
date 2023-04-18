@@ -12,19 +12,24 @@ public class CSVUnlabeledFileReader extends ReaderTemplate{
     }
 
     @Override
-    void openSource(String source) throws FileNotFoundException {
-            csv = new Scanner(new File(fileName));
+    void openSource(String source) {
+        try {
+            csv = new Scanner(new File(this.source));
+        }catch (FileNotFoundException e) {
+            datos = Table.TABLA_NULA;
+        }
+
     }
 
     @Override
     void processHeaders(String headers) {
-        String[] cabeceraEnArray = getNextData().split(",");
+        String[] cabeceraEnArray = headers.split(",");
         datos = new Table(cabeceraEnArray);
     }
 
     @Override
     void processData(String data) {
-        String[] filaEnTexto = getNextData().split(",");
+        String[] filaEnTexto = data.split(",");
         Double[] filaEnDouble = new Double[filaEnTexto.length];
         int indice = 0;
         for (String dato : filaEnTexto)
@@ -39,7 +44,7 @@ public class CSVUnlabeledFileReader extends ReaderTemplate{
 
     @Override
     boolean hasMoreData() {
-      return csv.hasNextLine();
+        return csv.hasNextLine();
     }
 
     @Override

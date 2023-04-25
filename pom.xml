@@ -23,7 +23,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>Hello</mainClass>
+                    <mainClass>interfazGrafica.vista.seleccionador</mainClass>
                 </configuration>
             </plugin>
         </plugins>

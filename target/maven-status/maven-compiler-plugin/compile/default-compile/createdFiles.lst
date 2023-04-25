@@ -7,7 +7,9 @@ tratamientoDatos\lectores\ReaderTemplate.class
 algoritmos\KNN.class
 mates\EuclideanDistance.class
 algoritmos\MasDatosQueGruposException.class
+interfazGrafica\vista\seleccionador.class
 algoritmos\aplicaciones\SongRecSys.class
+interfazGrafica\vista\recomendador.class
 tratamientoDatos\tablas\TableWithLabels.class
 tratamientoDatos\TablesPrints.class
 algoritmos\Kmeans.class
@@ -18,5 +20,4 @@ mates\PuntosDiferentesDimensiones.class
 tratamientoDatos\tablas\Table.class
 mates\Distance.class
 tratamientoDatos\lectores\CSVUnlabeledFileReader.class
-Hello.class
 tratamientoDatos\lectores\CSVLabeledFileReader.class

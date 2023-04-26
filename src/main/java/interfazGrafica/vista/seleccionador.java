@@ -2,14 +2,11 @@ package interfazGrafica.vista;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import javax.swing.*;
 
 
 public class seleccionador extends Application {
@@ -20,34 +17,37 @@ public class seleccionador extends Application {
     }
     @Override
     public void start(Stage stage) throws Exception {
+        //stage es el escenario, la ventana
+        //scene es la escena, lo que se representa dentro de la ventana
         stage.setTitle("Song Recommender");
-        StackPane root = new StackPane();
-
-        stage.setScene(new Scene(root, 500, 500));
 
         //Primera opción
-        JLabel label1 = new JLabel("Recommendation Type");
-        ToggleGroup grupo1 = new ToggleGroup();
+        Label labelAlgoritmo = new Label("Recommendation Type");
+        ToggleGroup grupoAlgoritmo = new ToggleGroup();
 
         RadioButton knn = new RadioButton(" Recommend based on song features");
         RadioButton kmeans = new RadioButton(" Recommend based on guessed genre");
 
-        knn.setToggleGroup(grupo1);
-        kmeans.setToggleGroup(grupo1);
+        knn.setToggleGroup(grupoAlgoritmo);
+        kmeans.setToggleGroup(grupoAlgoritmo);
 
         //Segunda opción
-        JLabel label2 = new JLabel("Distance Type");
-        ToggleGroup grupo2 = new ToggleGroup();
+        Label labelDistance = new Label("Distance Type");
+        ToggleGroup grupoDistance = new ToggleGroup();
 
         RadioButton euclidean = new RadioButton(" Euclidean ");
         RadioButton manhattan = new RadioButton(" Manhattan");
 
-        knn.setToggleGroup(grupo2);
-        kmeans.setToggleGroup(grupo2);
+        knn.setToggleGroup(grupoDistance);
+        kmeans.setToggleGroup(grupoDistance);
 
         //Tercera opción
-        JLabel label3 = new JLabel("Song Titles");
+        Label labelLista = new Label("Song Titles");
 
+        VBox vBox = new VBox(labelAlgoritmo, knn, kmeans, labelDistance, euclidean, manhattan, labelLista);
+
+        Scene scene = new Scene(vBox, 400,300);
+        stage.setScene(scene);
         stage.show();
     }
 }

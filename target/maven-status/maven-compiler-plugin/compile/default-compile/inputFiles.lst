@@ -1,9 +1,8 @@
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\algoritmos\aplicaciones\SongRecSys.java
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\algoritmos\SaveTable.java
+C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\mvc\vista\seleccionador.java
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\algoritmos\Algorithm.java
-C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\interfazGrafica\vista\recomendador.java
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\algoritmos\RecSys.java
-C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\interfazGrafica\vista\seleccionador.java
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\tratamientoDatos\filas\RowWithLabel.java
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\mates\Distance.java
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\mates\EuclideanDistance.java
@@ -13,6 +12,7 @@ C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\tratamientoDatos\
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\tratamientoDatos\lectores\CSVUnlabeledFileReader.java
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\tratamientoDatos\lectores\ReaderTemplate.java
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\algoritmos\KNN.java
+C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\mvc\vista\recomendador.java
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\tratamientoDatos\tablas\Table.java
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\algoritmos\DistanceClient.java
 C:\Users\aleja\Documents\GitHub\Machine_Learning\src\main\java\mates\PuntosDiferentesDimensiones.java

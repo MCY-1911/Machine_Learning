@@ -2,6 +2,7 @@ package algoritmos;
 
 import mates.EuclideanDistance;
 import tratamientoDatos.lectores.CSV;
+import tratamientoDatos.lectores.LectorSongs;
 import tratamientoDatos.tablas.Table;
 import org.junit.jupiter.api.Test;
 
@@ -46,7 +47,7 @@ class RecSysTest {
         }
 
         // Obtenemos los titulos de las canciones
-        names = readNames(ruta+sep+"songs_test_names.csv");
+        names = LectorSongs.readNames(ruta+sep+"songs_test_names.csv");
 
         // Iniciamos los sistemas de recomendacion. Entrenar + iniciar
         this.recsysKnn.train(tables.get("knn"+"train"));
@@ -88,18 +89,6 @@ class RecSysTest {
         it = titulosMismoGrupoKmeans.iterator();
         List<String> recomendacionesKmeans = recsysKmeans.recommend(it.next(), 5);
         assertTrue(titulosMismoGrupoKmeans.containsAll(recomendacionesKmeans));
-    }
-
-    private List<String> readNames(String fileOfItemNames) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(fileOfItemNames));
-        String line;
-        List<String> names = new ArrayList<>();
-
-        while ((line = br.readLine()) != null) {
-            names.add(line);
-        }
-        br.close();
-        return names;
     }
 
 }

@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class prueba {
     public static void main(String[] args) throws MasDatosQueGruposException, IOException {
-        SongRecomendationApplication impModelo = new SongRecomendationApplication();
+        ModeloCanciones impModelo = new ModeloCanciones();
         System.out.printf(impModelo.getCanciones().toString());
     }
 }

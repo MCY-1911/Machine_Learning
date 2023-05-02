@@ -2,8 +2,8 @@ package mvc.Arrancador;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import mvc.modelo.SongRecomendationApplication;
-import mvc.vista.Seleccionador;
+import mvc.modelo.ModeloCanciones;
+import mvc.vista.VistaCanciones;
 
 public class Principal extends Application {
 
@@ -13,8 +13,8 @@ public class Principal extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        SongRecomendationApplication impModelo = new SongRecomendationApplication();
-        Seleccionador impVista = new Seleccionador(stage);
+        ModeloCanciones impModelo = new ModeloCanciones();
+        VistaCanciones impVista = new VistaCanciones(stage);
         impVista.setModelo(impModelo);
         stage.setTitle("Song Recommender");
         impVista.crearGUI();

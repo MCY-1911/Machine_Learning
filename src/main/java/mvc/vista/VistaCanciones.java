@@ -1,13 +1,9 @@
 package mvc.vista;
 
-import com.sun.scenario.effect.Blend;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mvc.controlador.Controlador;
@@ -16,7 +12,7 @@ import mvc.modelo.Modelo;
 import java.util.List;
 
 
-public class Seleccionador implements Vista {
+public class VistaCanciones implements Vista {
 
     private final Stage stage;
 
@@ -31,7 +27,7 @@ public class Seleccionador implements Vista {
     private Controlador controlador;
     private Modelo modelo;
 
-    public Seleccionador(final Stage stage) {
+    public VistaCanciones(final Stage stage) {
         this.stage = stage;
     }
 
@@ -39,7 +35,6 @@ public class Seleccionador implements Vista {
     public void crearGUI() {
         //stage es el escenario, la ventana
         //scene es la escena, lo que se representa dentro de la ventana
-        //FALTAN ESCUCHADORES
 
         VBox display = new VBox();
 
@@ -71,7 +66,9 @@ public class Seleccionador implements Vista {
         ListView cancionesMostradas = new ListView<>(canciones);
         display.getChildren().addAll(labelLista, cancionesMostradas);
 
-        //
+        //Botón de confirmación
+        Button recomendar = new Button("Recommend");
+        display.getChildren().add(recomendar);
 
 
         Scene scene = new Scene(display, 300, 500);

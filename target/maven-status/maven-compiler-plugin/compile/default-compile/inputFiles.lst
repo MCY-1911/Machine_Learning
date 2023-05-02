@@ -3,8 +3,6 @@ C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\tratamientoDat
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\tratamientoDatos\TablesPrints.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\algoritmos\KNN.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\mvc\vista\Vista.java
-C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\mvc\modelo\SongRecomendationApplication.java
-C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\mvc\vista\Seleccionador.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\tratamientoDatos\filas\Row.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\tratamientoDatos\lectores\LectorSongs.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\mvc\modelo\prueba.java
@@ -15,11 +13,13 @@ C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\algoritmos\Kme
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\tratamientoDatos\lectores\ReaderTemplate.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\algoritmos\aplicaciones\SongRecSys.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\tratamientoDatos\filas\RowWithLabel.java
+C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\mvc\vista\VistaCanciones.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\mates\ManhattanDistance.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\algoritmos\Algorithm.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\mvc\modelo\Modelo.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\mates\EuclideanDistance.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\algoritmos\SaveTable.java
+C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\mvc\modelo\ModeloCanciones.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\mvc\controlador\Controlador.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\algoritmos\RecSys.java
 C:\Users\al415647\Documents\GitHub\Machine_Learning\src\main\java\mates\Distance.java

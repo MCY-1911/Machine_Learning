@@ -30,7 +30,7 @@ class RecSysTest {
 
         // Creamos la ruta genérica a los conjuntos de train y test
         String sep = System.getProperty("file.separator");
-        String ruta = "src" + File.separator + "Files" + File.separator + "songs_files" + File.separator;
+        String ruta = "src" + sep + "files" + sep + "songs_files";
 
         // Guardamos en un mapa las rutas específicas
         filenames.put("knn" + "train", ruta + sep + "songs_train.csv");

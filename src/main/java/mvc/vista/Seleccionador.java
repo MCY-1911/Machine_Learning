@@ -1,31 +1,47 @@
 package mvc.vista;
 
-import javafx.application.Application;
-import javafx.beans.Observable;
+import com.sun.scenario.effect.Blend;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import mvc.controlador.Controlador;
+import mvc.modelo.Modelo;
 
 import java.util.List;
 
 
-public class seleccionador extends Application implements Vista {
+public class Seleccionador implements Vista {
 
+    private final Stage stage;
 
-    public static void main(String[] args) {
-        launch(args);
+    public void setControlador(final Controlador controlador) {
+        this.controlador = controlador;
     }
+
+    public void setModelo(final Modelo modelo) {
+        this.modelo = modelo;
+    }
+
+    private Controlador controlador;
+    private Modelo modelo;
+
+    public Seleccionador(final Stage stage) {
+        this.stage = stage;
+    }
+
     @Override
-    public void start(Stage stage) throws Exception {
+    public void crearGUI() {
         //stage es el escenario, la ventana
         //scene es la escena, lo que se representa dentro de la ventana
-        stage.setTitle("Song Recommender");
+        //FALTAN ESCUCHADORES
+
+        VBox display = new VBox();
 
         //Primera opción
         Label labelAlgoritmo = new Label("Recommendation Type");
@@ -36,6 +52,7 @@ public class seleccionador extends Application implements Vista {
 
         knn.setToggleGroup(grupoAlgoritmo);
         kmeans.setToggleGroup(grupoAlgoritmo);
+        display.getChildren().addAll(labelAlgoritmo ,knn, kmeans);
 
         //Segunda opción
         Label labelDistance = new Label("Distance Type");
@@ -46,16 +63,18 @@ public class seleccionador extends Application implements Vista {
 
         euclidean.setToggleGroup(grupoDistance);
         manhattan.setToggleGroup(grupoDistance);
+        display.getChildren().addAll(labelDistance, euclidean, manhattan);
 
         //Tercera opción
         Label labelLista = new Label("Song Titles");
+        ObservableList<String> canciones = FXCollections.observableArrayList(modelo.getCanciones());
+        ListView cancionesMostradas = new ListView<>(canciones);
+        display.getChildren().addAll(labelLista, cancionesMostradas);
+
+        //
 
 
-
-
-        VBox vBox = new VBox(labelAlgoritmo, knn, kmeans, labelDistance, euclidean, manhattan, labelLista);
-
-        Scene scene = new Scene(vBox, 400,300);
+        Scene scene = new Scene(display, 300, 500);
         stage.setScene(scene);
         stage.show();
     }

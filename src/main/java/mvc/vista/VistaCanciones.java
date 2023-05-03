@@ -7,6 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mvc.controlador.Controlador;
+import mvc.modelo.Algoritmos;
+import mvc.modelo.Distancias;
 import mvc.modelo.Modelo;
 
 import java.util.List;
@@ -30,8 +32,7 @@ public class VistaCanciones implements Vista {
     public VistaCanciones(final Stage stage) {
         this.stage = stage;
     }
-
-    @Override
+    
     public void crearGUI() {
         //stage es el escenario, la ventana
         //scene es la escena, lo que se representa dentro de la ventana
@@ -70,20 +71,19 @@ public class VistaCanciones implements Vista {
         Button recomendar = new Button("Recommend");
         display.getChildren().add(recomendar);
 
-
-        Scene scene = new Scene(display, 300, 500);
+        Scene scene = new Scene(display);
         stage.setScene(scene);
         stage.show();
     }
 
     @Override
-    public int getAlgoritmo() {
-        return 0;
+    public Algoritmos getAlgoritmo() {
+        return Algoritmos.KNN;
     }
 
     @Override
-    public int getDistancia() {
-        return 0;
+    public Distancias getDistancia() {
+        return Distancias.EUCLIDEAN;
     }
 
     @Override

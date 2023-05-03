@@ -17,7 +17,7 @@ public class ModeloCanciones implements Modelo {
     // SE PUEDE REFACTORIZAR EN UN MAPA POR SI AÑADIMOS DISTANCIAS/ALGORITMOS
     private Vista implemntaciónVista;
     List<String> songs;
-    private RecSys recSys;
+    private Map<String, RecSys> recomendadores;
 
 
 
@@ -27,22 +27,15 @@ public class ModeloCanciones implements Modelo {
         String sep = System.getProperty("file.separator");
         String ruta = "src" + sep + "files" + sep + "songs_files";
 
-        // Nos guardamos una lista para los titulos de las canciones
+        // Nos guardamos una lista para los títulos de las canciones
         songs = LectorSongs.readNames(ruta+sep+"songs_test_names.csv");
 
-        //En un mapa guardamos el nombre del algoritmo/conjunto y su ruta correspondientee
+        // En un mapa guardamos el nombre del algoritmo/conjunto y su ruta correspondientee
         Map<String,String> filenames = new HashMap<>();
         filenames.put("knn"+"train",ruta+sep+"songs_train.csv");
         filenames.put("knn"+"test",ruta+sep+"songs_test.csv");
         filenames.put("kmeans"+"train",ruta+sep+"songs_train_withoutnames.csv");
         filenames.put("kmeans"+"test",ruta+sep+"songs_test_withoutnames.csv");
-
-        // En otro mapa guardamos los algoritmos
-        Map<String, Algorithm> algorithmsWithDistance = new HashMap<>();
-        algorithmsWithDistance.put("knn" + "euclidean",new KNN(new EuclideanDistance()));
-        algorithmsWithDistance.put("knn" + "manhattan",new KNN(new ManhattanDistance()));
-        algorithmsWithDistance.put("kmeans" + "euclidean",new Kmeans(15, 200, 4321, new EuclideanDistance()));
-        algorithmsWithDistance.put("kmeans" + "manhattan",new Kmeans(15, 200, 4321, new ManhattanDistance()));
 
         // Tablas de datos, tanto entrenamiento como test
         Map<String, Table> tables = new HashMap<>();
@@ -51,6 +44,20 @@ public class ModeloCanciones implements Modelo {
             tables.put("knn" + stage, new CSVLabeledFileReader(filenames.get("knn" + stage)).readTableFromSource());
             tables.put("kmeans" + stage, new CSVUnlabeledFileReader(filenames.get("kmeans" + stage)).readTableFromSource());
         }
+
+        // En otro mapa guardamos los recomendadores
+        recomendadores = new HashMap<>();
+        recomendadores.put("knn" + "#" + "euclidean", new RecSys(new KNN(new EuclideanDistance())));
+        recomendadores.put("knn" + "#" + "manhattan",new RecSys(new KNN(new ManhattanDistance())));
+        recomendadores.put("kmeans" + "#" + "euclidean",new RecSys(new Kmeans(15, 200, 4321, new EuclideanDistance())));
+        recomendadores.put("kmeans" + "#" + "manhattan",new RecSys(new Kmeans(15, 200, 4321, new ManhattanDistance())));
+
+        for(String etiqueta: recomendadores.keySet()) {
+            String[] algoritmoYDistancia = etiqueta.split("#");
+            recomendadores.get(etiqueta).train(tables.get(algoritmoYDistancia[0] + "train" ));
+            recomendadores.get(etiqueta).run(tables.get(algoritmoYDistancia[0]+"test"), songs);
+        }
+
     }
 
 
@@ -59,12 +66,10 @@ public class ModeloCanciones implements Modelo {
     }
 
     @Override
-    public List<String> getRecomendaciones(String song) {
-        implemntaciónVista.getSong();
-        return null;
+    public List<String> getRecomendaciones(String song, String algoritmo, String distancia, int numRecomendaciones) {
+        return recomendadores.get(algoritmo + "#" + distancia).recommend(song, numRecomendaciones);
     }
 
-    //EMPLEAMOS UNA ENUMERACIÓN?
     @Override
     public List<String> getCanciones() {
         return songs;

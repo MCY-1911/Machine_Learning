@@ -1,120 +1,107 @@
 package mvc.vista;
 
 import algoritmos.MasDatosQueGruposException;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mvc.controlador.Controlador;
-import mvc.modelo.Modelo;
 
-import java.util.List;
-
-public class VistaResultado implements Vista{
+public class VistaResultado implements InterrogaVista{
 
     final Stage stage;
-    String algoritmo;
-    String distancia;
+    String algorithm;
+    String distance;
     String song;
-    int numRecomend;
+
+    Spinner<Integer> spinner = new Spinner<>();
+    int numRecommendations = 0;
+
+    // Solo necesitamos una referencia al controlador para conseguir los datos
+    Controlador controlador;
+    // Y otro para volver a la vista anterior
+    VistaCanciones vistaCanciones;
+
+    public VistaResultado(final Stage stage, String algorithm, String distance, String song, VistaCanciones vistaCanciones) {
+        this.stage = stage;
+        this.algorithm = algorithm;
+        this.distance = distance;
+        this.song = song;
+        this.vistaCanciones = vistaCanciones;
+    }
 
     public void setControlador(final Controlador controlador) {
         this.controlador = controlador;
     }
 
-    public void setModelo(final Modelo modelo) {
-        this.modelo = modelo;
-    }
-
-    private Controlador controlador;
-    private Modelo modelo;
-
-    public VistaResultado(final Stage stage, String algoritmo, String distancia, String song, int numRecomend) {
-        this.stage = stage;
-        this.algoritmo = algoritmo;
-        this.distancia = distancia;
-        this.song = song;
-        this.numRecomend = numRecomend;
-    }
-
-    @Override
     public void crearGUI() throws MasDatosQueGruposException {
-            controlador.setModelo(modelo);
-            stage.setTitle("Song Recommender");
+        stage.setTitle("Recommend titles");
+
+        HBox displaySpinner = new HBox();
+        VBox displayGeneral = new VBox();
+
+        //Número de recomendaciones
+        Label labelnumRecomend = new Label("Number of remcommendations:");
+
+        // Creamos un Spinner con valor por defecto 5
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 5);
+        spinner.setValueFactory(valueFactory);
 
 
-            HBox display = new HBox();
-            VBox display2 = new VBox();
+        displaySpinner.getChildren().addAll(labelnumRecomend, spinner);
+        displaySpinner.setSpacing(5);
+        displayGeneral.getChildren().add(displaySpinner);
+
+        //Título de la canción
+        Label titulo = new Label("If you liked\" " + song + "\" you might like");
+        displayGeneral.getChildren().add(titulo);
 
 
-            //Número de recomendaciones
-            Label labelnumRecomend = new Label("Numer of remcommendations");
+        //Lista de canciones
+        ObservableList<String> canciones = FXCollections.observableArrayList(controlador.getCanciones());
+        ListView cancionesRecomendadas = new ListView(canciones);
+        displayGeneral.getChildren().add(cancionesRecomendadas);
 
-            Spinner<Integer> spinner = new Spinner<>();
-            SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 5);
-            spinner.setValueFactory(valueFactory);
+        valueFactory.valueProperty().addListener( (obs, oldValue, newValue) -> {
+            numRecommendations = newValue;
+        });
 
-                valueFactory.valueProperty().addListener((obs, oldValue, newValue) -> {
-                                System.out.println("Nuevo valor del spinner: " + newValue);
-                VistaResultado newVista = new VistaResultado(stage, algoritmo, distancia, song, newValue);
-                newVista.setModelo(modelo);
-                newVista.setControlador(controlador);
-
-
-                try {
-                    System.out.println("hola");
-                    newVista.crearGUI();
-                } catch (MasDatosQueGruposException var7) {
-                    throw new RuntimeException(var7);
-                }
-            });
-            display.getChildren().addAll(labelnumRecomend, spinner);
-            display.setSpacing(5);
-
-            //Titulo de la canción
-            Label titulo = new Label("If you liked\" " + song + "\" you might like");
-            display2.getChildren().add(titulo);
+        //Boton de Close
+        Button buttonBack = new Button("Close");
+        displayGeneral.getChildren().add(buttonBack);
+        buttonBack.setOnAction(actionEvent -> {
+            stage.close();
+            vistaCanciones.crearGUICanciones();
+        });
 
 
-            //Lista de canciones
-            ObservableList<String> canciones = FXCollections.observableArrayList(recomendaciones());
-            ListView cancionesMostradas = new ListView(canciones);
 
-
-            //Boton de close
-            Button buttonBack = new Button("Close");
-            buttonBack.setOnAction(actionEvent -> {
-                stage.close();
-                VistaCanciones vistaCanciones = new VistaCanciones(stage);
-                vistaCanciones.setControlador(controlador);
-                vistaCanciones.setModelo(modelo);
-                vistaCanciones.crearGUI();
-            });
-
-            VBox root = new VBox(display, display2, cancionesMostradas, buttonBack);
-            root.setSpacing(5);
-
-            Scene scene = new Scene(root, 300, 500);
-            stage.setScene(scene);
-            stage.show();
-    }
-
-    @Override
-    public List<String> recomendaciones() throws MasDatosQueGruposException {
-        return controlador.recomiendaCanciones(song, algoritmo, distancia, numRecomend);
+        Scene scene = new Scene(displayGeneral);
+        stage.setScene(scene);
+        stage.show();
     }
 
 
     @Override
-    public List<String> muestraCanciones() {
-        return controlador.vuelveAListaCanciones();
+    public String getAlgorithm() {
+        return algorithm;
     }
 
+    @Override
+    public String getDistance() {
+        return distance;
+    }
 
+    @Override
+    public String getSong() {
+        return song;
+    }
+
+    @Override
+    public int getNumRecommendations() {
+        return spinner.getValue();
+    }
 }

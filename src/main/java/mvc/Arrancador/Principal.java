@@ -20,7 +20,6 @@ public class Principal extends Application {
         impControlador.setModelo(impModelo);
         impVista.setControlador(impControlador);
         impVista.setModelo(impModelo);
-        stage.setTitle("Song Recommender");
-        impVista.crearGUI();
+        impVista.crearGUICanciones();
     }
 }

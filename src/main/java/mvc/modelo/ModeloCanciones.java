@@ -3,23 +3,18 @@ package mvc.modelo;
 import algoritmos.*;
 import mates.EuclideanDistance;
 import mates.ManhattanDistance;
-import mvc.vista.Vista;
 import tratamientoDatos.lectores.*;
 import tratamientoDatos.tablas.Table;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ModeloCanciones implements Modelo {
+public class ModeloCanciones implements InterrogaModelo {
 
-    // SE PUEDE REFACTORIZAR EN UN MAPA POR SI AÑADIMOS DISTANCIAS/ALGORITMOS
-    private Vista implemntaciónVista;
     List<String> songs;
     private Map<String, RecSys> recomendadores;
-    private RecSys recSys;
 
 
 
@@ -61,23 +56,13 @@ public class ModeloCanciones implements Modelo {
 
     }
 
-
-    public void setImplemntaciónVista(Vista implemntaciónVista) {
-        this.implemntaciónVista = implemntaciónVista;
-    }
-
-    @Override
-    public List<String> getRecomendaciones(String song, String algoritmo, String distancia, int numRecomendaciones) {
-
-
-        recSys = recomendadores.get(algoritmo + "#" + distancia);
-
-
-        return  recSys.recommend(song, numRecomendaciones);
-    }
-
     @Override
     public List<String> getCanciones() {
         return songs;
+    }
+
+    @Override
+    public List<String> getRecomendaciones(String algorithm, String distance, String song, int numRecommendations) {
+        return recomendadores.get(algorithm + "#" + distance).recommend(song, numRecommendations);
     }
 }

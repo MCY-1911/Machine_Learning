@@ -2,6 +2,7 @@ package mvc.Arrancador;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import mvc.controlador.ControladorCanciones;
 import mvc.modelo.ModeloCanciones;
 import mvc.vista.VistaCanciones;
 
@@ -15,6 +16,8 @@ public class Principal extends Application {
     public void start(Stage stage) throws Exception {
         ModeloCanciones impModelo = new ModeloCanciones();
         VistaCanciones impVista = new VistaCanciones(stage);
+        ControladorCanciones impControlador = new ControladorCanciones();
+        impVista.setControlador(impControlador);
         impVista.setModelo(impModelo);
         stage.setTitle("Song Recommender");
         impVista.crearGUI();

@@ -1,103 +1,118 @@
 package mvc.vista;
 
+import algoritmos.MasDatosQueGruposException;
+import java.awt.Panel;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mvc.controlador.Controlador;
-import mvc.modelo.Algoritmos;
-import mvc.modelo.Distancias;
 import mvc.modelo.Modelo;
 
-import java.util.List;
-
-
 public class VistaCanciones implements Vista {
-
     private final Stage stage;
+    private Controlador controlador;
+    private Modelo modelo;
+    String algoritmo;
+    String selectedSong;
+    String distancia;
+    int numRecomend;
 
-    public void setControlador(final Controlador controlador) {
+    public void setControlador(Controlador controlador) {
         this.controlador = controlador;
     }
 
-    public void setModelo(final Modelo modelo) {
+    public void setModelo(Modelo modelo) {
         this.modelo = modelo;
     }
 
-    private Controlador controlador;
-    private Modelo modelo;
-
-    public VistaCanciones(final Stage stage) {
+    public VistaCanciones(Stage stage) {
         this.stage = stage;
     }
-    
-    public void crearGUI() {
-        //stage es el escenario, la ventana
-        //scene es la escena, lo que se representa dentro de la ventana
 
+    public void crearGUI() {
         VBox display = new VBox();
 
-        //Primera opción
+        //Primer titulo con los botones
         Label labelAlgoritmo = new Label("Recommendation Type");
         ToggleGroup grupoAlgoritmo = new ToggleGroup();
-
         RadioButton knn = new RadioButton(" Recommend based on song features");
+        knn.setUserData("knn");
         RadioButton kmeans = new RadioButton(" Recommend based on guessed genre");
-
+        kmeans.setUserData("kmeans");
         knn.setToggleGroup(grupoAlgoritmo);
         kmeans.setToggleGroup(grupoAlgoritmo);
-        display.getChildren().addAll(labelAlgoritmo ,knn, kmeans);
+        display.getChildren().addAll(new Node[]{labelAlgoritmo, knn, kmeans});
 
-        //Segunda opción
+        //Segundo titulo con los botones
         Label labelDistance = new Label("Distance Type");
         ToggleGroup grupoDistance = new ToggleGroup();
-
         RadioButton euclidean = new RadioButton(" Euclidean ");
+        euclidean.setUserData("euclidean");
         RadioButton manhattan = new RadioButton(" Manhattan");
-
+        manhattan.setUserData("manhattan");
         euclidean.setToggleGroup(grupoDistance);
         manhattan.setToggleGroup(grupoDistance);
-        display.getChildren().addAll(labelDistance, euclidean, manhattan);
+        display.getChildren().addAll(new Node[]{labelDistance, euclidean, manhattan});
 
-        //Tercera opción
+        //Lista de canciones
         Label labelLista = new Label("Song Titles");
-        ObservableList<String> canciones = FXCollections.observableArrayList(modelo.getCanciones());
-        ListView cancionesMostradas = new ListView<>(canciones);
-        display.getChildren().addAll(labelLista, cancionesMostradas);
-
-        //Botón de confirmación
+        ObservableList<String> canciones = FXCollections.observableArrayList(this.muestraCanciones());
+        ListView cancionesMostradas = new ListView(canciones);
+        display.getChildren().addAll(new Node[]{labelLista, cancionesMostradas});
         Button recomendar = new Button("Recommend");
+
+        //Accion del boton Recommend
+        recomendar.setOnAction((actionEvent) -> {
+            this.selectedSong = (String)cancionesMostradas.getSelectionModel().getSelectedItem();
+            this.algoritmo = grupoAlgoritmo.toString();
+            this.distancia = grupoDistance.toString();
+
+           //Si estan todos los parametros pasa a la segunda vista
+            if (grupoAlgoritmo.getSelectedToggle() != null && grupoDistance.getSelectedToggle() != null && this.selectedSong != null) {
+                this.stage.close();
+                VistaResultado vista2 = new VistaResultado(this.stage, this.algoritmo, this.distancia, this.selectedSong);
+                vista2.setControlador(this.controlador);
+                vista2.setModelo(this.modelo);
+                try {
+                    vista2.crearGUI();
+                } catch (MasDatosQueGruposException var7) {
+                    throw new RuntimeException(var7);
+                }
+
+                // Si no estan todos los parametros marcados salta un error
+            } else {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("Missing selection");
+                alert.setContentText("Please select an option for each category.");
+                alert.showAndWait();
+            }
+        });
+
         display.getChildren().add(recomendar);
-
-        Scene scene = new Scene(display);
-        stage.setScene(scene);
-        stage.show();
+        Scene scene = new Scene(display, 300.0, 500.0);
+        this.stage.setScene(scene);
+        this.stage.show();
     }
 
     @Override
-    public Algoritmos getAlgoritmo() {
-        return Algoritmos.KNN;
+    public List<String> recomendaciones() throws MasDatosQueGruposException {
+       return controlador.recomiendaCanciones(selectedSong, algoritmo, distancia, numRecomend);
     }
 
-    @Override
-    public Distancias getDistancia() {
-        return Distancias.EUCLIDEAN;
-    }
 
-    @Override
-    public String getSong() {
-        return null;
-    }
-
-    @Override
-    public int getNumeroRecomendaciones() {
-        return 0;
-    }
-
-    @Override
-    public void muestraRecomendaciones(List<String> recomendaciones) {
-
+    public List<String> muestraCanciones() {
+        return this.controlador.vuelveAListaCanciones();
     }
 }

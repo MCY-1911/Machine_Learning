@@ -44,7 +44,6 @@ public class RecSys {
 
         // Paso 1: obtenemos los datos del título marcado como Liked
         int indiceLiked = findName(nameLikedItem);
-
         // Paso 2: obtenemos el identificador del grupo de dicha canción Liked
         Integer labelLiked = identificadorGrupoDeCadaTitulo.get(indiceLiked);
 
@@ -53,6 +52,7 @@ public class RecSys {
 
         //Asignamos el nombre correspondiente de cada indice y devolvemos
         return getNamesSelectedItems(listaDeIndices);
+
     }
 
     private int findName(String nombre){

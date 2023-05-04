@@ -8,6 +8,7 @@ import tratamientoDatos.lectores.*;
 import tratamientoDatos.tablas.Table;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,11 +19,11 @@ public class ModeloCanciones implements Modelo {
     private Vista implemntaciónVista;
     List<String> songs;
     private Map<String, RecSys> recomendadores;
+    private RecSys recSys;
 
 
 
     public ModeloCanciones() throws IOException, MasDatosQueGruposException {
-
         // Ruta genérica a los conjuntos de datos
         String sep = System.getProperty("file.separator");
         String ruta = "src" + sep + "files" + sep + "songs_files";
@@ -67,7 +68,12 @@ public class ModeloCanciones implements Modelo {
 
     @Override
     public List<String> getRecomendaciones(String song, String algoritmo, String distancia, int numRecomendaciones) {
-        return recomendadores.get(algoritmo + "#" + distancia).recommend(song, numRecomendaciones);
+
+
+        recSys = recomendadores.get(algoritmo + "#" + distancia);
+
+
+        return  recSys.recommend(song, numRecomendaciones);
     }
 
     @Override

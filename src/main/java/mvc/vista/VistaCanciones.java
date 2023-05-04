@@ -7,12 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -47,22 +42,22 @@ public class VistaCanciones implements Vista {
         Label labelAlgoritmo = new Label("Recommendation Type");
         ToggleGroup grupoAlgoritmo = new ToggleGroup();
         RadioButton knn = new RadioButton(" Recommend based on song features");
+        knn.setToggleGroup(grupoAlgoritmo);
         knn.setUserData("knn");
         RadioButton kmeans = new RadioButton(" Recommend based on guessed genre");
-        kmeans.setUserData("kmeans");
-        knn.setToggleGroup(grupoAlgoritmo);
         kmeans.setToggleGroup(grupoAlgoritmo);
+        kmeans.setUserData("kmeans");
         display.getChildren().addAll(new Node[]{labelAlgoritmo, knn, kmeans});
 
         //Segundo titulo con los botones
         Label labelDistance = new Label("Distance Type");
         ToggleGroup grupoDistance = new ToggleGroup();
         RadioButton euclidean = new RadioButton(" Euclidean ");
+        euclidean.setToggleGroup(grupoDistance);
         euclidean.setUserData("euclidean");
         RadioButton manhattan = new RadioButton(" Manhattan");
-        manhattan.setUserData("manhattan");
-        euclidean.setToggleGroup(grupoDistance);
         manhattan.setToggleGroup(grupoDistance);
+        manhattan.setUserData("manhattan");
         display.getChildren().addAll(new Node[]{labelDistance, euclidean, manhattan});
 
         //Lista de canciones
@@ -70,18 +65,24 @@ public class VistaCanciones implements Vista {
         ObservableList<String> canciones = FXCollections.observableArrayList(this.muestraCanciones());
         ListView cancionesMostradas = new ListView(canciones);
         display.getChildren().addAll(new Node[]{labelLista, cancionesMostradas});
-        Button recomendar = new Button("Recommend");
+
+
 
         //Accion del boton Recommend
+        Button recomendar = new Button("Recommend");
         recomendar.setOnAction((actionEvent) -> {
             this.selectedSong = (String)cancionesMostradas.getSelectionModel().getSelectedItem();
-            this.algoritmo = grupoAlgoritmo.toString();
-            this.distancia = grupoDistance.toString();
+            Toggle toggleAlgoritmo = grupoAlgoritmo.getSelectedToggle();
+            Toggle toggleDistancia = grupoDistance.getSelectedToggle();
+
+
 
            //Si estan todos los parametros pasa a la segunda vista
             if (grupoAlgoritmo.getSelectedToggle() != null && grupoDistance.getSelectedToggle() != null && this.selectedSong != null) {
                 this.stage.close();
-                VistaResultado vista2 = new VistaResultado(this.stage, this.algoritmo, this.distancia, this.selectedSong);
+                this.algoritmo = toggleAlgoritmo.getUserData().toString();
+                this.distancia = toggleDistancia.getUserData().toString();
+                VistaResultado vista2 = new VistaResultado(this.stage, this.algoritmo, this.distancia, this.selectedSong, 5);
                 vista2.setControlador(this.controlador);
                 vista2.setModelo(this.modelo);
                 try {

@@ -1,6 +1,8 @@
 package mvc.vista;
 
 import algoritmos.MasDatosQueGruposException;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -33,71 +35,74 @@ public class VistaResultado implements Vista{
     private Controlador controlador;
     private Modelo modelo;
 
-    public VistaResultado(final Stage stage, String algoritmo, String distancia, String song) {
+    public VistaResultado(final Stage stage, String algoritmo, String distancia, String song, int numRecomend) {
         this.stage = stage;
         this.algoritmo = algoritmo;
         this.distancia = distancia;
         this.song = song;
-        this.numRecomend = 5;
+        this.numRecomend = numRecomend;
     }
 
     @Override
     public void crearGUI() throws MasDatosQueGruposException {
-
-        stage.setTitle("Song Recommender");
-
-        HBox display = new HBox();
-        VBox display2 = new VBox();
+            controlador.setModelo(modelo);
+            stage.setTitle("Song Recommender");
 
 
-        //Número de recomendaciones
-        Label labelnumRecomend = new Label("Numer of remcommendations");
-
-        Spinner<Integer> spinner = new Spinner<>();
-
-// Se define el rango de valores permitidos
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 50);
-
-// Se agrega un listener para detectar cambios en el valor del Spinner
-        valueFactory.valueProperty().addListener((obs, oldValue, newValue) -> {
-            numRecomend = newValue;
-
-        });
-
-        spinner.setValueFactory(valueFactory);
+            HBox display = new HBox();
+            VBox display2 = new VBox();
 
 
+            //Número de recomendaciones
+            Label labelnumRecomend = new Label("Numer of remcommendations");
 
-        display.getChildren().addAll(labelnumRecomend, spinner);
-        display.setSpacing(5);
+            Spinner<Integer> spinner = new Spinner<>();
+            SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 5);
+            spinner.setValueFactory(valueFactory);
 
-        //Titulo de la canción
-        Label titulo = new Label("If you liked\" " + song + "\" you might like");
-
-        display2.getChildren().add(titulo);
-
-
-        VBox root = new VBox(display, display2);
-        //Lista de canciones
-        ObservableList<String> canciones = FXCollections.observableArrayList(recomendaciones());
-        root.getChildren().add((Node) canciones);
+                valueFactory.valueProperty().addListener((obs, oldValue, newValue) -> {
+                                System.out.println("Nuevo valor del spinner: " + newValue);
+                VistaResultado newVista = new VistaResultado(stage, algoritmo, distancia, song, newValue);
+                newVista.setModelo(modelo);
+                newVista.setControlador(controlador);
 
 
-        //Boton de close
-        Button back = new Button("Close");
-        back.setOnAction(actionEvent -> {
-            stage.close();
-            VistaCanciones vistaCanciones = new VistaCanciones(stage);
-            vistaCanciones.crearGUI();
-        });
+                try {
+                    System.out.println("hola");
+                    newVista.crearGUI();
+                } catch (MasDatosQueGruposException var7) {
+                    throw new RuntimeException(var7);
+                }
+            });
+            display.getChildren().addAll(labelnumRecomend, spinner);
+            display.setSpacing(5);
+
+            //Titulo de la canción
+            Label titulo = new Label("If you liked\" " + song + "\" you might like");
+            display2.getChildren().add(titulo);
 
 
-        root.getChildren().add(back);
+            //Lista de canciones
+            ObservableList<String> canciones = FXCollections.observableArrayList(recomendaciones());
+            ListView cancionesMostradas = new ListView(canciones);
 
-        Scene scene = new Scene(display, 300, 500);
-        stage.setScene(scene);
-        stage.show();
 
+            //Boton de close
+            Button buttonBack = new Button("Close");
+            buttonBack.setOnAction(actionEvent -> {
+                stage.close();
+                VistaCanciones vistaCanciones = new VistaCanciones(stage);
+                vistaCanciones.setControlador(controlador);
+                vistaCanciones.setModelo(modelo);
+                vistaCanciones.crearGUI();
+            });
+
+            VBox root = new VBox(display, display2, cancionesMostradas, buttonBack);
+            root.setSpacing(5);
+
+            Scene scene = new Scene(root, 300, 500);
+            stage.setScene(scene);
+            stage.show();
     }
 
     @Override

@@ -11,6 +11,9 @@ public class ControladorCanciones implements Controlador{
     public void setModelo(final Modelo modelo) {
         this.modelo = modelo;
     }
+    public ControladorCanciones(){
+
+    }
 
     @Override
     public List<String> recomiendaCanciones(String song, String algoritmo, String distancia, int num) throws MasDatosQueGruposException {

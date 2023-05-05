@@ -4,7 +4,6 @@ mvc\modelo\InterrogaModelo.class
 tratamientoDatos\filas\RowWithLabel.class
 tratamientoDatos\lectores\CSV.class
 algoritmos\KNN.class
-mvc\modelo\prueba.class
 mvc\controlador\ControladorCanciones.class
 algoritmos\aplicaciones\SongRecSys.class
 algoritmos\RecSys.class

@@ -14,7 +14,7 @@ import java.util.Map;
 public class ModeloCanciones implements InterrogaModelo {
 
     List<String> songs;
-    private Map<String, RecSys> recomendadores;
+    private final Map<String, RecSys> recomendadores;
 
 
 

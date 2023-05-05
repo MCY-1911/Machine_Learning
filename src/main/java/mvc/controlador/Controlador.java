@@ -1,7 +1,6 @@
 package mvc.controlador;
 
 import mvc.vista.InterrogaVista;
-import mvc.vista.VistaResultado;
 
 import java.util.List;
 

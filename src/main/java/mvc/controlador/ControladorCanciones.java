@@ -1,9 +1,7 @@
 package mvc.controlador;
 
-import algoritmos.MasDatosQueGruposException;
 import mvc.modelo.InterrogaModelo;
 import mvc.vista.InterrogaVista;
-import mvc.vista.VistaResultado;
 
 import java.util.List;
 
@@ -40,8 +38,7 @@ public class ControladorCanciones implements Controlador{
         String distance = preguntaVista.getDistance();
         String song = preguntaVista.getSong();
         int numRecommendations = preguntaVista.getNumRecommendations();
-        List<String> canciones = modelo.getRecomendaciones(algorithm, distance, song, numRecommendations);
-        return canciones;
+        return modelo.getRecomendaciones(algorithm, distance, song, numRecommendations);
     }
 
 

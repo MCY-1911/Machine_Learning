@@ -8,14 +8,13 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import mvc.controlador.Controlador;
-import mvc.modelo.InterrogaModelo;
 
 public class VistaCanciones implements InformaVista {
     private final Stage stage;
     private Controlador controlador;
     ToggleGroup grupoAlgoritmo = new ToggleGroup();
     ToggleGroup grupoDistance = new ToggleGroup();
-    ListView cancionesMostradas;
+    ListView<String> cancionesMostradas;
 
 
 
@@ -56,7 +55,7 @@ public class VistaCanciones implements InformaVista {
         //Lista de canciones
         Label labelLista = new Label("Song Titles");
         ObservableList<String> canciones = FXCollections.observableArrayList(controlador.getCanciones());
-        cancionesMostradas = new ListView(canciones);
+        cancionesMostradas = new ListView<>(canciones);
         display.getChildren().addAll(labelLista, cancionesMostradas);
 
 
@@ -76,7 +75,7 @@ public class VistaCanciones implements InformaVista {
                 // Si los tenemos, los guardamos como atributos de una nueva Vista
                 String algorithm = grupoAlgoritmo.getSelectedToggle().getUserData().toString();
                 String distance = grupoDistance.getSelectedToggle().getUserData().toString();
-                String song = cancionesMostradas.getSelectionModel().getSelectedItem().toString();
+                String song = cancionesMostradas.getSelectionModel().getSelectedItem();
                 VistaResultado vistaRecomendaciones = new VistaResultado(this.stage, algorithm, distance, song);
                 vistaRecomendaciones.setControlador(controlador);
                 controlador.setInterrogaVista(vistaRecomendaciones);

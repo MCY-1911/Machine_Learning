@@ -1,8 +1,6 @@
 package mvc.vista;
 
 import algoritmos.MasDatosQueGruposException;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -59,6 +57,7 @@ public class VistaResultado implements InterrogaVista{
 
 
         //Lista de canciones
+        cancionesRecomendadas.getItems().addAll(controlador.recomiendaCanciones());
         displayGeneral.getChildren().add(cancionesRecomendadas);
 
         valueFactory.valueProperty().addListener( (obs, oldValue, newValue) -> {
@@ -69,9 +68,7 @@ public class VistaResultado implements InterrogaVista{
         // Botón de Close
         Button buttonBack = new Button("Close");
         displayGeneral.getChildren().add(buttonBack);
-        buttonBack.setOnAction(actionEvent -> {
-            ventana.close();
-        });
+        buttonBack.setOnAction(actionEvent -> ventana.close());
 
         Scene scene = new Scene(displayGeneral);
         ventana.setScene(scene);

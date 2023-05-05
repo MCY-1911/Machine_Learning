@@ -13,7 +13,6 @@ import mvc.modelo.InterrogaModelo;
 public class VistaCanciones implements InformaVista {
     private final Stage stage;
     private Controlador controlador;
-    private InterrogaModelo modelo; // Seguramente no usemos esta parte
     ToggleGroup grupoAlgoritmo = new ToggleGroup();
     ToggleGroup grupoDistance = new ToggleGroup();
     ListView cancionesMostradas;
@@ -22,10 +21,6 @@ public class VistaCanciones implements InformaVista {
 
     public void setControlador(Controlador controlador) {
         this.controlador = controlador;
-    }
-
-    public void setModelo(InterrogaModelo modelo) {
-        this.modelo = modelo;
     }
 
     public VistaCanciones(Stage stage) {
@@ -60,7 +55,7 @@ public class VistaCanciones implements InformaVista {
 
         //Lista de canciones
         Label labelLista = new Label("Song Titles");
-        ObservableList<String> canciones = FXCollections.observableArrayList(modelo.getCanciones());
+        ObservableList<String> canciones = FXCollections.observableArrayList(controlador.getCanciones());
         cancionesMostradas = new ListView(canciones);
         display.getChildren().addAll(labelLista, cancionesMostradas);
 
@@ -68,23 +63,21 @@ public class VistaCanciones implements InformaVista {
         //Acción del botón Recommend
         Button recomendar = new Button("Recommend");
         recomendar.setOnAction(actionEvent -> {
-            //Si no están todos los parámetros, avisa al usuario
+            //Si no están todos los parámetros, avisa al usuario con un mensaje de error
             if (grupoAlgoritmo.getSelectedToggle() == null
                     || grupoDistance.getSelectedToggle() == null
                     || cancionesMostradas.getSelectionModel().getSelectedItem() == null) {
-                // Si no están todos los parámetros seleccionados salta un error
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setHeaderText("Missing selection");
                 alert.setContentText("Please select an option for each category.");
                 alert.showAndWait();
             } else {
-                // Si los tenemos los guardamos como atributos de una nueva Vista
+                // Si los tenemos, los guardamos como atributos de una nueva Vista
                 String algorithm = grupoAlgoritmo.getSelectedToggle().getUserData().toString();
                 String distance = grupoDistance.getSelectedToggle().getUserData().toString();
                 String song = cancionesMostradas.getSelectionModel().getSelectedItem().toString();
-                this.stage.close();
-                VistaResultado vistaRecomendaciones = new VistaResultado(this.stage, algorithm, distance, song, this);
+                VistaResultado vistaRecomendaciones = new VistaResultado(this.stage, algorithm, distance, song);
                 vistaRecomendaciones.setControlador(controlador);
                 try {
                     vistaRecomendaciones.crearGUI();
@@ -100,37 +93,4 @@ public class VistaCanciones implements InformaVista {
         this.stage.setScene(scene);
         this.stage.show();
     }
-
-
-
-
-/*
-    // Cuando haces clic el botón Recommend, guarda todas las elecciones en atributos
-        this.selectedSong = (String)cancionesMostradas.getSelectionModel().getSelectedItem();
-    Toggle toggleAlgoritmo = grupoAlgoritmo.getSelectedToggle();
-    Toggle toggleDistancia = grupoDistance.getSelectedToggle();
-
-    //Si están todos los parámetros pasa a la segunda vista
-        if (grupoAlgoritmo.getSelectedToggle() != null && grupoDistance.getSelectedToggle() != null && this.selectedSong != null) {
-        this.stage.close();
-        this.algoritmo = toggleAlgoritmo.getUserData().toString();
-        this.distancia = toggleDistancia.getUserData().toString();
-        VistaResultado vista2 = new VistaResultado(this.stage, this.algoritmo, this.distancia, this.selectedSong, 5);
-        vista2.setControlador(this.controlador);
-        vista2.setModelo(this.modelo);
-        try {
-            vista2.crearGUI();
-        } catch (MasDatosQueGruposException var7) {
-            throw new RuntimeException(var7);
-        }
-
-    } else {
-        // Si no están todos los parámetros marcados salta un error
-        Alert alert = new Alert(AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText("Missing selection");
-        alert.setContentText("Please select an option for each category.");
-        alert.showAndWait();
-    }*/
-
 }

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import mvc.controlador.ControladorCanciones;
 import mvc.modelo.ModeloCanciones;
+import mvc.vista.InterrogaVista;
 import mvc.vista.VistaCanciones;
 
 public class Principal extends Application {
@@ -18,8 +19,8 @@ public class Principal extends Application {
         VistaCanciones impVista = new VistaCanciones(stage);
         ControladorCanciones impControlador = new ControladorCanciones();
         impControlador.setModelo(impModelo);
+        impControlador.setInterrogaVista((InterrogaVista) impVista);
         impVista.setControlador(impControlador);
-        impVista.setModelo(impModelo);
         impVista.crearGUICanciones();
     }
 }

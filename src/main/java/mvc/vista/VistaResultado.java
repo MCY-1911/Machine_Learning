@@ -12,25 +12,25 @@ import mvc.controlador.Controlador;
 
 public class VistaResultado implements InterrogaVista{
 
-    final Stage stage;
+    final Stage ventana;
     String algorithm;
     String distance;
     String song;
+    ListView cancionesRecomendadas;
 
-    Spinner<Integer> spinner = new Spinner<>();
+    Spinner<Integer> spinner;
     int numRecommendations = 0;
 
     // Solo necesitamos una referencia al controlador para conseguir los datos
     Controlador controlador;
-    // Y otro para volver a la vista anterior
-    VistaCanciones vistaCanciones;
 
-    public VistaResultado(final Stage stage, String algorithm, String distance, String song, VistaCanciones vistaCanciones) {
-        this.stage = stage;
+
+    public VistaResultado(final Stage propietario, String algorithm, String distance, String song) {
+        this.ventana = new Stage();
+        ventana.initOwner(propietario);
         this.algorithm = algorithm;
         this.distance = distance;
         this.song = song;
-        this.vistaCanciones = vistaCanciones;
     }
 
     public void setControlador(final Controlador controlador) {
@@ -38,7 +38,7 @@ public class VistaResultado implements InterrogaVista{
     }
 
     public void crearGUI() throws MasDatosQueGruposException {
-        stage.setTitle("Recommend titles");
+        ventana.setTitle("Recommend titles");
 
         HBox displaySpinner = new HBox();
         VBox displayGeneral = new VBox();
@@ -47,7 +47,8 @@ public class VistaResultado implements InterrogaVista{
         Label labelnumRecomend = new Label("Number of remcommendations:");
 
         // Creamos un Spinner con valor por defecto 5
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 5);
+        spinner = new Spinner<>();
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10, 5);
         spinner.setValueFactory(valueFactory);
 
 
@@ -57,31 +58,28 @@ public class VistaResultado implements InterrogaVista{
 
         //Título de la canción
         Label titulo = new Label("If you liked\" " + song + "\" you might like");
-        displayGeneral.getChildren().add(titulo);
+        Label info = new Label("Algorithm: " + algorithm + "Distance: " + distance + "\n");
+        displayGeneral.getChildren().addAll(titulo, info);
 
 
         //Lista de canciones
-        ObservableList<String> canciones = FXCollections.observableArrayList(controlador.getCanciones());
-        ListView cancionesRecomendadas = new ListView(canciones);
         displayGeneral.getChildren().add(cancionesRecomendadas);
 
         valueFactory.valueProperty().addListener( (obs, oldValue, newValue) -> {
-            numRecommendations = newValue;
+            ObservableList<String> canciones = FXCollections.observableArrayList(controlador.getCanciones());
+            cancionesRecomendadas = new ListView(canciones);
         });
 
-        //Boton de Close
+        // Botón de Close
         Button buttonBack = new Button("Close");
         displayGeneral.getChildren().add(buttonBack);
         buttonBack.setOnAction(actionEvent -> {
-            stage.close();
-            vistaCanciones.crearGUICanciones();
+            ventana.close();
         });
 
-
-
         Scene scene = new Scene(displayGeneral);
-        stage.setScene(scene);
-        stage.show();
+        ventana.setScene(scene);
+        ventana.show();
     }
 
 

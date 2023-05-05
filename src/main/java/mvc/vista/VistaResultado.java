@@ -16,13 +16,9 @@ public class VistaResultado implements InterrogaVista{
     String algorithm;
     String distance;
     String song;
-    ListView cancionesRecomendadas;
-
-    Spinner<Integer> spinner;
-    int numRecommendations = 0;
-
-    // Solo necesitamos una referencia al controlador para conseguir los datos
     Controlador controlador;
+    ListView<String> cancionesRecomendadas = new ListView<>();
+    Spinner<Integer> spinner;
 
 
     public VistaResultado(final Stage propietario, String algorithm, String distance, String song) {
@@ -44,7 +40,7 @@ public class VistaResultado implements InterrogaVista{
         VBox displayGeneral = new VBox();
 
         //Número de recomendaciones
-        Label labelnumRecomend = new Label("Number of remcommendations:");
+        Label labelnumRecomend = new Label("Number of recommendations:");
 
         // Creamos un Spinner con valor por defecto 5
         spinner = new Spinner<>();
@@ -58,7 +54,7 @@ public class VistaResultado implements InterrogaVista{
 
         //Título de la canción
         Label titulo = new Label("If you liked\" " + song + "\" you might like");
-        Label info = new Label("Algorithm: " + algorithm + "Distance: " + distance + "\n");
+        Label info = new Label("Algorithm: " + algorithm + " " + "Distance: " + distance + "\n");
         displayGeneral.getChildren().addAll(titulo, info);
 
 
@@ -66,8 +62,8 @@ public class VistaResultado implements InterrogaVista{
         displayGeneral.getChildren().add(cancionesRecomendadas);
 
         valueFactory.valueProperty().addListener( (obs, oldValue, newValue) -> {
-            ObservableList<String> canciones = FXCollections.observableArrayList(controlador.getCanciones());
-            cancionesRecomendadas = new ListView(canciones);
+            cancionesRecomendadas.getItems().clear();
+            cancionesRecomendadas.getItems().addAll(controlador.recomiendaCanciones());
         });
 
         // Botón de Close

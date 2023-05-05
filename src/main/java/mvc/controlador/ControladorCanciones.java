@@ -3,6 +3,7 @@ package mvc.controlador;
 import algoritmos.MasDatosQueGruposException;
 import mvc.modelo.InterrogaModelo;
 import mvc.vista.InterrogaVista;
+import mvc.vista.VistaResultado;
 
 import java.util.List;
 
@@ -15,11 +16,11 @@ public class ControladorCanciones implements Controlador{
     // de que necesita recomendaciones, y será el controlador el encargado de preguntar al modelo y devolver a la Vista
     InterrogaModelo modelo;
 
-
-
     public void setModelo(InterrogaModelo modelo) {
         this.modelo = modelo;
     }
+
+    @Override
     public void setInterrogaVista(InterrogaVista vista) {
         this.preguntaVista = vista;
     }
@@ -42,5 +43,6 @@ public class ControladorCanciones implements Controlador{
         List<String> canciones = modelo.getRecomendaciones(algorithm, distance, song, numRecommendations);
         return canciones;
     }
+
 
 }

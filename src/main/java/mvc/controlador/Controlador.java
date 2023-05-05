@@ -1,5 +1,8 @@
 package mvc.controlador;
 
+import mvc.vista.InterrogaVista;
+import mvc.vista.VistaResultado;
+
 import java.util.List;
 
 public interface Controlador {
@@ -10,4 +13,5 @@ public interface Controlador {
     // Por esa razón hemos decidido que el Controlador actuará de intermediario para obtener información
     List<String> getCanciones();
     List<String> recomiendaCanciones();
+    void setInterrogaVista(InterrogaVista vista);
 }

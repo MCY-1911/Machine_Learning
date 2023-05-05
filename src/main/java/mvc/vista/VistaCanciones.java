@@ -79,6 +79,7 @@ public class VistaCanciones implements InformaVista {
                 String song = cancionesMostradas.getSelectionModel().getSelectedItem().toString();
                 VistaResultado vistaRecomendaciones = new VistaResultado(this.stage, algorithm, distance, song);
                 vistaRecomendaciones.setControlador(controlador);
+                controlador.setInterrogaVista(vistaRecomendaciones);
                 try {
                     vistaRecomendaciones.crearGUI();
                 } catch (MasDatosQueGruposException e) {

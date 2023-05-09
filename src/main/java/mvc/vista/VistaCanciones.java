@@ -6,10 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import mvc.controlador.Controlador;
 
 public class VistaCanciones implements InformaVista {
@@ -77,14 +79,29 @@ public class VistaCanciones implements InformaVista {
         cancionesMostradas = new ListView<>(canciones);
         display.getChildren().addAll(labelLista, cancionesMostradas);
 
-        cancionesMostradas.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        //Añadimos un tooltip a la lista
+        Tooltip consejo = new Tooltip("Double click for recommendations bases on this song");
+        cancionesMostradas.setTooltip(consejo);
+
+
+        // Escuchador para comprobar si todas las opciones estçan listas y entonces habilitar el botón Recommend
+        cancionesMostradas.getSelectionModel().selectedItemProperty().addListener((item, valorAnterior, valorActual) -> {
             if(isAllSelected())
                 recomendar.setDisable(false);
+            // Además, actualizamos el texto de dicho botón
+            recomendar.setText("Recommend on " + valorActual + "...");
         });
 
-        recomendar.setOnAction(actionEvent -> {
-            createRecommendationView();
+        // Escuchador para el doble-clic
+        cancionesMostradas.setOnMouseClicked( e -> {
+            if (e.getButton().equals(MouseButton.PRIMARY) && e.getClickCount() == 2 && isAllSelected()) {
+               createRecommendationView();
+            }
         });
+
+
+
+        recomendar.setOnAction(actionEvent -> createRecommendationView());
 
         display.getChildren().add(recomendar);
         display.setSpacing(5);
@@ -117,6 +134,7 @@ public class VistaCanciones implements InformaVista {
         }
     }
 
+    // Por si se desea cambiar la forma de avisar al usuario de que le faltan opciones por seleccionar
     private void alertUser() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");

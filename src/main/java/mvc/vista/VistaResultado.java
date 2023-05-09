@@ -1,6 +1,7 @@
 package mvc.vista;
 
 import algoritmos.MasDatosQueGruposException;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -42,9 +43,15 @@ public class VistaResultado implements InterrogaVista{
 
         // Creamos un Spinner con valor por defecto 5
         spinner = new Spinner<>();
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 10, 5);
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 5);
         spinner.setValueFactory(valueFactory);
-
+        spinner.setEditable(true);
+        // Añadir un filtro para aceptar solo números
+        spinner.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                spinner.getEditor().setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
 
         displaySpinner.getChildren().addAll(labelnumRecomend, spinner);
         displaySpinner.setSpacing(5);
@@ -52,8 +59,7 @@ public class VistaResultado implements InterrogaVista{
 
         //Título de la canción
         Label titulo = new Label("If you liked\" " + song + "\" you might like");
-        Label info = new Label("Algorithm: " + algorithm + " " + "Distance: " + distance + "\n");
-        displayGeneral.getChildren().addAll(titulo, info);
+        displayGeneral.getChildren().addAll(titulo);
 
 
         //Lista de canciones
@@ -67,8 +73,11 @@ public class VistaResultado implements InterrogaVista{
 
         // Botón de Close
         Button buttonBack = new Button("Close");
-        displayGeneral.getChildren().add(buttonBack);
         buttonBack.setOnAction(actionEvent -> ventana.close());
+
+        displayGeneral.getChildren().add(buttonBack);
+        displayGeneral.setSpacing(5);
+        displayGeneral.setPadding(new Insets(10,10,10,10));
 
         Scene scene = new Scene(displayGeneral);
         ventana.setScene(scene);

@@ -19,6 +19,7 @@ public class KNN implements Algorithm<TableWithLabels,Integer, List<Double>>, Di
     }
 
 
+
     @Override
     public Integer estimate(List<Double> data) {
 

@@ -17,10 +17,8 @@ public class Principal extends Application {
         ModeloCanciones impModelo = new ModeloCanciones();
         VistaCanciones impVista = new VistaCanciones(stage);
         ControladorCanciones impControlador = new ControladorCanciones();
-
         impControlador.setModelo(impModelo);
         impVista.setControlador(impControlador);
-
         impVista.crearGUICanciones();
     }
 }

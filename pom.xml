@@ -25,7 +25,7 @@
                 <configuration>
                     <mainClass>mvc.Arrancador.Principal</mainClass>
                     <!--                    Esta linea depende de tu equipo-->
-                    <executable>C:\Users\al415647\.jdks\corretto-19.0.2\bin\java.exe</executable>
+                    <executable>C:\Users\aleja\.jdks\corretto-19.0.2\bin\java.exe</executable>
                     </configuration>
             </plugin>
         </plugins>

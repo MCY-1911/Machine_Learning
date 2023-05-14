@@ -4,6 +4,7 @@ import tratamientoDatos.tablas.TableWithLabels;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class CSVLabeledFileReader extends CSVUnlabeledFileReader{
@@ -32,10 +33,7 @@ public class CSVLabeledFileReader extends CSVUnlabeledFileReader{
     @Override
     void processData(String data) {
         String[] filaEnTexto = data.split(",");
-        Double[] filaEnDouble = new Double[filaEnTexto.length-1];
-        for (int i = 0; i < filaEnDouble.length; i++) {
-            filaEnDouble[i] = Double.parseDouble(filaEnTexto[i]);
-        }
+        Double[] filaEnDouble = convertADoubleArray(Arrays.copyOf(filaEnTexto, filaEnTexto.length-1));
         String clase = filaEnTexto[filaEnTexto.length-1];
         ((TableWithLabels) datos).add(filaEnDouble, clase);
     }

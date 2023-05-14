@@ -30,11 +30,16 @@ public class CSVUnlabeledFileReader extends ReaderTemplate{
     @Override
     void processData(String data) {
         String[] filaEnTexto = data.split(",");
-        Double[] filaEnDouble = new Double[filaEnTexto.length];
-        int indice = 0;
-        for (String dato : filaEnTexto)
-            filaEnDouble[indice++] = Double.parseDouble(dato);
+        Double[] filaEnDouble = convertADoubleArray(filaEnTexto);
         datos.add(filaEnDouble);
+    }
+
+    protected Double[] convertADoubleArray(String[] filaEnTexto) {
+        Double[] filaEnDouble = new Double[filaEnTexto.length];
+        for (int i = 0; i < filaEnTexto.length; i++) {
+            filaEnDouble[i] = Double.parseDouble(filaEnTexto[i]);
+        }
+        return filaEnDouble;
     }
 
     @Override

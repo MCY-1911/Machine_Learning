@@ -1,18 +1,15 @@
 package algoritmos.aplicaciones;
 
-import algoritmos.KNN;
-import algoritmos.Kmeans;
-import algoritmos.RecSys;
-import algoritmos.Algorithm;
+import algoritmos.*;
+import mates.Distance;
 import mates.EuclideanDistance;
+import mates.ManhattanDistance;
 import tratamientoDatos.lectores.CSV;
+import tratamientoDatos.lectores.LectorSongs;
 import tratamientoDatos.tablas.Table;
 
-import java.io.BufferedReader;
+
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +17,7 @@ import java.util.Map;
 class SongRecSys {
     private RecSys recsys;
 
-    SongRecSys(String method) throws Exception {
+    SongRecSys(String method, String distance) throws Exception {
         String sep = System.getProperty("file.separator");
         String ruta = "src" + File.separator + "Files" +File.separator +"songs_files"+File.separator;
 
@@ -31,7 +28,13 @@ class SongRecSys {
         filenames.put("kmeans"+"train",ruta+sep+"songs_train_withoutnames.csv");
         filenames.put("kmeans"+"test",ruta+sep+"songs_test_withoutnames.csv");
 
+        // Distances
+        Map<String, Distance> distances = new HashMap<>();
+        distances.put("euclidean", new EuclideanDistance());
+        distances.put("manhattan", new ManhattanDistance());
+
         // Algorithms
+        // La distancia Euclidiana es un placeholder
         Map<String, Algorithm> algorithms = new HashMap<>();
         algorithms.put("knn",new KNN(new EuclideanDistance()));
         algorithms.put("kmeans",new Kmeans(15, 200, 4321, new EuclideanDistance()));
@@ -46,36 +49,24 @@ class SongRecSys {
         }
 
         // Names of items
-        List<String> names = readNames(ruta+sep+"songs_test_names.csv");
+        List<String> names = LectorSongs.readNames(ruta+sep+"songs_test_names.csv");
 
         // Start the RecSys
-        this.recsys = new RecSys(algorithms.get(method));
+        DistanceClient algorithm = (DistanceClient) algorithms.get(method);
+        algorithm.setDistance(distances.get(distance));
+        this.recsys = new RecSys((Algorithm) algorithm);
         this.recsys.train(tables.get(method+"train"));
         this.recsys.run(tables.get(method+"test"), names);
 
         // Given a liked item, ask for a number of recomendations
-        String liked_name = "Lootkemia";
+        String liked_name = "JUNKY";
         List<String> recommended_items = this.recsys.recommend(liked_name,7);
 
         // Display the recommendation text (to be replaced with graphical display with JavaFX implementation)
-
-
-
         reportRecommendation(liked_name,recommended_items);
 
     }
 
-    private List<String> readNames(String fileOfItemNames) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(fileOfItemNames));
-        String line;
-        List<String> names = new ArrayList<>();
-
-        while ((line = br.readLine()) != null) {
-            names.add(line);
-        }
-        br.close();
-        return names;
-    }
 
     private void reportRecommendation(String liked_name, List<String> recommended_items) {
         System.out.println("If you liked \""+liked_name+"\" then you might like:");
@@ -86,9 +77,9 @@ class SongRecSys {
     }
 
     public static void main(String[] args) throws Exception {
-        new SongRecSys("knn");
-        new SongRecSys("kmeans");
-
-
+        new SongRecSys("knn","euclidean");
+        new SongRecSys("knn","manhattan");
+        new SongRecSys("kmeans", "euclidean");
+        new SongRecSys("kmeans", "manhattan");
     }
 }

@@ -11,7 +11,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import mvc.controlador.Controlador;
 
 public class VistaCanciones implements InformaVista {

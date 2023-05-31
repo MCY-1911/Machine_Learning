@@ -6,12 +6,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import mvc.controlador.Controlador;
 
 public class VistaResultado implements InterrogaVista{
 
-    final Stage ventana;
+    final Stage escenario;
+    final VistaCanciones vistaPrincipal;
     String algorithm;
     String distance;
     String song;
@@ -20,12 +23,15 @@ public class VistaResultado implements InterrogaVista{
     Spinner<Integer> spinner;
 
 
-    public VistaResultado(final Stage propietario, String algorithm, String distance, String song) {
-        this.ventana = new Stage();
-        ventana.initOwner(propietario);
+    public VistaResultado(VistaCanciones vistaPrincipal, String algorithm, String distance, String song) {
+        this.escenario = new Stage();
+        this.vistaPrincipal = vistaPrincipal;
+        escenario.initOwner(vistaPrincipal.getStage());
         this.algorithm = algorithm;
         this.distance = distance;
         this.song = song;
+
+        escenario.setOnCloseRequest(event -> volverAVentanaPrincipal());
     }
 
     public void setControlador(final Controlador controlador) {
@@ -33,57 +39,77 @@ public class VistaResultado implements InterrogaVista{
     }
 
     public void crearGUI() throws MasDatosQueGruposException {
-        ventana.setTitle("Recommend titles");
-
-        HBox displaySpinner = new HBox();
+        escenario.setTitle("Recommend titles: " + song);
         VBox displayGeneral = new VBox();
 
-        //Número de recomendaciones
-        Label labelnumRecomend = new Label("Number of recommendations:");
-
-        // Creamos un Spinner con valor por defecto 5
-        spinner = new Spinner<>();
-        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 5);
-        spinner.setValueFactory(valueFactory);
-        spinner.setEditable(true);
-        // Añadir un filtro para aceptar solo números
-        spinner.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                spinner.getEditor().setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-
-        displaySpinner.getChildren().addAll(labelnumRecomend, spinner);
-        displaySpinner.setSpacing(5);
-        displayGeneral.getChildren().add(displaySpinner);
-
-        //Título de la canción
-        Label titulo = new Label("If you liked\" " + song + "\" you might like");
-        displayGeneral.getChildren().addAll(titulo);
-
+        crearTitulo(displayGeneral);
+        crearSpinner(displayGeneral);
 
         //Lista de canciones
         cancionesRecomendadas.getItems().addAll(controlador.recomiendaCanciones());
         displayGeneral.getChildren().add(cancionesRecomendadas);
 
+        crearBotonClose(displayGeneral);
+        displayGeneral.setSpacing(5);
+        displayGeneral.setPadding(new Insets(10,10,10,10));
+
+        Scene scene = new Scene(displayGeneral);
+        escenario.setScene(scene);
+        escenario.show();
+    }
+
+    private void crearTitulo(VBox displayGeneral) {
+        //Título de la canción
+        Label preTitulo = new Label("If you liked:");
+        Label titulo = new Label(song);
+        titulo.setFont(Font.font("Arial", FontWeight.BOLD, 14));
+        Label postTitulo = new Label("You might like");
+        displayGeneral.getChildren().addAll(preTitulo,titulo,postTitulo);
+    }
+
+    private void crearSpinner(VBox displayGeneral) {
+
+        HBox displaySpinner = new HBox();
+
+        //Texto para número de recomendaciones
+        Label etiquetaNumeroRecomendaciones = new Label("Number of recommendations:");
+
+        // Creamos un Spinner con valor por defecto 5
+        spinner = new Spinner<>();
+        SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 100, 5);
+        spinner.setValueFactory(valueFactory);
+
+        // Añadir un filtro para aceptar solo números
+        spinner.setEditable(true);
+        spinner.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                spinner.getEditor().setText(newValue.replaceAll("\\D", ""));
+            }
+        });
+
+        // Escuchador para obtener las recomendaciones dinámicamente
         valueFactory.valueProperty().addListener( (obs, oldValue, newValue) -> {
             cancionesRecomendadas.getItems().clear();
             cancionesRecomendadas.getItems().addAll(controlador.recomiendaCanciones());
         });
 
-        // Botón de Close
-        Button buttonBack = new Button("Close");
-        buttonBack.setOnAction(actionEvent -> ventana.close());
-
-        displayGeneral.getChildren().add(buttonBack);
-        displayGeneral.setSpacing(5);
-        displayGeneral.setPadding(new Insets(10,10,10,10));
-
-        Scene scene = new Scene(displayGeneral);
-        ventana.setScene(scene);
-        ventana.show();
+        // Lo agregamos a la escena
+        displaySpinner.getChildren().addAll(etiquetaNumeroRecomendaciones, spinner);
+        displaySpinner.setSpacing(5);
+        displayGeneral.getChildren().add(displaySpinner);
     }
 
+    private void crearBotonClose(VBox displayGeneral) {
+        Button buttonBack = new Button("Close");
+        buttonBack.setOnAction(actionEvent -> volverAVentanaPrincipal());
+        displayGeneral.getChildren().add(buttonBack);
+    }
+
+    private void volverAVentanaPrincipal() {
+        escenario.close();
+        if (vistaPrincipal.getPoliticaSeleccion() == SelectionMode.SINGLE)
+            vistaPrincipal.habilitarVentanaPrincipal();
+    }
 
     @Override
     public String getAlgorithm() {

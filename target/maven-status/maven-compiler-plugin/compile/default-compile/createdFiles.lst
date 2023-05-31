@@ -5,6 +5,7 @@ tratamientoDatos\filas\RowWithLabel.class
 tratamientoDatos\lectores\CSV.class
 algoritmos\KNN.class
 mvc\controlador\ControladorCanciones.class
+mvc\Arrancador\Arrancador.class
 algoritmos\aplicaciones\SongRecSys.class
 algoritmos\RecSys.class
 tratamientoDatos\tablas\Table.class
@@ -20,7 +21,6 @@ tratamientoDatos\tablas\TableWithLabels.class
 tratamientoDatos\TablesPrints.class
 algoritmos\Kmeans.class
 algoritmos\SaveTable.class
-mvc\Arrancador\Principal.class
 tratamientoDatos\filas\Row.class
 mates\PuntosDiferentesDimensiones.class
 mvc\modelo\ModeloCanciones.class

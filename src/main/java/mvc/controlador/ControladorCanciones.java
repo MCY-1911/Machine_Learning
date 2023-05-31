@@ -28,11 +28,6 @@ public class ControladorCanciones implements Controlador{
     }
 
     @Override
-    public List<String> getCanciones() {
-        return modelo.getCanciones();
-    }
-
-    @Override
     public List<String> recomiendaCanciones() {
         String algorithm = preguntaVista.getAlgorithm();
         String distance = preguntaVista.getDistance();

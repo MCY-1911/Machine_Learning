@@ -1,11 +1,13 @@
 package tratamientoDatos;
 
 import tratamientoDatos.lectores.CSV;
+import tratamientoDatos.lectores.LectorSongs;
 import tratamientoDatos.tablas.Table;
 import tratamientoDatos.tablas.TableWithLabels;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import static tratamientoDatos.tablas.Table.TABLA_NULA;

@@ -15,14 +15,15 @@ public class Arrancador extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        ModeloCanciones impModelo = new ModeloCanciones();
         VistaCanciones impVista = new VistaCanciones(stage);
-        //Podemos elegir entre poder mostrar varias ventanas de canciones recomendadas o solo una a la vez
-        impVista.setPoliticaSeleccion(SelectionMode.SINGLE);
         ControladorCanciones impControlador = new ControladorCanciones();
+        ModeloCanciones impModelo = new ModeloCanciones();
+        //Podemos elegir entre poder mostrar varias ventanas de canciones recomendadas o solo una a la vez
         impControlador.setModelo(impModelo);
         impVista.setControlador(impControlador);
         impVista.setModelo(impModelo);
+
+        impVista.setPoliticaSeleccion(SelectionMode.MULTIPLE);
         impVista.crearGUICanciones();
     }
 }

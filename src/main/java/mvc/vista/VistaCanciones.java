@@ -149,8 +149,8 @@ public class VistaCanciones implements InformaVista {
         String distance = grupoDistance.getSelectedToggle().getUserData().toString();
         String song = cancionesMostradas.getSelectionModel().getSelectedItem();
         VistaResultado vistaRecomendaciones = new VistaResultado(this, algorithm, distance, song);
-        vistaRecomendaciones.setControlador(controlador);
-        controlador.setInterrogaVista(vistaRecomendaciones);
+        vistaRecomendaciones.setModelo(modelo);
+        modelo.setVista(vistaRecomendaciones);
         try {
             vistaRecomendaciones.crearGUI();
             if (politicaSeleccion==SelectionMode.SINGLE)

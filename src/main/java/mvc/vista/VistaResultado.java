@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import mvc.controlador.Controlador;
+import mvc.modelo.InterrogaModelo;
 
 public class VistaResultado implements InterrogaVista{
 
@@ -18,7 +18,7 @@ public class VistaResultado implements InterrogaVista{
     String algorithm;
     String distance;
     String song;
-    Controlador controlador;
+    InterrogaModelo modelo;
     ListView<String> cancionesRecomendadas = new ListView<>();
     Spinner<Integer> spinner;
 
@@ -34,8 +34,8 @@ public class VistaResultado implements InterrogaVista{
         escenario.setOnCloseRequest(event -> volverAVentanaPrincipal());
     }
 
-    public void setControlador(final Controlador controlador) {
-        this.controlador = controlador;
+    public void setModelo(InterrogaModelo modelo) {
+        this.modelo = modelo;
     }
 
     public void crearGUI() throws MasDatosQueGruposException {
@@ -46,7 +46,7 @@ public class VistaResultado implements InterrogaVista{
         crearSpinner(displayGeneral);
 
         //Lista de canciones
-        cancionesRecomendadas.getItems().addAll(controlador.recomiendaCanciones());
+        cancionesRecomendadas.getItems().addAll(modelo.getRecomendaciones());
         displayGeneral.getChildren().add(cancionesRecomendadas);
 
         crearBotonClose(displayGeneral);
@@ -90,7 +90,7 @@ public class VistaResultado implements InterrogaVista{
         // Escuchador para obtener las recomendaciones dinámicamente
         valueFactory.valueProperty().addListener( (obs, oldValue, newValue) -> {
             cancionesRecomendadas.getItems().clear();
-            cancionesRecomendadas.getItems().addAll(controlador.recomiendaCanciones());
+            cancionesRecomendadas.getItems().addAll(modelo.getRecomendaciones());
         });
 
         // Lo agregamos a la escena

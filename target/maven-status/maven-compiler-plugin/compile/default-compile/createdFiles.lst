@@ -7,6 +7,7 @@ algoritmos\KNN.class
 mvc\controlador\ControladorCanciones.class
 mvc\Arrancador\Arrancador.class
 algoritmos\aplicaciones\SongRecSys.class
+mvc\modelo\CambiaModelo.class
 algoritmos\RecSys.class
 tratamientoDatos\tablas\Table.class
 mvc\vista\VistaCanciones.class

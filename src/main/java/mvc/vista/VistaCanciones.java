@@ -1,6 +1,6 @@
 package mvc.vista;
 
-import algoritmos.MasDatosQueGruposException;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -14,15 +14,18 @@ import javafx.stage.Stage;
 import mvc.controlador.Controlador;
 import mvc.modelo.InterrogaModelo;
 
-public class VistaCanciones implements InformaVista {
+
+public class VistaCanciones implements InformaVista, InterrogaVista {
     private final Stage stage;
-    SelectionMode politicaSeleccion = SelectionMode.MULTIPLE;
     private Controlador controlador;
     private InterrogaModelo modelo;
+    private VistaResultado vistaResultado;
+
     VBox display = new VBox();
     ToggleGroup grupoAlgoritmo = new ToggleGroup();
     ToggleGroup grupoDistance = new ToggleGroup();
     ListView<String> cancionesMostradas;
+    Button recomendar;
 
 
     public VistaCanciones(Stage stage) {
@@ -41,25 +44,15 @@ public class VistaCanciones implements InformaVista {
         this.modelo = modelo;
     }
 
-    public SelectionMode getPoliticaSeleccion() {
-        return politicaSeleccion;
-    }
-
-    public void setPoliticaSeleccion(SelectionMode politicaSeleccion) {
-        this.politicaSeleccion = politicaSeleccion;
-    }
-
     public void crearGUICanciones() {
 
         stage.setTitle("Song Recommender");
 
-        Button recomendar = new Button("Recommend");
-        recomendar.setDisable(true);
-        recomendar.setOnAction(actionEvent -> createRecommendationView());
 
-        crearOpcionesAlgoritmo(recomendar);
-        crearOpcionesDistancia(recomendar);
-        crearListaCanciones(recomendar);
+        crearBotonRecomendar();
+        crearOpcionesAlgoritmo();
+        crearOpcionesDistancia();
+        crearListaCanciones();
 
         display.getChildren().add(recomendar);
         display.setSpacing(5);
@@ -70,7 +63,13 @@ public class VistaCanciones implements InformaVista {
         this.stage.show();
     }
 
-    private void crearOpcionesAlgoritmo(Button recomendar) {
+    private void crearBotonRecomendar() {
+        recomendar = new Button("Recommend");
+        recomendar.setDisable(true);
+        recomendar.setOnAction(actionEvent -> createRecommendationView());
+    }
+
+    private void crearOpcionesAlgoritmo() {
         //Primer título con los botones
         Label labelAlgoritmo = new Label("Recommendation Type");
         labelAlgoritmo.setFont(Font.font("Arial",FontWeight.BOLD, 14));
@@ -89,7 +88,7 @@ public class VistaCanciones implements InformaVista {
         });
     }
 
-    private void crearOpcionesDistancia(Button recomendar) {
+    private void crearOpcionesDistancia() {
         //Segundo título con los botones
         Label labelDistance = new Label("Distance Type");
         labelDistance.setFont(Font.font("Arial",FontWeight.BOLD, 14));
@@ -108,13 +107,16 @@ public class VistaCanciones implements InformaVista {
         });
     }
 
-    private void crearListaCanciones(Button recomendar) {
-        //Lista de canciones
+    private void crearListaCanciones() {
+
+        // Etiqueta del apartado
         Label labelLista = new Label("Song Titles");
         labelLista.setFont(Font.font("Arial",FontWeight.BOLD, 14));
-        ObservableList<String> canciones = FXCollections.observableArrayList(modelo.getCanciones());
-        cancionesMostradas = new ListView<>(canciones);
-        display.getChildren().addAll(labelLista, cancionesMostradas);
+        display.getChildren().addAll(labelLista);
+
+        // Listado de canciones
+        controlador.pideCanciones();
+        display.getChildren().addAll(cancionesMostradas);
 
         //Añadimos un tooltip a la lista
         Tooltip consejo = new Tooltip("Double click for recommendations bases on this song");
@@ -136,30 +138,48 @@ public class VistaCanciones implements InformaVista {
         });
     }
 
-    private boolean isAllSelected() {
-       return (grupoAlgoritmo.getSelectedToggle() != null
-                && grupoDistance.getSelectedToggle() != null
-                && cancionesMostradas.getSelectionModel().getSelectedItem() != null);
-
-    }
-
     private void createRecommendationView() {
-        // Si los tenemos, los guardamos como atributos de una nueva Vista
-        String algorithm = grupoAlgoritmo.getSelectedToggle().getUserData().toString();
-        String distance = grupoDistance.getSelectedToggle().getUserData().toString();
-        String song = cancionesMostradas.getSelectionModel().getSelectedItem();
-        VistaResultado vistaRecomendaciones = new VistaResultado(this, algorithm, distance, song);
-        vistaRecomendaciones.setModelo(modelo);
-        modelo.setVista(vistaRecomendaciones);
-        try {
-            vistaRecomendaciones.crearGUI();
-            if (politicaSeleccion==SelectionMode.SINGLE)
-                deshabilitarVentanaPrincipal();
-        } catch (MasDatosQueGruposException e) {
-            e.printStackTrace();
-        }
+        // Ligamos la subclase, para otro programador, el uso de estas dos clases de ve como usar solo esta
+        vistaResultado = new VistaResultado(this);
+        vistaResultado.crearGUI();
+        deshabilitarVentanaPrincipal();
     }
 
+    // Métodos que necesita el Modelo
+    @Override
+    public void listaCanciones() {
+        ObservableList<String> canciones = FXCollections.observableArrayList(modelo.getCanciones());
+        cancionesMostradas = new ListView<>(canciones);
+    }
+
+    @Override
+    public void listaRecomendaciones() {
+        vistaResultado.listaRecomendaciones(modelo.getRecomendaciones());
+    }
+
+
+    // Métodos que necesita el Controlador
+    @Override
+    public String getAlgorithm() {
+        return grupoAlgoritmo.getSelectedToggle().getUserData().toString();
+    }
+
+    @Override
+    public String getDistance() {
+        return grupoDistance.getSelectedToggle().getUserData().toString();
+    }
+
+    @Override
+    public String getSong() {
+        return cancionesMostradas.getSelectionModel().getSelectedItem();
+    }
+
+    @Override
+    public int getNumRecommendations() {
+        return vistaResultado.getNumRecommendations();
+    }
+
+    // Métodos necesarios por VistaResultado
     private void deshabilitarVentanaPrincipal() {
         display.setDisable(true);
         stage.getScene().getRoot().setStyle("-fx-opacity: 0.5;");
@@ -168,5 +188,15 @@ public class VistaCanciones implements InformaVista {
     public void habilitarVentanaPrincipal() {
         display.setDisable(false);
         stage.getScene().getRoot().setStyle("-fx-opacity: 1.0;");
+    }
+
+    private boolean isAllSelected() {
+        return (grupoAlgoritmo.getSelectedToggle() != null
+                && grupoDistance.getSelectedToggle() != null
+                && cancionesMostradas.getSelectionModel().getSelectedItem() != null);
+    }
+
+    void llamaControladorParaRecomendaciones(){
+        controlador.pideRecomendaciones();
     }
 }

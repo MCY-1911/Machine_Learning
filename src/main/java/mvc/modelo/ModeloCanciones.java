@@ -3,7 +3,7 @@ package mvc.modelo;
 import algoritmos.*;
 import mates.EuclideanDistance;
 import mates.ManhattanDistance;
-import mvc.vista.InterrogaVista;
+import mvc.vista.InformaVista;
 import tratamientoDatos.lectores.*;
 import tratamientoDatos.tablas.Table;
 
@@ -14,14 +14,10 @@ import java.util.Map;
 
 public class ModeloCanciones implements InterrogaModelo, CambiaModelo {
 
-    List<String> songs;
     private final Map<String, RecSys> recomendadores;
-    private InterrogaVista vista;
-
-    @Override
-    public void setVista(InterrogaVista vista) {
-        this.vista = vista;
-    }
+    List<String> songs;
+    List<String> recommendations;
+    private InformaVista vista;
 
     public ModeloCanciones() throws IOException, MasDatosQueGruposException {
         // Ruta genérica a los conjuntos de datos
@@ -61,17 +57,29 @@ public class ModeloCanciones implements InterrogaModelo, CambiaModelo {
 
     }
 
+    public void setVista(InformaVista vista) {
+        this.vista = vista;
+    }
+
+
+    @Override
+    public void avisaAVistaDeCanciones() {
+        vista.listaCanciones();
+    }
+
     @Override
     public List<String> getCanciones() {
         return songs;
     }
 
     @Override
+    public void buscaRecomendacionesYAvisaVista(String algorithm, String distance, String song, int numRecommendations) {
+        recommendations = recomendadores.get(algorithm + "#" + distance).recommend(song, numRecommendations);
+        vista.listaRecomendaciones();
+    }
+
+    @Override
     public List<String> getRecomendaciones() {
-        String algorithm = vista.getAlgorithm();
-        String distance = vista.getDistance();
-        String song = vista.getSong();
-        int numRecommendations = vista.getNumRecommendations();
-        return recomendadores.get(algorithm + "#" + distance).recommend(song, numRecommendations);
+        return recommendations;
     }
 }

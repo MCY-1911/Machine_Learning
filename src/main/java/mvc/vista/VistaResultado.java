@@ -1,6 +1,5 @@
 package mvc.vista;
 
-import algoritmos.MasDatosQueGruposException;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -9,47 +8,38 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
-import mvc.modelo.InterrogaModelo;
 
-public class VistaResultado implements InterrogaVista{
+
+import java.util.List;
+
+public class VistaResultado {
 
     final Stage escenario;
     final VistaCanciones vistaPrincipal;
-    String algorithm;
-    String distance;
-    String song;
-    InterrogaModelo modelo;
     ListView<String> cancionesRecomendadas = new ListView<>();
     Spinner<Integer> spinner;
 
 
-    public VistaResultado(VistaCanciones vistaPrincipal, String algorithm, String distance, String song) {
+    public VistaResultado(VistaCanciones vistaPrincipal) {
         this.escenario = new Stage();
         this.vistaPrincipal = vistaPrincipal;
         escenario.initOwner(vistaPrincipal.getStage());
-        this.algorithm = algorithm;
-        this.distance = distance;
-        this.song = song;
-
         escenario.setOnCloseRequest(event -> volverAVentanaPrincipal());
     }
 
-    public void setModelo(InterrogaModelo modelo) {
-        this.modelo = modelo;
-    }
 
-    public void crearGUI() throws MasDatosQueGruposException {
-        escenario.setTitle("Recommend titles: " + song);
+    public void crearGUI() {
+        escenario.setTitle("Recommend titles: " + vistaPrincipal.getSong());
         VBox displayGeneral = new VBox();
 
         crearTitulo(displayGeneral);
         crearSpinner(displayGeneral);
 
-        //Lista de canciones
-        cancionesRecomendadas.getItems().addAll(modelo.getRecomendaciones());
+        //Lista de canciones recomendadas
         displayGeneral.getChildren().add(cancionesRecomendadas);
+        vistaPrincipal.llamaControladorParaRecomendaciones();
 
-        crearBotonClose(displayGeneral);
+        crearClose(displayGeneral);
         displayGeneral.setSpacing(5);
         displayGeneral.setPadding(new Insets(10,10,10,10));
 
@@ -61,7 +51,7 @@ public class VistaResultado implements InterrogaVista{
     private void crearTitulo(VBox displayGeneral) {
         //Título de la canción
         Label preTitulo = new Label("If you liked:");
-        Label titulo = new Label(song);
+        Label titulo = new Label(vistaPrincipal.getSong());
         titulo.setFont(Font.font("Arial", FontWeight.BOLD, 14));
         Label postTitulo = new Label("You might like");
         displayGeneral.getChildren().addAll(preTitulo,titulo,postTitulo);
@@ -88,10 +78,7 @@ public class VistaResultado implements InterrogaVista{
         });
 
         // Escuchador para obtener las recomendaciones dinámicamente
-        valueFactory.valueProperty().addListener( (obs, oldValue, newValue) -> {
-            cancionesRecomendadas.getItems().clear();
-            cancionesRecomendadas.getItems().addAll(modelo.getRecomendaciones());
-        });
+        valueFactory.valueProperty().addListener( (obs, oldValue, newValue) -> vistaPrincipal.llamaControladorParaRecomendaciones());
 
         // Lo agregamos a la escena
         displaySpinner.getChildren().addAll(etiquetaNumeroRecomendaciones, spinner);
@@ -99,7 +86,7 @@ public class VistaResultado implements InterrogaVista{
         displayGeneral.getChildren().add(displaySpinner);
     }
 
-    private void crearBotonClose(VBox displayGeneral) {
+    private void crearClose(VBox displayGeneral) {
         Button buttonBack = new Button("Close");
         buttonBack.setOnAction(actionEvent -> volverAVentanaPrincipal());
         displayGeneral.getChildren().add(buttonBack);
@@ -107,27 +94,15 @@ public class VistaResultado implements InterrogaVista{
 
     private void volverAVentanaPrincipal() {
         escenario.close();
-        if (vistaPrincipal.getPoliticaSeleccion() == SelectionMode.SINGLE)
-            vistaPrincipal.habilitarVentanaPrincipal();
+        vistaPrincipal.habilitarVentanaPrincipal();
     }
 
-    @Override
-    public String getAlgorithm() {
-        return algorithm;
-    }
-
-    @Override
-    public String getDistance() {
-        return distance;
-    }
-
-    @Override
-    public String getSong() {
-        return song;
-    }
-
-    @Override
     public int getNumRecommendations() {
         return spinner.getValue();
+    }
+
+    public void listaRecomendaciones(List<String> recomendaciones) {
+        cancionesRecomendadas.getItems().clear();
+        cancionesRecomendadas.getItems().addAll(recomendaciones);
     }
 }

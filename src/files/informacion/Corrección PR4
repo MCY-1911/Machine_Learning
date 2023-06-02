@@ -1,9 +1,0 @@
-//
-// APTO
-//
-// - abrir cada vez una nueva ventana para cada recomendación puede ser una elección, pero entonces, hace falta identificar de una manera o otra la ventana. En tu aplicación, tenemos muchas ventanas, todas “Recommended Titles”, y al final, no sabemos cual ventana recomendada basado en que canción.
-// - getCanciones (en controlador): no es responsabilidad del controlador devolver “canciones” a la vista
-// - recomiendaCanciones (en controlador): no es responsabilidad del controlador devolver “recomendaciones” a la vista
-// - no hay notificaciones desde el modelo a la vista, cuando algo ha cambiado en el modelo
-// - basicamente, no se ha implementado el patrón MVC correctamente
-// - te doy apto porque funciona, y hay alguna lógica en la implementación. Pero está claro que el patrón MVC no está implementado correctamente.

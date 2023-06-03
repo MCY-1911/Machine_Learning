@@ -61,7 +61,6 @@ public class ModeloCanciones implements InterrogaModelo, CambiaModelo {
         this.vista = vista;
     }
 
-
     @Override
     public void avisaAVistaDeCanciones() {
         vista.listaCanciones();

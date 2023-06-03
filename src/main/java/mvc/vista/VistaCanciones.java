@@ -3,6 +3,7 @@ package mvc.vista;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,10 +22,12 @@ public class VistaCanciones implements InformaVista, InterrogaVista {
     private InterrogaModelo modelo;
     private VistaResultado vistaResultado;
 
+    // Componentes de la Vista
     VBox display = new VBox();
     ToggleGroup grupoAlgoritmo = new ToggleGroup();
     ToggleGroup grupoDistance = new ToggleGroup();
     ListView<String> cancionesMostradas;
+    FilteredList<String> filteredList;
     Button recomendar;
 
 
@@ -47,7 +50,6 @@ public class VistaCanciones implements InformaVista, InterrogaVista {
     public void crearGUICanciones() {
 
         stage.setTitle("Song Recommender");
-
 
         crearBotonRecomendar();
         crearOpcionesAlgoritmo();
@@ -116,7 +118,18 @@ public class VistaCanciones implements InformaVista, InterrogaVista {
 
         // Listado de canciones
         controlador.pideCanciones();
-        display.getChildren().addAll(cancionesMostradas);
+
+        // Barra de búsqueda
+        Label labelBuscar = new Label("Search: ");
+        TextField searchBar = new TextField();
+        searchBar.setPromptText("Enter a song title");
+        searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(cancion -> newValue.isEmpty() || cancion.toLowerCase().contains(newValue.toLowerCase()));
+            recomendar.setText("Recommend");
+            recomendar.setDisable(true);
+        });
+
+        display.getChildren().addAll(labelBuscar, searchBar, cancionesMostradas);
 
         //Añadimos un tooltip a la lista
         Tooltip consejo = new Tooltip("Double click for recommendations bases on this song");
@@ -149,7 +162,8 @@ public class VistaCanciones implements InformaVista, InterrogaVista {
     @Override
     public void listaCanciones() {
         ObservableList<String> canciones = FXCollections.observableArrayList(modelo.getCanciones());
-        cancionesMostradas = new ListView<>(canciones);
+        filteredList = new FilteredList<>(canciones);
+        cancionesMostradas = new ListView<>(filteredList);
     }
 
     @Override

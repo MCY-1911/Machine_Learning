@@ -4,9 +4,9 @@ import algoritmos.*;
 import mates.Distance;
 import mates.EuclideanDistance;
 import mates.ManhattanDistance;
-import tratamientoDatos.lectores.CSV;
-import tratamientoDatos.lectores.LectorSongs;
-import tratamientoDatos.tablas.Table;
+import tratamientodatos.lectores.CSV;
+import tratamientodatos.lectores.LectorSongs;
+import tratamientodatos.tablas.Table;
 
 
 import java.io.File;

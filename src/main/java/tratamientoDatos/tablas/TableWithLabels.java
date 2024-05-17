@@ -1,7 +1,7 @@
-package tratamientoDatos.tablas;
+package tratamientodatos.tablas;
 
-import tratamientoDatos.filas.Row;
-import tratamientoDatos.filas.RowWithLabel;
+import tratamientodatos.filas.Row;
+import tratamientodatos.filas.RowWithLabel;
 
 import java.util.ArrayList;
 import java.util.HashMap;

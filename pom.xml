@@ -23,9 +23,8 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.8</version>
                 <configuration>
-                    <mainClass>mvc.Arrancador.Arrancador</mainClass>
-                    <!--                    Esta linea depende de tu equipo-->
-                    <executable>C:\Users\aleja\.jdks\corretto-19.0.2\bin\java.exe</executable>
+                    <mainClass>mvc.arrancador.Arrancador</mainClass>
+                    <executable>C:\Users\al415647\.jdks\corretto-19.0.2\bin\java.exe</executable>
                     </configuration>
             </plugin>
         </plugins>

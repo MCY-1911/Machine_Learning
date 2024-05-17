@@ -1,14 +1,11 @@
 package algoritmos;
 
 import mates.EuclideanDistance;
-import tratamientoDatos.lectores.CSV;
-import tratamientoDatos.lectores.LectorSongs;
-import tratamientoDatos.tablas.Table;
+import tratamientodatos.lectores.CSV;
+import tratamientodatos.lectores.LectorSongs;
+import tratamientodatos.tablas.Table;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 

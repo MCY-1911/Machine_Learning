@@ -1,4 +1,4 @@
-package mvc.Arrancador;
+package mvc.arrancador;
 
 import javafx.application.Application;
 import javafx.stage.Stage;

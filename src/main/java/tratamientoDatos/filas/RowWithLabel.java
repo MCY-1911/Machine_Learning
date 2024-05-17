@@ -1,4 +1,4 @@
-package tratamientoDatos.filas;
+package tratamientodatos.filas;
 
 public class RowWithLabel extends Row{
     protected int numberClass;

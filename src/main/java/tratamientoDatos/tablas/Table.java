@@ -1,6 +1,6 @@
-package tratamientoDatos.tablas;
+package tratamientodatos.tablas;
 
-import tratamientoDatos.filas.Row;
+import tratamientodatos.filas.Row;
 
 import java.util.ArrayList;
 import java.util.Collections;

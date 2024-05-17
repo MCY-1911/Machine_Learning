@@ -1,6 +1,6 @@
 package algoritmos;
 
-import tratamientoDatos.tablas.Table;
+import tratamientodatos.tablas.Table;
 
 public interface Algorithm<T extends Table,U,W> {
     void train(T datos) throws MasDatosQueGruposException;

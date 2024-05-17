@@ -1,17 +1,15 @@
-package tratamientoDatos;
+package tratamientodatos;
 
-import tratamientoDatos.lectores.CSV;
-import tratamientoDatos.lectores.LectorSongs;
-import tratamientoDatos.tablas.Table;
-import tratamientoDatos.tablas.TableWithLabels;
+import tratamientodatos.lectores.CSV;
+import tratamientodatos.tablas.Table;
+import tratamientodatos.tablas.TableWithLabels;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Scanner;
 
-import static tratamientoDatos.tablas.Table.TABLA_NULA;
-import static tratamientoDatos.tablas.TableWithLabels.TABLA_LABELS_NULA;
+import static tratamientodatos.tablas.Table.TABLA_NULA;
+import static tratamientodatos.tablas.TableWithLabels.TABLA_LABELS_NULA;
 
 
 public class TablesPrints {

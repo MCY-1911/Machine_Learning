@@ -18,3 +18,8 @@ target/classes/PR1/RowWithLabel.class
 target/classes/PR1/Table.class
 target/classes/PR1/TableWithLabels.class
 target/test-classes/Algoritmos/KNNTest.class
+
+.ai
+/.ai/
+/.idea/
+/target/

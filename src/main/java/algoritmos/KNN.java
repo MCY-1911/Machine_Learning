@@ -2,8 +2,8 @@ package algoritmos;
 
 import mates.PuntosDiferentesDimensiones;
 import mates.Distance;
-import tratamientoDatos.filas.RowWithLabel;
-import tratamientoDatos.tablas.TableWithLabels;
+import tratamientodatos.filas.RowWithLabel;
+import tratamientodatos.tablas.TableWithLabels;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class KNN implements Algorithm<TableWithLabels,Integer, List<Double>>, Di
             } catch (PuntosDiferentesDimensiones e) {
                 e.printStackTrace();
             }
-            if (distancia < distanciaMin) {
+            if ( distancia != null && distancia < distanciaMin) {
                 distanciaMin = distancia;
                 numeroClaseEstimado = candidato.getNumberClass();
             }

@@ -2,8 +2,8 @@ package algoritmos;
 
 import mates.PuntosDiferentesDimensiones;
 import mates.Distance;
-import tratamientoDatos.filas.Row;
-import tratamientoDatos.tablas.Table;
+import tratamientodatos.filas.Row;
+import tratamientodatos.tablas.Table;
 
 import java.util.*;
 

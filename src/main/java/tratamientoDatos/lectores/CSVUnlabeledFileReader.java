@@ -1,6 +1,6 @@
-package tratamientoDatos.lectores;
+package tratamientodatos.lectores;
 
-import tratamientoDatos.tablas.Table;
+import tratamientodatos.tablas.Table;
 
 import java.io.File;
 import java.io.FileNotFoundException;

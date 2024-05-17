@@ -1,7 +1,7 @@
 package algoritmos;
 
-import tratamientoDatos.filas.Row;
-import tratamientoDatos.tablas.Table;
+import tratamientodatos.filas.Row;
+import tratamientodatos.tablas.Table;
 
 import java.util.ArrayList;
 import java.util.HashSet;

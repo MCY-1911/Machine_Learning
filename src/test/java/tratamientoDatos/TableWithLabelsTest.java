@@ -1,15 +1,15 @@
-package tratamientoDatos;
+package tratamientodatos;
 
-import tratamientoDatos.lectores.CSVLabeledFileReader;
-import tratamientoDatos.lectores.ReaderTemplate;
-import tratamientoDatos.tablas.TableWithLabels;
+import tratamientodatos.lectores.CSVLabeledFileReader;
+import tratamientodatos.lectores.ReaderTemplate;
+import tratamientodatos.tablas.TableWithLabels;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import static tratamientoDatos.tablas.TableWithLabels.TABLA_LABELS_NULA;
+import static tratamientodatos.tablas.TableWithLabels.TABLA_LABELS_NULA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TableWithLabelsTest {

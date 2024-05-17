@@ -1,9 +1,9 @@
-package tratamientoDatos;
+package tratamientodatos;
 
-import tratamientoDatos.lectores.CSVUnlabeledFileReader;
-import tratamientoDatos.lectores.ReaderTemplate;
-import tratamientoDatos.tablas.Table;
-import static tratamientoDatos.tablas.Table.TABLA_NULA;
+import tratamientodatos.lectores.CSVUnlabeledFileReader;
+import tratamientodatos.lectores.ReaderTemplate;
+import tratamientodatos.tablas.Table;
+import static tratamientodatos.tablas.Table.TABLA_NULA;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;

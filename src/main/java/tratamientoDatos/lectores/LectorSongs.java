@@ -1,4 +1,4 @@
-package tratamientoDatos.lectores;
+package tratamientodatos.lectores;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -7,15 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LectorSongs {
-    public static List<String> readNames(String fileOfItemNames) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(fileOfItemNames));
-        String line;
-        List<String> names = new ArrayList<>();
 
-        while ((line = br.readLine()) != null) {
-            names.add(line);
+    private LectorSongs() {super();}
+    public static List<String> readNames(String fileOfItemNames) throws IOException {
+        List<String> names = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(fileOfItemNames));)  {
+            String line;
+
+            while ((line = br.readLine()) != null) {
+                names.add(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        br.close();
         return names;
     }
 }

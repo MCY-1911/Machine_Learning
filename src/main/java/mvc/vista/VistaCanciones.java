@@ -18,6 +18,7 @@ import mvc.modelo.InterrogaModelo;
 
 public class VistaCanciones implements InformaVista, InterrogaVista {
     private final Stage stage;
+    private final static String ARIAL = "Arial";
     private Controlador controlador;
     private InterrogaModelo modelo;
     private VistaResultado vistaResultado;
@@ -74,7 +75,7 @@ public class VistaCanciones implements InformaVista, InterrogaVista {
     private void crearOpcionesAlgoritmo() {
         //Primer título con los botones
         Label labelAlgoritmo = new Label("Recommendation Type");
-        labelAlgoritmo.setFont(Font.font("Arial",FontWeight.BOLD, 14));
+        labelAlgoritmo.setFont(Font.font(ARIAL,FontWeight.BOLD, 14));
         RadioButton knn = new RadioButton(" Recommend based on song features");
         knn.setToggleGroup(grupoAlgoritmo);
         knn.setUserData("knn");
@@ -93,7 +94,7 @@ public class VistaCanciones implements InformaVista, InterrogaVista {
     private void crearOpcionesDistancia() {
         //Segundo título con los botones
         Label labelDistance = new Label("Distance Type");
-        labelDistance.setFont(Font.font("Arial",FontWeight.BOLD, 14));
+        labelDistance.setFont(Font.font(ARIAL,FontWeight.BOLD, 14));
         RadioButton euclidean = new RadioButton(" Euclidean ");
         euclidean.setToggleGroup(grupoDistance);
         euclidean.setUserData("euclidean");
@@ -113,7 +114,7 @@ public class VistaCanciones implements InformaVista, InterrogaVista {
 
         // Etiqueta del apartado
         Label labelLista = new Label("Song Titles");
-        labelLista.setFont(Font.font("Arial",FontWeight.BOLD, 14));
+        labelLista.setFont(Font.font(ARIAL,FontWeight.BOLD, 14));
         display.getChildren().addAll(labelLista);
 
         // Listado de canciones

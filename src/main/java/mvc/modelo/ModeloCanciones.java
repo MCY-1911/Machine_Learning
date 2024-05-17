@@ -15,9 +15,9 @@ import java.util.Map;
 public class ModeloCanciones implements InterrogaModelo, CambiaModelo {
 
     private final Map<String, RecSys> recomendadores;
-    private final String knn = "knn";
-    private final String kmeans = "kmeans";
-    private final String train = "train";
+    private static final String KNN = "KNN";
+    private static final String KMEANS = "KEMANS";
+    private static final String TRAIN = "train";
     List<String> songs;
     List<String> recommendations;
     private InformaVista vista;
@@ -32,31 +32,31 @@ public class ModeloCanciones implements InterrogaModelo, CambiaModelo {
 
         // En un mapa guardamos el nombre del algoritmo/conjunto y su ruta correspondientee
         Map<String,String> filenames = new HashMap<>();
-        filenames.put(knn +"train",ruta+sep+"songs_train.csv");
-        filenames.put(knn +"test",ruta+sep+"songs_test.csv");
-        filenames.put(kmeans +"train",ruta+sep+"songs_train_withoutnames.csv");
-        filenames.put(kmeans +"test",ruta+sep+"songs_test_withoutnames.csv");
+        filenames.put(KNN + TRAIN,ruta+sep+"songs_train.csv");
+        filenames.put(KNN +"test",ruta+sep+"songs_test.csv");
+        filenames.put(KMEANS + TRAIN,ruta+sep+"songs_train_withoutnames.csv");
+        filenames.put(KMEANS +"test",ruta+sep+"songs_test_withoutnames.csv");
 
         // Tablas de datos, tanto entrenamiento como test
         Map<String, Table> tables = new HashMap<>();
-        String [] stages = {"train", "test"};
+        String [] stages = {TRAIN, "test"};
         for (String stage : stages) {
-            tables.put(knn + stage, new CSVLabeledFileReader(filenames.get("knn" + stage)).readTableFromSource());
-            tables.put(kmeans + stage, new CSVUnlabeledFileReader(filenames.get("kmeans" + stage)).readTableFromSource());
+            tables.put(KNN + stage, new CSVLabeledFileReader(filenames.get("KNN" + stage)).readTableFromSource());
+            tables.put(KMEANS + stage, new CSVUnlabeledFileReader(filenames.get(KMEANS + stage)).readTableFromSource());
         }
 
         // En otro mapa guardamos los recomendadores
         recomendadores = new HashMap<>();
-        recomendadores.put(knn + "#" + "euclidean", new RecSys(new KNN(new EuclideanDistance())));
-        recomendadores.put(knn + "#" + "manhattan",new RecSys(new KNN(new ManhattanDistance())));
-        recomendadores.put(kmeans + "#" + "euclidean",new RecSys(new Kmeans(15, 200, 4321, new EuclideanDistance())));
-        recomendadores.put(kmeans + "#" + "manhattan",new RecSys(new Kmeans(15, 200, 4321, new ManhattanDistance())));
+        recomendadores.put(KNN + "#" + "euclidean", new RecSys(new KNN(new EuclideanDistance())));
+        recomendadores.put(KNN + "#" + "manhattan",new RecSys(new KNN(new ManhattanDistance())));
+        recomendadores.put(KMEANS + "#" + "euclidean",new RecSys(new Kmeans(15, 200, 4321, new EuclideanDistance())));
+        recomendadores.put(KMEANS + "#" + "manhattan",new RecSys(new Kmeans(15, 200, 4321, new ManhattanDistance())));
 
         for(Map.Entry<String, RecSys> entry: recomendadores.entrySet()) {
             String etiqueta = entry.getKey();
             RecSys recomendador = entry.getValue();
             String[] algoritmoYDistancia = etiqueta.split("#");
-            recomendador.train(tables.get(algoritmoYDistancia[0] + "train" ));
+            recomendador.train(tables.get(algoritmoYDistancia[0] + TRAIN));
             recomendadores.get(etiqueta).run(tables.get(algoritmoYDistancia[0]+"test"), songs);
         }
 

@@ -13,8 +13,7 @@ public class SaveTable {
         super();
     }
     public void saveTableWithPredictions(Table t, String filename, Kmeans estimador) throws IOException {
-        try {
-            FileWriter fw = new FileWriter(filename);
+        try(FileWriter fw = new FileWriter(filename)) {
             for (int i=0; i<t.getNumeroFilas(); i++)
             {
                 Row row = t.getRowAt(i);
@@ -29,7 +28,6 @@ public class SaveTable {
                 fw.write(datos.get(j).toString());
                 fw.write("\n");
             }
-            fw.close();
         } catch (IOException e) {
             throw e;
         }

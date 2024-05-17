@@ -12,12 +12,12 @@ public class Table {
     protected List<Row> instancias;
     public static final Table TABLA_NULA = new Table();
     static {
-        List<String> headersTABLA_NULA = new ArrayList<>();
-        headersTABLA_NULA.add("Esta");
-        headersTABLA_NULA.add("tabla");
-        headersTABLA_NULA.add("es");
-        headersTABLA_NULA.add("NULA");
-        TABLA_NULA.headers = headersTABLA_NULA;
+        List<String> headersTablaNula = new ArrayList<>();
+        headersTablaNula.add("Esta");
+        headersTablaNula.add("tabla");
+        headersTablaNula.add("es");
+        headersTablaNula.add("NULA");
+        TABLA_NULA.headers = headersTablaNula;
     }
 
     public Table() {

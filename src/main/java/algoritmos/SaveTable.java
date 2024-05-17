@@ -29,7 +29,7 @@ public class SaveTable {
                 fw.write("\n");
             }
         } catch (IOException e) {
-            throw e;
+            throw new IOException(e);
         }
     }
 }

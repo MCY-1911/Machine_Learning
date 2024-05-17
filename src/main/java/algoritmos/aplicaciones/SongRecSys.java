@@ -65,18 +65,18 @@ class SongRecSys {
         this.recsys.run(tables.get(method+"test"), names);
 
         // Given a liked item, ask for a number of recomendations
-        String liked_name = "JUNKY";
-        List<String> recommended_items = this.recsys.recommend(liked_name,7);
+        String likedName = "JUNKY";
+        List<String> recommendedItems = this.recsys.recommend(likedName,7);
 
         // Display the recommendation text (to be replaced with graphical display with JavaFX implementation)
-        reportRecommendation(liked_name,recommended_items);
+        reportRecommendation(likedName,recommendedItems);
 
     }
 
 
-    private void reportRecommendation(String liked_name, List<String> recommended_items) {
-        System.out.println("If you liked \""+liked_name+"\" then you might like:");
-        for (String name : recommended_items)
+    private void reportRecommendation(String likedName, List<String> recommendedItems) {
+        System.out.println("If you liked \""+likedName+"\" then you might like:");
+        for (String name : recommendedItems)
         {
             System.out.println("\t * "+name);
         }

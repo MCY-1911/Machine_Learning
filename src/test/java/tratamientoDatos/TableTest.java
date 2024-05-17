@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-public class TableTest {
+class TableTest {
     ReaderTemplate constructorTabla;
     Table tabla;
 

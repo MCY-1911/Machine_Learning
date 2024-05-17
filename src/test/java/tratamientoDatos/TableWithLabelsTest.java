@@ -12,7 +12,7 @@ import java.util.List;
 import static tratamientodatos.tablas.TableWithLabels.TABLA_LABELS_NULA;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TableWithLabelsTest {
+class TableWithLabelsTest {
 
     ReaderTemplate constructorTabla;
     TableWithLabels tablaLabels;

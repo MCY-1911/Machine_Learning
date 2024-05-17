@@ -18,7 +18,7 @@ import mvc.modelo.InterrogaModelo;
 
 public class VistaCanciones implements InformaVista, InterrogaVista {
     private final Stage stage;
-    private final static String ARIAL = "Arial";
+    private static final String ARIAL = "Arial";
     private Controlador controlador;
     private InterrogaModelo modelo;
     private VistaResultado vistaResultado;

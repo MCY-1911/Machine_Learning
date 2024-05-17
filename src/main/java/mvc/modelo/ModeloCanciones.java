@@ -17,7 +17,6 @@ public class ModeloCanciones implements InterrogaModelo, CambiaModelo {
     private final Map<String, RecSys> recomendadores;
     private final String knn = "knn";
     private final String kmeans = "kmeans";
-    private final String train = "train";
     List<String> songs;
     List<String> recommendations;
     private InformaVista vista;

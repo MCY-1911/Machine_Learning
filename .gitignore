@@ -23,3 +23,5 @@ target/test-classes/Algoritmos/KNNTest.class
 /.ai/
 /.idea/
 /target/
+pom.xml
+pom.xml

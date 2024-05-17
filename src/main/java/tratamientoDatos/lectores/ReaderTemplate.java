@@ -13,7 +13,7 @@ public abstract class ReaderTemplate {
     Table datos;
     Scanner csv = null;
 
-    public ReaderTemplate(String fileName) {
+    protected ReaderTemplate(String fileName) {
         super();
         this.source = fileName;
     }
@@ -32,7 +32,7 @@ public abstract class ReaderTemplate {
             e.printStackTrace();
         }
         // Si el fichero no se puede procesar devolvemos una tabla nula, sea o no con etiquetas
-        if (datos==Table.TABLA_NULA || datos== TableWithLabels.TABLA_LABELS_NULA)
+        if (datos==Table.TABLA_NULA || datos == TableWithLabels.TABLA_LABELS_NULA)
             return datos;
         processHeaders(getNextData());
         while(hasMoreData())
